@@ -6,11 +6,11 @@ import Characteristics from "./Characteristics";
 
 const LeftSection = () => {
   return (
-    <div className="max-w-xs w-full border-r">
+    <div className="max-w-xs w-full">
       <div className="sticky top-5">
-        <ScrollArea className="h-screen px-4">
+        <ScrollArea className="h-screen px-4 border-r snap-y snap-mandatory">
           {/* Personal Details */}
-          <div className="space-y-5">
+          <div className="space-y-5 snap-start">
             <Identity />
             <Badges />
             <Address />

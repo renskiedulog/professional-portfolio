@@ -53,9 +53,9 @@ const characters = [
   },
   {
     label: "Anxious Communicator",
-    description: "I tend to carefully think through everything I want to say before speaking, often considering how to convey my message in the best way. While this can make me seem hesitant at times, it ensures I communicate thoughtfully and clearly."
-  }
-  
+    description:
+      "I tend to carefully think through everything I want to say before speaking, often considering how to convey my message in the best way. While this can make me seem hesitant at times, it ensures I communicate thoughtfully and clearly.",
+  },
 ];
 
 const Characteristics = () => {
