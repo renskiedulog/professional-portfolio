@@ -62,7 +62,7 @@ export default function RootLayout({
                 <AnimatePresence>
                   <BlurFade>{children}</BlurFade>
                 </AnimatePresence>
-                <div className="fixed bottom-0 inset-x-0 h-20 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] dark:bg-background" />
+                <div className="z-0 fixed bottom-0 inset-x-0 h-12 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] dark:bg-background" />
               </TooltipProvider>
             </ThemeProvider>
           </StorageProvider>
