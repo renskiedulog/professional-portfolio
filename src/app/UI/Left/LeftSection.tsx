@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Badges from "./Badges";
 import Identity from "./Identity";
+import Badges from "./Badges";
 import Address from "./Address";
 import Characteristics from "./Characteristics";
 
