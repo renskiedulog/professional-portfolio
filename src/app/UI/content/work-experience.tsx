@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Heading from "../global-components/heading";
 
 interface WorkExperience {
   company: string;
@@ -32,9 +33,7 @@ const experiences: WorkExperience[] = [
 export default function WorkExperience() {
   return (
     <div className="w-full max-w-xl space-y-3">
-      <h2 className="text-3xl font-black text-primary/80 dark:text-primary">
-        Work Experience
-      </h2>
+      <Heading>Work Experience</Heading>
       <div className="space-y-3">
         {experiences.map((experience, index) => (
           <Link
@@ -61,7 +60,7 @@ export default function WorkExperience() {
                 </p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground whitespace-nowrap">
+            <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">
               {experience.period}
             </p>
           </Link>

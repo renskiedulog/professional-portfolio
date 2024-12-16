@@ -1,11 +1,10 @@
 import React from "react";
+import Heading from "../global-components/heading";
 
 const AboutMe = () => {
   return (
     <div className="space-y-3">
-      <h2 className="text-3xl font-black text-primary/80 dark:text-primary">
-        About Me
-      </h2>
+      <Heading>About Me</Heading>
       <p>
         In early 2022, I discovered programming and immediately realized it was
         a field I could excel in and never tire of. My passion for gaming, which
