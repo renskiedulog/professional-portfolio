@@ -7,9 +7,10 @@ const AboutMe = () => {
       <Heading>About Me</Heading>
       <p>
         In early 2022, I discovered programming and immediately realized it was
-        a field I could excel in and never tire of. My passion for gaming, which
+        something I really had great affinity with. My passion for gaming, which
         began at the age of 7, greatly contributed to my journey into
-        programming. Got into a scholarship in{" "}
+        programming. Decided to not pursue college due to financial issues but
+        luckily got into a scholarship in{" "}
         <a
           href="https://www.passerellesnumeriques.org/"
           className="underline"
