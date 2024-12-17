@@ -18,10 +18,6 @@ const badges = [
     icon: FaCalendarCheck,
   },
   {
-    label: "HE / HIM",
-    icon: FaMale,
-  },
-  {
     label: "Renren",
     icon: FaIdCard,
   },

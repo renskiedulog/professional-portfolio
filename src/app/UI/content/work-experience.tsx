@@ -48,7 +48,7 @@ export default function WorkExperience() {
                 <AvatarFallback>{experience.company[0]}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-bold text-lg flex items-center group-hover:underline">
+                <p className="font-bold text-lg flex items-center group-hover:underline text-primary">
                   {experience.company}
                   <ChevronRight
                     size={18}

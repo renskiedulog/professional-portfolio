@@ -46,7 +46,7 @@ const NavigationBar = () => {
   const { setTheme, theme } = useTheme();
 
   return (
-    <nav className="fixed z-50 bottom-5 left-1/2 bg-background -translate-x-1/2 rounded-full flex items-center divide-x border">
+    <nav className="fixed z-50 bottom-5 left-1/2 bg-background -translate-x-1/2 rounded-full flex items-center divide-x divide-primary/20 border border-primary/50">
       {/* Links */}
       <div className="flex overflow-hidden">
         {links?.length > 0 &&

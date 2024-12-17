@@ -49,7 +49,7 @@ const skills = [
     ],
   },
   {
-    label: "Currently Learning",
+    label: "Studying",
     width: "half",
     items: [
       {
@@ -130,19 +130,23 @@ const Skills = () => {
           skills?.map((skill, idx) => (
             <div
               key={idx}
-              className={`${skill.width === "half" ? "max-w-[250px] w-full" : "w-full mt-3"}`}
+              className={`${
+                skill.width === "half" ? "max-w-[250px] w-full" : "w-full mt-3"
+              }`}
             >
               <h3 className="text-lg font-semibold text-primary/90">
                 {skill?.label}
               </h3>
-              <div className="flex items-center space-x-3 mt-1">
+              <div className="flex items-center space-x-3 mt-2">
                 {skill?.items?.length > 0 &&
                   skill?.items?.map((item, index) => (
                     <div
                       key={`${item?.name}-${index}`}
-                      className="flex justify-center items-center flex-col gap-0.5"
+                      className="flex justify-center items-center flex-col gap-1"
                     >
-                      {item?.icon && <item.icon size={28} />}
+                      {item?.icon && (
+                        <item.icon className="text-primary" size={28} />
+                      )}
                       {item?.name && (
                         <p className="text-[10px]">{item?.name}</p>
                       )}
