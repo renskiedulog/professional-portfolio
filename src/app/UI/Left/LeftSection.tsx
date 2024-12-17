@@ -1,20 +1,23 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Identity from "@/app/UI/Left/Identity";
-import Badges from "@/app/UI/Left/Badges";
-import Address from "@/app/UI/Left/Address";
-import Characteristics from "@/app/UI/Left/Characteristics";
+import Identity from "./Identity";
+import Badges from "./Badges";
+import Address from "./Address";
+import Characteristics from "./Characteristics";
+import { ChevronDown } from "lucide-react";
 
 const LeftSection = () => {
   return (
-    <div className="max-w-xs w-full">
+    <div className="max-w-[325px] w-full">
       <div className="sticky top-5">
         <ScrollArea className="h-screen px-4 border-r snap-y snap-mandatory">
-          {/* Personal Details */}
-          <div className="space-y-5 snap-start">
-            <Identity />
-            <Badges />
-            <Address />
-            <Characteristics />
+          <div className="pb-12">
+            {/* Personal Details */}
+            <div className="space-y-5 mb-5">
+              <Identity />
+              <Badges />
+              <Address />
+              <Characteristics />
+            </div>
           </div>
         </ScrollArea>
       </div>

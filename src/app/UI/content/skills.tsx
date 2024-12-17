@@ -114,7 +114,7 @@ const skills = [
         icon: SiMysql,
       },
       {
-        name: "Adobe",
+        name: "Photoshop",
         icon: SiAdobephotoshop,
       },
       {

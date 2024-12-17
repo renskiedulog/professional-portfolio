@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="flex">
       <LeftSection />
-      <div className="px-5 py-2 space-y-5 w-full pb-16">
+      <div className="px-5 space-y-5 w-full pb-16">
         <AboutMe />
         <Skills />
         <WorkExperience />
