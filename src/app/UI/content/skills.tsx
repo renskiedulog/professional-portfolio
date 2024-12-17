@@ -46,6 +46,10 @@ const skills = [
         name: "React",
         icon: FaReact,
       },
+      {
+        name: "Typescript",
+        icon: BiLogoTypescript,
+      },
     ],
   },
   {
@@ -123,7 +127,7 @@ const skills = [
 
 const Skills = () => {
   return (
-    <div className="space-y-3">
+    <div>
       <Heading>Skills</Heading>
       <div className="flex flex-wrap items-start">
         {skills?.length > 0 &&
@@ -131,13 +135,15 @@ const Skills = () => {
             <div
               key={idx}
               className={`${
-                skill.width === "half" ? "max-w-[250px] w-full" : "w-full mt-3"
+                skill.width === "half"
+                  ? "max-w-[300px] w-full mt-3"
+                  : "w-full mt-3"
               }`}
             >
               <h3 className="text-lg font-semibold text-primary/90">
                 {skill?.label}
               </h3>
-              <div className="flex items-center space-x-3 mt-2">
+              <div className="flex items-center space-x-3 mt-1">
                 {skill?.items?.length > 0 &&
                   skill?.items?.map((item, index) => (
                     <div

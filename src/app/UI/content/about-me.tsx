@@ -17,8 +17,11 @@ const AboutMe = () => {
         >
           Passarelles Numériques
         </a>{" "}
-        where I pursued a Certificate in Computer Technology, completed a 10
-        months internship at{" "}
+        where I pursued a Certificate in Computer Technology at the{" "}
+        <a href="https://usc.edu.ph/" target="_blank" className="underline">
+          University Of San Carlos
+        </a>
+        , completed a 10 months internship at{" "}
         <a href="https://webriq.com" className="underline" target="_blank">
           WebriQ
         </a>

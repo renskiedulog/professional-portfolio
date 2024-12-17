@@ -1,12 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Code } from "lucide-react";
 import {
+  FaBookOpen,
   FaCalendarCheck,
   FaGamepad,
   FaIdCard,
   FaMale,
   FaPhotoVideo,
 } from "react-icons/fa";
+import { RiMoonClearLine } from "react-icons/ri";
 
 const badges = [
   {
@@ -31,11 +33,15 @@ const badges = [
   },
   {
     label: "Manga",
-    icon: FaPhotoVideo,
+    icon: FaBookOpen,
   },
   {
     label: "Gaming",
     icon: FaGamepad,
+  },
+  {
+    label: "Night Owl",
+    icon: RiMoonClearLine,
   },
 ];
 
