@@ -1,9 +1,9 @@
-import Image from "next/image";
 import LeftSection from "./UI/left/LeftSection";
 import AboutMe from "./UI/content/about-me";
 import WorkExperience from "./UI/content/work-experience";
 import Skills from "./UI/content/skills";
 import Education from "./UI/content/education";
+import Projects from "./UI/content/projects";
 
 export default function Home() {
   return (
@@ -14,6 +14,7 @@ export default function Home() {
         <Skills />
         <WorkExperience />
         <Education />
+        <Projects />
       </div>
     </div>
   );

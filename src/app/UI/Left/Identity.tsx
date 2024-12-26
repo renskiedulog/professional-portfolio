@@ -13,7 +13,7 @@ const Identity = () => {
         <AvatarFallback>RD</AvatarFallback>
       </Avatar>
       <h1 className="text-3xl font-medium/90">Renato Dulog</h1>
-      <p className="text-sm opacity-50 font-medium">Web Developer</p>
+      <p className="text-sm opacity-50 font-medium text-center">Fullstack Web Developer</p>
     </div>
   );
 };

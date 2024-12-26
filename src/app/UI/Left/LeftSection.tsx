@@ -3,7 +3,6 @@ import Identity from "./Identity";
 import Badges from "./Badges";
 import Address from "./Address";
 import Characteristics from "./Characteristics";
-import { ChevronDown } from "lucide-react";
 
 const LeftSection = () => {
   return (
