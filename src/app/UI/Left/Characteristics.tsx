@@ -32,9 +32,9 @@ const characters = [
       "I'm constantly craving new knowledge. I never stop learning, always searching for the next thing to expand my mind and satisfy my curiosity.",
   },
   {
-    label: "Meticulous Moron",
+    label: "Lone Wolf",
     description:
-      "I tend to get lost in the details, sometimes overthinking even the simplest tasks. But when I do, I make sure everything is just right—often to my own confusion.",
+      "I work best on my own, using my independence and focus to get things done. I’m self-driven and handle tasks without much supervision.",
   },
   {
     label: "Focus Fiend",
