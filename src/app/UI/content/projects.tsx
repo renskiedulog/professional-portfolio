@@ -3,6 +3,13 @@ import Heading from "../global-components/heading";
 import { RiNextjsFill } from "react-icons/ri";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { FaReact } from "react-icons/fa";
+import { SiTailwindcss } from "react-icons/si";
 
 interface Project {
   title: String;
@@ -21,71 +28,71 @@ interface Stack {
 
 const projects: Project[] = [
   {
-    title: "Example",
+    title: "AnimeSensei",
     description:
-      "Example Description Example Description Example Description Example Description Example Description",
-    image: "",
-    videoUrl: "",
-    githubLink: "",
-    liveUrl: "",
+      "AnimeSensei is a sleek platform for anime enthusiasts to explore, discover, and watch their favorite shows. Built with modern technologies for a seamless user experience.",
+    image: "https://example.com/images/animesensei-banner.jpg",
+    videoUrl: "https://example.com/videos/animesensei-demo.mp4",
+    githubLink: "https://github.com/username/animesensei",
+    liveUrl: "https://animesensei.example.com",
     stacks: [
       {
-        title: "NextJS",
+        title: "Next.js",
         icon: RiNextjsFill,
       },
       {
-        title: "NextJS",
-        icon: RiNextjsFill,
+        title: "React",
+        icon: FaReact, // Add appropriate icon from a library
       },
       {
-        title: "NextJS",
-        icon: RiNextjsFill,
+        title: "TailwindCSS",
+        icon: SiTailwindcss, // Add appropriate icon from a library
       },
     ],
   },
   {
-    title: "Example",
+    title: "AnimeSensei",
     description:
-      "Example Description Example Description Example Description Example Description Example Description",
-    image: "",
-    videoUrl: "",
-    githubLink: "",
-    liveUrl: "",
+      "AnimeSensei is a sleek platform for anime enthusiasts to explore, discover, and watch their favorite shows. Built with modern technologies for a seamless user experience.",
+    image: "https://example.com/images/animesensei-banner.jpg",
+    videoUrl: "https://example.com/videos/animesensei-demo.mp4",
+    githubLink: "https://github.com/username/animesensei",
+    liveUrl: "https://animesensei.example.com",
     stacks: [
       {
-        title: "NextJS",
+        title: "Next.js",
         icon: RiNextjsFill,
       },
       {
-        title: "NextJS",
-        icon: RiNextjsFill,
+        title: "React",
+        icon: FaReact, // Add appropriate icon from a library
       },
       {
-        title: "NextJS",
-        icon: RiNextjsFill,
+        title: "TailwindCSS",
+        icon: SiTailwindcss, // Add appropriate icon from a library
       },
     ],
   },
   {
-    title: "Example",
+    title: "AnimeSensei",
     description:
-      "Example Description Example Description Example Description Example Description Example Description",
-    image: "",
-    videoUrl: "",
-    githubLink: "",
-    liveUrl: "",
+      "AnimeSensei is a sleek platform for anime enthusiasts to explore, discover, and watch their favorite shows. Built with modern technologies for a seamless user experience.",
+    image: "https://example.com/images/animesensei-banner.jpg",
+    videoUrl: "https://example.com/videos/animesensei-demo.mp4",
+    githubLink: "https://github.com/username/animesensei",
+    liveUrl: "https://animesensei.example.com",
     stacks: [
       {
-        title: "NextJS",
+        title: "Next.js",
         icon: RiNextjsFill,
       },
       {
-        title: "NextJS",
-        icon: RiNextjsFill,
+        title: "React",
+        icon: FaReact, // Add appropriate icon from a library
       },
       {
-        title: "NextJS",
-        icon: RiNextjsFill,
+        title: "TailwindCSS",
+        icon: SiTailwindcss, // Add appropriate icon from a library
       },
     ],
   },
@@ -107,24 +114,33 @@ const Projects = () => {
 
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
-    <div className="border p-3.5 rounded shadow-sm bg-background space-y-1.5">
+    <div className="border rounded-md overflow-hidden shadow-sm bg-background">
       <Image
         className="aspect-video object-cover"
         src="/usc.jpg"
-        width={500}
-        height={500}
+        width={800}
+        height={800}
         alt={project?.title as string}
       />
-      <h3 className="font-extrabold text-lg">{project?.title}</h3>
-      <p className="font-medium text-base">{project?.description}</p>
-      <Separator />
-      <div>
-        <div className="flex gap-1.5">
-          {project?.stacks?.map((stack, index) => (
-            <div key={index} className="flex flex-col items-center">
-              <stack.icon className="text-2xl" />
-            </div>
-          ))}
+      <div className="px-3.5 py-2">
+        <h3 className="font-bold text-lg">{project?.title}</h3>
+        <p className="font-medium text-sm mt-1">
+          {project?.description}
+        </p>
+        <Separator className="mt-2" />
+        <div className="mt-2">
+          <div className="flex gap-1.5">
+            {project?.stacks?.map((stack, index) => (
+              <Tooltip key={index}>
+                <TooltipTrigger asChild>
+                  <stack.icon className="text-2xl hover:cursor-pointer" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{stack?.title}</p>
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </div>
         </div>
       </div>
     </div>
