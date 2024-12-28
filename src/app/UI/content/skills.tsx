@@ -31,7 +31,7 @@ const skills = [
     width: "half",
     items: [
       {
-        name: "NextJS",
+        name: "Next.js",
         icon: RiNextjsFill,
       },
       {

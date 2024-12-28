@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/tooltip";
 import { FaReact } from "react-icons/fa";
 import { SiTailwindcss } from "react-icons/si";
+import { Badge } from "@/components/ui/badge";
 
 interface Project {
   title: String;
@@ -18,12 +19,7 @@ interface Project {
   videoUrl?: String;
   githubLink?: String;
   liveUrl?: String;
-  stacks?: Stack[];
-}
-
-interface Stack {
-  title: String;
-  icon: React.ReactNode | any;
+  stacks?: String[];
 }
 
 const projects: Project[] = [
@@ -35,20 +31,7 @@ const projects: Project[] = [
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
-    stacks: [
-      {
-        title: "Next.js",
-        icon: RiNextjsFill,
-      },
-      {
-        title: "React",
-        icon: FaReact, // Add appropriate icon from a library
-      },
-      {
-        title: "TailwindCSS",
-        icon: SiTailwindcss, // Add appropriate icon from a library
-      },
-    ],
+    stacks: ["Next.js", "Tailwind CSS", "Consumet API","Shadcn UI"],
   },
   {
     title: "AnimeSensei",
@@ -58,20 +41,7 @@ const projects: Project[] = [
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
-    stacks: [
-      {
-        title: "Next.js",
-        icon: RiNextjsFill,
-      },
-      {
-        title: "React",
-        icon: FaReact, // Add appropriate icon from a library
-      },
-      {
-        title: "TailwindCSS",
-        icon: SiTailwindcss, // Add appropriate icon from a library
-      },
-    ],
+    stacks: ["NextJS", "Tailwind CSS"],
   },
   {
     title: "AnimeSensei",
@@ -81,20 +51,7 @@ const projects: Project[] = [
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
-    stacks: [
-      {
-        title: "Next.js",
-        icon: RiNextjsFill,
-      },
-      {
-        title: "React",
-        icon: FaReact, // Add appropriate icon from a library
-      },
-      {
-        title: "TailwindCSS",
-        icon: SiTailwindcss, // Add appropriate icon from a library
-      },
-    ],
+    stacks: ["NextJS", "Tailwind CSS"],
   },
 ];
 
@@ -124,24 +81,18 @@ const ProjectCard = ({ project }: { project: Project }) => {
       />
       <div className="px-3.5 py-2">
         <h3 className="font-bold text-lg">{project?.title}</h3>
-        <p className="font-medium text-sm mt-1">
-          {project?.description}
-        </p>
-        <Separator className="mt-2" />
-        <div className="mt-2">
-          <div className="flex gap-1.5">
-            {project?.stacks?.map((stack, index) => (
-              <Tooltip key={index}>
-                <TooltipTrigger asChild>
-                  <stack.icon className="text-2xl hover:cursor-pointer" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{stack?.title}</p>
-                </TooltipContent>
-              </Tooltip>
-            ))}
-          </div>
+        <p className="font-medium text-sm mt-1">{project?.description}</p>
+        <div className="flex gap-1 flex-wrap mt-1">
+          {project?.stacks?.map((stack, index) => (
+            <span
+              key={index}
+              className="bg-primary-foreground dark:bg-white/20 text-primary text-[11px] py-0.5 px-1.5 border border-opacity-10 rounded text-nowrap font-semibold"
+            >
+              {stack}
+            </span>
+          ))}
         </div>
+        <Separator className="mt-2" />
       </div>
     </div>
   );
