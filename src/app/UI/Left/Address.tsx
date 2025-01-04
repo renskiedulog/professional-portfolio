@@ -26,9 +26,9 @@ const addresses = [
     link: "tel:09919016500",
   },
   {
-    label: "renatodulog.27",
+    label: "renato.dulog",
     icon: FaFacebookSquare,
-    link: "https://facebook.com/renatodulog.27",
+    link: "https://facebook.com/renato.dulog",
   },
   {
     label: "in/renato-dulog-004582276",
