@@ -95,9 +95,41 @@ const ProjectCard = ({ project }: { project: Project }) => {
       />
       <div className="px-3.5 py-2">
         <h3 className="font-bold text-lg">{project?.title}</h3>
-        <div>
-          <p className="font-medium text-sm mt-1">{project?.description}</p>
-        </div>
+        {project?.description && (
+          <div>
+            <input
+              type="checkbox"
+              id={`project-${projects?.indexOf(project)}`}
+              className="peer hidden"
+            />
+            {project?.description?.split("")?.length > 150 ? (
+              <>
+                <p className="font-medium text-sm mt-1 peer-checked:hidden block">
+                  {project?.description?.substring(0, 150)}...
+                  <label
+                    className="text-xs opacity-60 font-medium hover:underline hover:opacity-70 cursor-pointer"
+                    htmlFor={`project-${projects?.indexOf(project)}`}
+                  >
+                    See More
+                  </label>
+                </p>
+                <p className="font-medium text-sm mt-1 peer-checked:flex hidden flex-col">
+                  {project?.description}
+                  <label
+                    className="text-xs opacity-60 font-medium hover:underline hover:opacity-70 cursor-pointer"
+                    htmlFor={`project-${projects?.indexOf(project)}`}
+                  >
+                    See Less
+                  </label>
+                </p>
+              </>
+            ) : (
+              <p className="font-medium text-sm mt-1">
+                {project?.description?.substring(0, 150)}
+              </p>
+            )}
+          </div>
+        )}
         <div className="flex gap-1 flex-wrap mt-1">
           {project?.stacks?.map((stack, index) => (
             <span
