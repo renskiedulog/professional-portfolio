@@ -43,10 +43,6 @@ const skills = [
         icon: RiTailwindCssFill,
       },
       {
-        name: "React",
-        icon: FaReact,
-      },
-      {
         name: "Typescript",
         icon: BiLogoTypescript,
       },
@@ -84,6 +80,10 @@ const skills = [
       {
         name: "Javascript",
         icon: BiLogoJavascript,
+      },
+      {
+        name: "React",
+        icon: FaReact,
       },
       {
         name: "Typescript",

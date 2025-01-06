@@ -117,7 +117,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
                   <Star fill="#eac54f" size={15} />5
                 </div>
               </TooltipTrigger>
-              <TooltipContent className="max-w-xs">Give This Project A Star</TooltipContent>
+              <TooltipContent className="max-w-xs">
+                Give This Project A Star
+              </TooltipContent>
             </Tooltip>
           </div>
           <div className="space-x-2 flex items-center">
