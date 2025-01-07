@@ -4,6 +4,7 @@ import Badges from "./Badges";
 import Address from "./Address";
 import Characteristics from "./Characteristics";
 import Files from "./Files";
+import Statistics from "./Statistics";
 
 const LeftSection = () => {
   return (
@@ -17,6 +18,7 @@ const LeftSection = () => {
               <Badges />
               <Address />
               <Characteristics />
+              <Statistics />
               <Files />
             </div>
           </div>
