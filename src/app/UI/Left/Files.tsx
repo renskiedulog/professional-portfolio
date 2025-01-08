@@ -11,7 +11,7 @@ const Files = () => {
 
   return (
     <div>
-      <h2 className="font-bold text-primary/90 text-lg">Files</h2>
+      <h2 className="font-bold text-primary/90 text-lg mt-1">Files</h2>
       <div className="grid grid-cols-4">
         {files.map((file, idx) => (
           <div
@@ -26,7 +26,9 @@ const Files = () => {
               size={50}
               className="hidden group-hover:block transition duration-300"
             />
-            <span className="text-gray-800 text-xs font-semibold text-center">{file.title}</span>
+            <span className="text-gray-800 text-xs font-semibold text-center">
+              {file.title}
+            </span>
           </div>
         ))}
       </div>

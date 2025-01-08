@@ -15,7 +15,7 @@ const AnimatedNumber = ({
   value: number;
   duration?: number;
 }) => {
-  const count = useMotionValue(0); 
+  const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) =>
     Math.floor(latest).toLocaleString()
   ); // Format the value
@@ -33,10 +33,7 @@ const AnimatedNumber = ({
   }, [isInView, count, value, duration]);
 
   return (
-    <motion.div
-      ref={ref}
-      className="text-4xl font-bold text-blue-600"
-    >
+    <motion.div ref={ref} className="text-3xl font-bold text-primary/90">
       {rounded}
     </motion.div>
   );
