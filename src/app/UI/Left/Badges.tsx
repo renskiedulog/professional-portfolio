@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { Code } from "lucide-react";
+import { Code, PawPrint } from "lucide-react";
 import {
   FaBookOpen,
   FaCalendarCheck,
@@ -42,6 +42,10 @@ const badges = [
   {
     label: "Night Owl",
     icon: RiMoonClearLine,
+  },
+  {
+    label: "Cat Lover",
+    icon: PawPrint,
   },
 ];
 

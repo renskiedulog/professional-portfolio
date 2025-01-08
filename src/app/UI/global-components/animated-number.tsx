@@ -18,7 +18,7 @@ const AnimatedNumber = ({
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) =>
     Math.floor(latest).toLocaleString()
-  ); // Format the value
+  );
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: "all" });
 
