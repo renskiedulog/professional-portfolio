@@ -7,11 +7,13 @@ const Statistics = () => {
       value: 13,
       unit: "years",
       label: "Computer Literacy",
+      duration: 1.5,
     },
     {
       value: 3,
       unit: "years",
       label: "Into Tech Industry",
+      duration: 1,
     },
     {
       value: 20,
@@ -20,13 +22,14 @@ const Statistics = () => {
     },
     {
       value: 90,
-      unit: "wpm", 
+      unit: "wpm",
       label: "Avg. Typing Speed",
     },
     {
       value: 5,
-      unit: "hours", 
+      unit: "hours",
       label: "Avg. Coding Hours Per Day ",
+      duration: 1,
     },
   ];
 
@@ -37,7 +40,10 @@ const Statistics = () => {
         {stats.map((stat, index) => (
           <div key={index} className="flex flex-col items-center basis-1/3">
             <div className="flex gap-0.5 items-end">
-              <AnimatedNumber value={stat.value} duration={2} />
+              <AnimatedNumber
+                value={stat.value}
+                duration={stat.duration || 2}
+              />
               {stat.unit && (
                 <span className="text-xs font-bold mb-1.5">{stat.unit}</span>
               )}

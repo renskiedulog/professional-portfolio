@@ -20,6 +20,7 @@ interface Project {
   githubLink?: String;
   liveUrl?: String;
   stacks?: String[];
+  disabled?: boolean;
 }
 
 const projects: Project[] = [
@@ -55,6 +56,7 @@ const projects: Project[] = [
     liveUrl: "https://animesensei.example.com",
     blogUrl: "",
     stacks: ["NextJS", "Tailwind CSS"],
+    disabled: true,
   },
   {
     title: "AnimeSensei",
@@ -66,6 +68,7 @@ const projects: Project[] = [
     liveUrl: "https://animesensei.example.com",
     blogUrl: "",
     stacks: ["NextJS", "Tailwind CSS"],
+    disabled: true,
   },
 ];
 
@@ -174,7 +177,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
               </Button>
             )}
             {project?.liveUrl && (
-              <Button className="text-xs" variant="default" size="sm">
+              <Button
+                disabled={project?.disabled || false}
+                className="text-xs"
+                variant="default"
+                size="sm"
+              >
                 <FaLink />
                 Live Preview
               </Button>
