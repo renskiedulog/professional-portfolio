@@ -28,7 +28,7 @@ const projects: Project[] = [
     title: "AnimeSensei",
     description:
       "AnimeSensei is a sleek platform for anime enthusiasts to explore, discover, and watch their favorite shows. Built with modern technologies for a seamless user experience.",
-    image: "https://example.com/images/animesensei-banner.jpg",
+    image: "/projects/animesensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
@@ -36,10 +36,9 @@ const projects: Project[] = [
     stacks: ["Next.js", "Tailwind CSS", "Consumet API", "Shadcn UI"],
   },
   {
-    title: "AnimeSensei",
-    description:
-      "AnimeSensei is a sleek platform for anime enthusiasts to explore, discover, and watch their favorite shows. Built with modern technologies for a seamless user experience.",
-    image: "https://example.com/images/animesensei-banner.jpg",
+    title: "MangaSensei",
+    description: "",
+    image: "/projects/mangasensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
@@ -50,7 +49,7 @@ const projects: Project[] = [
     title: "AnimeSensei",
     description:
       "AnimeSensei is a sleek platform for anime enthusiasts to explore, discover, and watch their favorite shows. Built with modern technologies for a seamless user experience.",
-    image: "https://example.com/images/animesensei-banner.jpg",
+    image: "/projects/portfolio.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
@@ -62,7 +61,7 @@ const projects: Project[] = [
     title: "AnimeSensei",
     description:
       "AnimeSensei is a sleek platform for anime enthusiasts to explore, discover, and watch their favorite shows. Built with modern technologies for a seamless user experience.",
-    image: "https://example.com/images/animesensei-banner.jpg",
+    image: "/projects/capstone.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
@@ -91,7 +90,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     <div className="border rounded-md overflow-hidden shadow-sm bg-background h-max mb-4">
       <Image
         className="aspect-video object-cover"
-        src="/usc.jpg"
+        src={project?.image}
         width={800}
         height={800}
         alt={project?.title as string}
