@@ -16,9 +16,9 @@ const addresses = [
     link: "",
   },
   {
-    label: "renato.dulog.dev@gmail.com",
+    label: "renato.larayos.dulog@gmail.com",
     icon: MdOutlineMailOutline,
-    link: "mailto:renato.dulog.dev@gmail.com",
+    link: "mailto:renato.larayos.dulog@gmail.com",
   },
   {
     label: "+639919016500",
@@ -37,7 +37,7 @@ const addresses = [
   },
 ];
 
-const Address = () => {
+const Details = () => {
   return (
     <div className="space-y-2.5">
       {addresses?.length > 0 &&
@@ -61,4 +61,4 @@ const Address = () => {
   );
 };
 
-export default Address;
+export default Details;

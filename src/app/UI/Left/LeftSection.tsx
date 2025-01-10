@@ -1,10 +1,10 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Identity from "./Identity";
 import Badges from "./Badges";
-import Address from "./Address";
 import Characteristics from "./Characteristics";
 import Files from "./Files";
 import Statistics from "./Statistics";
+import Details from "./Details";
 
 const LeftSection = () => {
   return (
@@ -16,7 +16,7 @@ const LeftSection = () => {
             <div className="space-y-5 mb-5">
               <Identity />
               <Badges />
-              <Address />
+              <Details />
               <Characteristics />
               <Statistics />
               <Files />

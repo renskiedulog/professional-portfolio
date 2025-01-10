@@ -21,7 +21,7 @@ const Statistics = () => {
       label: "Websites Worked",
     },
     {
-      value: 90,
+      value: 80,
       unit: "wpm",
       label: "Avg. Typing Speed",
     },
