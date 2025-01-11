@@ -30,7 +30,6 @@ const projects: Project[] = [
       "AnimeSensei is a sleek platform for anime enthusiasts that are looking for the updated, and streamline animes to date. Crafted with great insight about speed and aesthetics, and served with an external server of the all time anime provider, gogoanime.",
     image: "/projects/animesensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
     blogUrl: "",
     stacks: ["Next.js", "Typescript", "Tailwind CSS", "Consumet API", "Axios"],
@@ -41,7 +40,6 @@ const projects: Project[] = [
       "Using mangadex's api service, mangasensei offers the best and updated manga in your page at an optimal speed enough to engross and immerse you in your favorite stories, while also looking clean and aesthetically pleasing, suited for reading.",
     image: "/projects/mangasensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    githubLink: "https://github.com/username/animesensei",
     liveUrl: "https://animesensei.example.com",
     blogUrl: "",
     stacks: [
@@ -59,8 +57,6 @@ const projects: Project[] = [
       "A customizable portfolio using Sanity and Next JS, aiming to create a site to centralize my efforts and dedication on the field, while also documenting my journey.",
     image: "/projects/portfolio.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    githubLink: "https://github.com/username/animesensei",
-    liveUrl: "https://animesensei.example.com",
     blogUrl: "",
     stacks: [
       "NextJS",
@@ -70,19 +66,16 @@ const projects: Project[] = [
       "Shadcn UI",
       "Framer Motion",
     ],
-    disabled: true,
   },
   {
     title: "Quenique: Queueing Management System For Boats",
     description:
-      "AnimeSensei is a sleek platform for anime enthusiasts to explore, discover, and watch their favorite shows. Built with modern technologies for a seamless user experience.",
+      "Our capstone project on the category of transportation, aiming to help unorganized ports on controlling the fairness and access to pumpboats. Easy and accessible and can be both deployed or used in a local machine, interactive and intuitive UI and Statistics chart for the business side.",
     image: "/projects/capstone.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    githubLink: "https://github.com/username/animesensei",
-    liveUrl: "https://animesensei.example.com",
+    githubLink: "https://github.com/renskiedulog/capstone",
     blogUrl: "",
     stacks: ["NextJS", "Typescript", "Tailwind CSS", "Mongo DB", "Shadcn UI"],
-    disabled: true,
   },
 ];
 
@@ -133,7 +126,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 <p className="font-medium text-sm mt-1 peer-checked:flex hidden flex-col">
                   {project?.description}
                   <label
-                    className="text-xs opacity-60 font-medium hover:underline hover:opacity-70 cursor-pointer"
+                    className="text-xs opacity-60 font-medium hover:underline hover:opacity-70 cursor-pointer w-max"
                     htmlFor={`project-${projects?.indexOf(project)}`}
                   >
                     See Less
@@ -185,22 +178,26 @@ const ProjectCard = ({ project }: { project: Project }) => {
               <TooltipContent className="max-w-xs">Case Study</TooltipContent>
             </Tooltip>
             {/* )} */}
-            {project?.githubLink && (
-              <Button className="text-xs" size="sm" variant="ghost">
-                <FaGithub /> Code
-              </Button>
+            {project?.githubLink ? (
+              <Link href={project?.githubLink as string} target="_blank">
+                <Button className="text-xs" size="sm" variant="ghost">
+                  <FaGithub /> Code
+                </Button>
+              </Link>
+            ) : (
+                <Button disabled className="text-xs" size="sm" variant="ghost">
+                  <FaGithub /> Code
+                </Button>
             )}
-            {project?.liveUrl && (
-              <Button
-                disabled={project?.disabled || false}
-                className="text-xs"
-                variant="default"
-                size="sm"
-              >
-                <FaLink />
-                Live Preview
-              </Button>
-            )}
+            <Button
+              disabled={project?.liveUrl ? false : true}
+              className="text-xs"
+              variant="default"
+              size="sm"
+            >
+              <FaLink />
+              {project?.liveUrl ? "No Preview" : "Live Preview"}
+            </Button>
           </div>
         </div>
       </div>

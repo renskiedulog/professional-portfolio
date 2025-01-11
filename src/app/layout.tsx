@@ -6,7 +6,6 @@ import { AnimatePresence } from "framer-motion";
 import { StorageProvider } from "./UI/global-components/storage-provider";
 import NavigationBar from "./UI/global-components/navigation-bar";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import BlurFade from "./UI/animation-wrappers/fade";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,7 +46,7 @@ export default function RootLayout({
         </div>
 
         {/* Content */}
-        <main className="max-w-5xl mx-auto py-5">
+        <main className="max-w-5xl mx-auto py-5 relative">
           <StorageProvider>
             <ThemeProvider
               attribute="class"
@@ -57,9 +56,7 @@ export default function RootLayout({
             >
               <TooltipProvider>
                 <NavigationBar />
-                <AnimatePresence>
-                  <BlurFade>{children}</BlurFade>
-                </AnimatePresence>
+                <AnimatePresence mode="wait">{children}</AnimatePresence>
                 <div className="z-0 fixed bottom-0 inset-x-0 h-12 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] dark:bg-background" />
               </TooltipProvider>
             </ThemeProvider>

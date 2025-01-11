@@ -4,18 +4,21 @@ import WorkExperience from "./UI/content/work-experience";
 import Skills from "./UI/content/skills";
 import Education from "./UI/content/education";
 import Projects from "./UI/content/projects";
+import BlurFade from "./UI/animation-wrappers/fade";
 
 export default function Home() {
   return (
-    <div className="flex">
-      <LeftSection />
-      <div className="px-5 space-y-8 w-full pb-16">
-        <AboutMe />
-        <Skills />
-        <WorkExperience />
-        <Education />
-        <Projects />
+    <BlurFade>
+      <div className="flex">
+        <LeftSection />
+        <div className="px-5 space-y-8 w-full pb-16">
+          <AboutMe />
+          <Skills />
+          <WorkExperience />
+          <Education />
+          <Projects />
+        </div>
       </div>
-    </div>
+    </BlurFade>
   );
 }

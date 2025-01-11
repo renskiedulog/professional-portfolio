@@ -4,13 +4,13 @@ import AnimatedNumber from "../global-components/animated-number";
 const Statistics = () => {
   const stats = [
     {
-      value: 13,
+      value: new Date().getFullYear() - 2012,
       unit: "years",
       label: "Computer Literacy",
       duration: 1.5,
     },
     {
-      value: 3,
+      value: new Date().getFullYear() - 2022,
       unit: "years",
       label: "Into Tech Industry",
       duration: 1,
