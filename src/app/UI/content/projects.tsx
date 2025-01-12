@@ -30,7 +30,6 @@ const projects: Project[] = [
       "AnimeSensei is a sleek platform for anime enthusiasts that are looking for the updated, and streamline animes to date. Crafted with great insight about speed and aesthetics, and served with an external server of the all time anime provider, gogoanime.",
     image: "/projects/animesensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    liveUrl: "https://animesensei.example.com",
     blogUrl: "",
     stacks: ["Next.js", "Typescript", "Tailwind CSS", "Consumet API", "Axios"],
   },
@@ -40,7 +39,6 @@ const projects: Project[] = [
       "Using mangadex's api service, mangasensei offers the best and updated manga in your page at an optimal speed enough to engross and immerse you in your favorite stories, while also looking clean and aesthetically pleasing, suited for reading.",
     image: "/projects/mangasensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    liveUrl: "https://animesensei.example.com",
     blogUrl: "",
     stacks: [
       "NextJS",
@@ -83,7 +81,7 @@ const Projects = () => {
   return (
     <div className="w-full max-w-2xl space-y-3">
       <Heading>Projects</Heading>
-      <div className="columns-2">
+      <div className="columns-1 lg:columns-2">
         {projects?.length > 0 &&
           projects?.map((project, index) => (
             <ProjectCard key={index} project={project} />
@@ -153,16 +151,20 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <Separator className="mt-2" />
         <div className="mt-2 flex justify-between">
           <div className="flex items-center gap-3">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-1 text-sm">
-                  <Star fill="#eac54f" size={15} />5
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
-                Give This Project A Star
-              </TooltipContent>
-            </Tooltip>
+            {project?.githubLink ? (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-center gap-1 text-sm">
+                    <Star fill="#eac54f" size={15} />5
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  Give This Project A Star
+                </TooltipContent>
+              </Tooltip>
+            ) : (
+              <p></p>
+            )}
           </div>
           <div className="space-x-2 flex items-center">
             {/* {project?.blogUrl && ( */}
@@ -185,9 +187,9 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 </Button>
               </Link>
             ) : (
-                <Button disabled className="text-xs" size="sm" variant="ghost">
-                  <FaGithub /> Code
-                </Button>
+              <Button disabled className="text-xs" size="sm" variant="ghost">
+                <FaGithub /> Code
+              </Button>
             )}
             <Button
               disabled={project?.liveUrl ? false : true}
@@ -196,7 +198,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
               size="sm"
             >
               <FaLink />
-              {project?.liveUrl ? "No Preview" : "Live Preview"}
+              {project?.liveUrl ? "Live Preview" : "No Preview"}
             </Button>
           </div>
         </div>

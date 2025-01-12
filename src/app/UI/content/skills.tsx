@@ -143,7 +143,7 @@ const Skills = () => {
               <h3 className="text-lg font-semibold text-primary/90">
                 {skill?.label}
               </h3>
-              <div className="flex items-center space-x-3 mt-1">
+              <div className="flex items-center gap-3 mt-1 flex-wrap">
                 {skill?.items?.length > 0 &&
                   skill?.items?.map((item, index) => (
                     <div

@@ -65,9 +65,12 @@ export default function Education() {
                     <p className="text-sm text-muted-foreground">
                       {experience.grade}
                     </p>
+                    <p className="text-sm text-muted-foreground font-medium whitespace-nowrap block md:hidden">
+                      {experience.period}
+                    </p>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">
+                <p className="text-sm text-muted-foreground font-medium whitespace-nowrap hidden md:block">
                   {experience.period}
                 </p>
               </Link>
@@ -93,9 +96,12 @@ export default function Education() {
                     <p className="text-sm text-muted-foreground">
                       {experience.grade}
                     </p>
+                    <p className="text-sm text-muted-foreground font-medium whitespace-nowrap block md:hidden">
+                      {experience.period}
+                    </p>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">
+                <p className="text-sm text-muted-foreground font-medium whitespace-nowrap hidden md:block">
                   {experience.period}
                 </p>
               </div>
