@@ -30,7 +30,6 @@ const projects: Project[] = [
       "AnimeSensei is a sleek platform for anime enthusiasts that are looking for the updated, and streamline animes to date. Crafted with great insight about speed and aesthetics, and served with an external server of the all time anime provider, gogoanime.",
     image: "/projects/animesensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    blogUrl: "",
     stacks: ["Next.js", "Typescript", "Tailwind CSS", "Consumet API", "Axios"],
   },
   {
@@ -39,7 +38,6 @@ const projects: Project[] = [
       "Using mangadex's api service, mangasensei offers the best and updated manga in your page at an optimal speed enough to engross and immerse you in your favorite stories, while also looking clean and aesthetically pleasing, suited for reading.",
     image: "/projects/mangasensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    blogUrl: "",
     stacks: [
       "NextJS",
       "Typescript",
@@ -55,7 +53,6 @@ const projects: Project[] = [
       "A customizable portfolio using Sanity and Next JS, aiming to create a site to centralize my efforts and dedication on the field, while also documenting my journey.",
     image: "/projects/portfolio.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    blogUrl: "",
     stacks: [
       "NextJS",
       "Typescript",
@@ -72,7 +69,6 @@ const projects: Project[] = [
     image: "/projects/capstone.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/renskiedulog/capstone",
-    blogUrl: "",
     stacks: ["NextJS", "Typescript", "Tailwind CSS", "Mongo DB", "Shadcn UI"],
   },
 ];
@@ -168,7 +164,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </div>
           <div className="space-x-2 flex items-center">
             {/* {project?.blogUrl && ( */}
-            <Tooltip>
+            {/* <Tooltip>
               <TooltipTrigger asChild>
                 <Link
                   href="#"
@@ -178,7 +174,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 </Link>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs">Case Study</TooltipContent>
-            </Tooltip>
+            </Tooltip> */}
             {/* )} */}
             {project?.githubLink ? (
               <Link href={project?.githubLink as string} target="_blank">

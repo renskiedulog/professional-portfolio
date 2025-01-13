@@ -6,6 +6,10 @@ import Education from "./UI/content/education";
 import Projects from "./UI/content/projects";
 import BlurFade from "./UI/animation-wrappers/fade";
 
+export const metadata = {
+  title: "Web Portfolio"
+}
+
 export default function Home() {
   return (
     <BlurFade>
