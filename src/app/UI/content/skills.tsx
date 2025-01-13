@@ -1,5 +1,5 @@
 import React from "react";
-import Heading from "../global-components/heading";
+import Heading from "@/app/UI/global-components/heading";
 import { DiMongodb } from "react-icons/di";
 import { BiLogoTypescript, BiLogoJavascript } from "react-icons/bi";
 import {

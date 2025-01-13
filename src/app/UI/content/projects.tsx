@@ -1,4 +1,4 @@
-import Heading from "../global-components/heading";
+import Heading from "@/app/UI/global-components/heading";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";

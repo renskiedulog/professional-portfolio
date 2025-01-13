@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import Heading from "../global-components/heading";
+import Heading from "@/app/UI/global-components/heading";
 
 interface EducationType {
   school: string;

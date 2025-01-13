@@ -1,5 +1,5 @@
 import React from "react";
-import AnimatedNumber from "../global-components/animated-number";
+import AnimatedNumber from "@/app/UI/global-components/animated-number";
 
 const Statistics = () => {
   const stats = [

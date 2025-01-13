@@ -1,10 +1,10 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Identity from "./Identity";
-import Badges from "./Badges";
-import Characteristics from "./Characteristics";
-import Files from "./Files";
-import Statistics from "./Statistics";
-import Details from "./Details";
+import Identity from "@/app/UI/left/Identity";
+import Badges from "@/app/UI/left/Badges";
+import Characteristics from "@/app/UI/left/Characteristics";
+import Files from "@/app/UI/left/Files";
+import Statistics from "@/app/UI/left/Statistics";
+import Details from "@/app/UI/left/Details";
 
 const LeftSection = () => {
   return (
