@@ -1,5 +1,4 @@
 import React from "react";
-import Heading from "@/app/UI/global-components/heading";
 import { DiMongodb } from "react-icons/di";
 import { BiLogoTypescript, BiLogoJavascript } from "react-icons/bi";
 import {
@@ -24,6 +23,7 @@ import {
   FaHtml5,
   FaReact,
 } from "react-icons/fa";
+import Heading from "../global-components/heading";
 
 const skills = [
   {

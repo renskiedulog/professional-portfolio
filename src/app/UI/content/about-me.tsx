@@ -1,5 +1,5 @@
 import React from "react";
-import Heading from "@/app/UI/global-components/heading";
+import Heading from "../global-components/heading";
 
 const AboutMe = () => {
   return (

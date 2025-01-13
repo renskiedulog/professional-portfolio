@@ -1,10 +1,10 @@
-import LeftSection from "@/app/UI/left/LeftSection";
-import AboutMe from "@/app/UI/content/about-me";
-import WorkExperience from "@/app/UI/content/work-experience";
-import Skills from "@/app/UI/content/skills";
-import Education from "@/app/UI/content/education";
-import Projects from "@/app/UI/content/projects";
-import BlurFade from "@/app/UI/animation-wrappers/fade";
+import BlurFade from "./UI/animation-wrappers/fade";
+import AboutMe from "./UI/content/about-me";
+import Education from "./UI/content/education";
+import Projects from "./UI/content/projects";
+import Skills from "./UI/content/skills";
+import WorkExperience from "./UI/content/work-experience";
+import LeftSection from "./UI/left/LeftSection";
 
 export const metadata = {
   title: "Web Portfolio"

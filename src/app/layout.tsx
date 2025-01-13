@@ -3,9 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { AnimatePresence } from "framer-motion";
-import { StorageProvider } from "@/app/UI/global-components/storage-provider";
-import NavigationBar from "@/app/UI/global-components/navigation-bar";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { StorageProvider } from "./UI/global-components/storage-provider";
+import NavigationBar from "./UI/global-components/navigation-bar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
