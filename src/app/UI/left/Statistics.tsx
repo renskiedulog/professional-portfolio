@@ -38,7 +38,7 @@ const Statistics = () => {
       <h2 className="font-bold text-primary/90 text-lg">Stats</h2>
       <div className="flex flex-wrap mt-1 gap-y-5 justify-center">
         {stats.map((stat, index) => (
-          <div key={index} className="flex flex-col items-center basis-1/3">
+          <div key={index} className="flex flex-col items-center basis-1/3 px-2 sm:px-0">
             <div className="flex gap-0.5 items-end">
               <AnimatedNumber
                 value={stat.value}

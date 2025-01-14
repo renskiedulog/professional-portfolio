@@ -1,9 +1,12 @@
+"use client";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import React from "react";
+import React, { useState } from "react";
+import BlurFade from "../animation-wrappers/fade";
+import { Separator } from "@/components/ui/separator";
 
 const characters = [
   {
@@ -59,6 +62,13 @@ const characters = [
 ];
 
 const Characteristics = () => {
+  const [index, setIndex] = useState(null);
+
+  const setActiveIndex = (e: number) => {
+    if (e === index) setIndex(null);
+    setIndex(e);
+  };
+
   return (
     <div>
       <h2 className="font-bold text-primary/90">Characteristics</h2>
@@ -67,7 +77,11 @@ const Characteristics = () => {
           characters?.map((char, idx) => (
             <Tooltip key={idx}>
               <TooltipTrigger asChild>
-                <div className="text-sm hover:underline cursor-help" key={idx}>
+                <div
+                  className={`text-sm hover:underline cursor-help ${idx === index ? "sm:font-normal font-semibold" : "font-normal"}`}
+                  onClick={() => setActiveIndex(idx)}
+                  key={idx}
+                >
                   {char?.label}
                 </div>
               </TooltipTrigger>
@@ -76,6 +90,12 @@ const Characteristics = () => {
               </TooltipContent>
             </Tooltip>
           ))}
+        {index !== null && (
+          <BlurFade className="sm:hidden block" key={index}>
+            <Separator className="mt-3 mb-2" />
+            <p className="text-sm">{characters[index]?.description}</p>
+          </BlurFade>
+        )}
       </div>
     </div>
   );

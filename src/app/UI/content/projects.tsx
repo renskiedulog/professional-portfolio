@@ -147,7 +147,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <Separator className="mt-2" />
         <div className="mt-2 flex justify-between">
           <div className="flex items-center gap-3">
-            {project?.githubLink ? (
+            {/* {project?.githubLink ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="flex items-center gap-1 text-sm">
@@ -160,7 +160,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
               </Tooltip>
             ) : (
               <p></p>
-            )}
+            )} */}
           </div>
           <div className="space-x-2 flex items-center">
             {/* {project?.blogUrl && ( */}

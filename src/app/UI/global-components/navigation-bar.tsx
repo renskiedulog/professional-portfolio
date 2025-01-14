@@ -28,17 +28,17 @@ const socials = [
   {
     label: "Facebook",
     icon: FaFacebookSquare,
-    link: "/",
+    link: "https://web.facebook.com/renato.dulog",
   },
   {
     label: "LinkedIn",
     icon: FaLinkedin,
-    link: "/blog",
+    link: "https://www.linkedin.com/in/renato-dulog-004582276/",
   },
   {
     label: "Github",
     icon: FaGithub,
-    link: "/blog",
+    link: "https://github.com/renskiedulog",
   },
 ];
 

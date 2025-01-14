@@ -6,6 +6,8 @@ import { AnimatePresence } from "framer-motion";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { StorageProvider } from "./UI/global-components/storage-provider";
 import NavigationBar from "./UI/global-components/navigation-bar";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,6 +49,8 @@ export default function RootLayout({
 
         {/* Content */}
         <main className="max-w-5xl mx-auto py-5 relative">
+          <Analytics />
+          <SpeedInsights/>
           <StorageProvider>
             <ThemeProvider
               attribute="class"
