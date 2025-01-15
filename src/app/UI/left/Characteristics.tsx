@@ -62,12 +62,7 @@ const characters = [
 ];
 
 const Characteristics = () => {
-  const [index, setIndex] = useState(null);
-
-  const setActiveIndex = (e: number) => {
-    if (e === index) setIndex(null);
-    setIndex(e);
-  };
+  const [index, setIndex] = useState<number | null>(0);
 
   return (
     <div>
@@ -78,8 +73,12 @@ const Characteristics = () => {
             <Tooltip key={idx}>
               <TooltipTrigger asChild>
                 <div
-                  className={`text-sm hover:underline cursor-help ${idx === index ? "sm:font-normal font-semibold" : "font-normal"}`}
-                  onClick={() => setActiveIndex(idx)}
+                  className={`text-sm hover:underline cursor-help ${
+                    idx === index
+                      ? "sm:font-normal font-semibold"
+                      : "font-normal"
+                  }`}
+                  onClick={() => setIndex(idx)}
                   key={idx}
                 >
                   {char?.label}
@@ -91,10 +90,12 @@ const Characteristics = () => {
             </Tooltip>
           ))}
         {index !== null && (
-          <BlurFade className="sm:hidden block" key={index}>
-            <Separator className="mt-3 mb-2" />
-            <p className="text-sm">{characters[index]?.description}</p>
-          </BlurFade>
+          <>
+            <Separator className="my-2 sm:hidden block" />
+            <BlurFade className="sm:hidden block" key={index}>
+              <p className="text-sm">{characters[index]?.description}</p>
+            </BlurFade>
+          </>
         )}
       </div>
     </div>

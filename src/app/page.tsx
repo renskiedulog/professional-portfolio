@@ -1,14 +1,15 @@
 import BlurFade from "./UI/animation-wrappers/fade";
 import AboutMe from "./UI/content/about-me";
 import Education from "./UI/content/education";
+import Footer from "./UI/content/footer";
 import Projects from "./UI/content/projects";
 import Skills from "./UI/content/skills";
 import WorkExperience from "./UI/content/work-experience";
 import LeftSection from "./UI/left/LeftSection";
 
 export const metadata = {
-  title: "Web Portfolio"
-}
+  title: "Web Portfolio",
+};
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
           <WorkExperience />
           <Education />
           <Projects />
+          <Footer />
         </div>
       </div>
     </BlurFade>
