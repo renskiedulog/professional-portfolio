@@ -135,6 +135,7 @@ const NavigationBar = () => {
                 <TooltipTrigger asChild>
                   <Link
                     href={socials?.link ?? "#"}
+                    target="_blank"
                     className="text-xs p-2.5 hover:bg-primary/10 transition-all duration-150 ease-linear"
                   >
                     {<socials.icon size={18} fontWeight="light" />}

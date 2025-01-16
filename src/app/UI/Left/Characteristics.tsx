@@ -55,9 +55,14 @@ const characters = [
       "I believe in continuous improvement, no matter how small the step. Every day is an opportunity to refine my skills and make incremental progress toward better results.",
   },
   {
-    label: "Anxious Communicator",
+    label: "Articulate Reader",
     description:
-      "I tend to carefully think through everything I want to say before speaking, often considering how to convey my message in the best way. While this can make me seem hesitant at times, it ensures I communicate thoughtfully and clearly.",
+      "I have a strong understanding of English and excel at reading and interpreting texts. While my verbal communication may not always be as fluent, I am able to articulate ideas and express myself clearly through writing."
+  },  
+  {
+    label: "Prompt Connoisseur",
+    description:
+      "I excel at crafting precise prompts, articulating ideas clearly, and finding the right information when needed. My ability to ask thoughtful questions and research effectively transforms curiosity into clarity, enabling impactful and insightful conversations.",
   },
 ];
 

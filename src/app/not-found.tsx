@@ -8,7 +8,7 @@ const NotFound = () => {
       <p>
         It seems like there isn't a page for this link. Let's go back shall we?
       </p>
-      <h1 className="text-5xl font-black">Page Not Found.</h1>
+      <h1 className="text-5xl font-black text-primary/90 dark:text-primary">Page Not Found.</h1>
       <Link prefetch={false} href="/" className="mt-5">
         <Button>Go Back To Homepage</Button>
       </Link>

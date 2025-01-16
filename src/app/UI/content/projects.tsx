@@ -3,13 +3,8 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { FaGithub, FaLink } from "react-icons/fa6";
-import { NotebookIcon, Star } from "lucide-react";
 import Link from "next/link";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 
 interface Project {
   title: String;
@@ -92,7 +87,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     <div className="border rounded-md overflow-hidden shadow-sm bg-background h-max mb-4">
       <Image
         className="aspect-video object-cover"
-        src={project?.image}
+        src={project?.image as string}
         width={800}
         height={800}
         alt={project?.title as string}
