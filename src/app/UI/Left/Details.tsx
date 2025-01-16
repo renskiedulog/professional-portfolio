@@ -13,7 +13,7 @@ const addresses = [
   {
     label: "Pandacan Pinamungajan Cebu",
     icon: MapPin,
-    link: "",
+    link: "https://www.google.com.ph/maps/place/Pandacan,+Pinamungahan,+Cebu/@10.2897883,123.5801877,15z/data=!3m1!4b1!4m6!3m5!1s0x33a96fb6a77461c3:0x343dd582e36c9c56!8m2!3d10.2878673!4d123.586797!16s%2Fg%2F11fyxbvd83?entry=ttu&g_ep=EgoyMDI1MDExMC4wIKXMDSoASAFQAw%3D%3D",
   },
   {
     label: "renato.larayos.dulog@gmail.com",
