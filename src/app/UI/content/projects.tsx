@@ -4,7 +4,14 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { FaGithub, FaLink } from "react-icons/fa6";
 import Link from "next/link";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Star } from "lucide-react";
+import { getRepoStarsFromLink } from "@/lib/github";
+import { Url } from "next/dist/shared/lib/router/router";
 
 interface Project {
   title: String;
@@ -25,6 +32,7 @@ const projects: Project[] = [
       "AnimeSensei is a sleek platform for anime enthusiasts that are looking for the updated, and streamline animes to date. Crafted with great insight about speed and aesthetics, and served with an external server of the all time anime provider, gogoanime.",
     image: "/projects/animesensei.webp",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
+    githubLink: "https://github.com/renskiedulog/AnimeSenseiPro",
     stacks: ["Next.js", "Typescript", "Tailwind CSS", "Consumet API", "Axios"],
   },
   {
@@ -32,6 +40,7 @@ const projects: Project[] = [
     description:
       "Using mangadex's api service, mangasensei offers the best and updated manga in your page at an optimal speed enough to engross and immerse you in your favorite stories, while also looking clean and aesthetically pleasing, suited for reading.",
     image: "/projects/mangasensei.webp",
+    githubLink: "https://github.com/renskiedulog/MangaSenseiPro",
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     stacks: [
       "NextJS",
@@ -82,7 +91,8 @@ const Projects = () => {
   );
 };
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = async ({ project }: { project: Project }) => {
+  const starCount = await getRepoStarsFromLink(project?.githubLink as string);
   return (
     <div className="border rounded-md overflow-hidden shadow-sm bg-background h-max mb-4">
       <Image
@@ -142,20 +152,23 @@ const ProjectCard = ({ project }: { project: Project }) => {
         <Separator className="mt-2" />
         <div className="mt-2 flex justify-between">
           <div className="flex items-center gap-3">
-            {/* {project?.githubLink ? (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center gap-1 text-sm">
-                    <Star fill="#eac54f" size={15} />5
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-xs">
-                  Give This Project A Star
-                </TooltipContent>
-              </Tooltip>
+            {starCount !== null ? (
+              <Link href={project?.githubLink as Url} target="_blank">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="flex items-center gap-1 text-sm">
+                      <Star fill="#eac54f" size={15} />
+                      {starCount}
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    Give This Project A Star
+                  </TooltipContent>
+                </Tooltip>
+              </Link>
             ) : (
               <p></p>
-            )} */}
+            )}
           </div>
           <div className="space-x-2 flex items-center">
             {/* {project?.blogUrl && ( */}

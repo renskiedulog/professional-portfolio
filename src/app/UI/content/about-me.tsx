@@ -6,7 +6,7 @@ const AboutMe = () => {
     <div className="space-y-3">
       <Heading>About Me</Heading>
       <p>
-        In early 2022, I discovered programming and immediately realized it was
+        In late 2022, I discovered programming and immediately realized it was
         something I really had great affinity with. My passion for computer and gaming, which
         began at the age of 7, greatly contributed to my journey into
         programming. Decided to not pursue college due to financial issues but
