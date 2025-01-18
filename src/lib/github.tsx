@@ -23,13 +23,12 @@ export async function getRepoStarsFromLink(repoUrl: string) {
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch repo data. Status: ${response.status}`);
+      return null;
     }
 
     const data = await response.json();
     return data.stargazers_count;
   } catch (error) {
-    console.error("Error fetching repository stars:", error);
-    throw error;
+    return null
   }
 }
