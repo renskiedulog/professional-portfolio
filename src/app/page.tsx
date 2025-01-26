@@ -6,6 +6,7 @@ import Projects from "./UI/content/projects";
 import Skills from "./UI/content/skills";
 import WorkExperience from "./UI/content/work-experience";
 import LeftSection from "./UI/left/LeftSection";
+import Container from "./UI/global-components/container";
 
 export const metadata = {
   title: "Web Portfolio",
@@ -13,7 +14,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <main className="max-w-5xl mx-auto py-5">
+    <Container>
       <BlurFade>
         <div className="flex flex-col md:flex-row">
           <LeftSection />
@@ -27,6 +28,6 @@ export default function Home() {
           </div>
         </div>
       </BlurFade>
-    </main>
+    </Container>
   );
 }
