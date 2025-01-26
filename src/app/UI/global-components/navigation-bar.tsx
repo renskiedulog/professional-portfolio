@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useTheme } from "next-themes";
 import { FaFacebookSquare, FaGithub, FaLinkedin } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 const links = [
   {
@@ -47,7 +48,10 @@ const NavigationBar = () => {
   const { setTheme, theme } = useTheme();
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollY, setLastScrollY] = useState(0);
+  const pathname = usePathname();
 
+  if(pathname?.split("/")[0] === "studio") return null;
+  
   const popToUpVariants: Variants = {
     hidden: {
       scale: 0.8,
