@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Home, Moon, Notebook, Sun } from "lucide-react";
+import { ArrowUp, Home, Moon, Notebook, Sun } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -49,9 +49,10 @@ const NavigationBar = () => {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
+  const [scrollHeight, setScrollHeight] = useState(0);
 
-  if(pathname?.split("/")[0] === "studio") return null;
-  
+  if (pathname?.split("/")[0] === "studio") return null;
+
   const popToUpVariants: Variants = {
     hidden: {
       scale: 0.8,
@@ -105,13 +106,23 @@ const NavigationBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
 
+  useEffect(() => {
+    const checkScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollHeight(currentScrollY);
+    };
+
+    window.addEventListener("scroll", checkScroll);
+    return () => window.removeEventListener("scroll", checkScroll);
+  }, []);
+
   return (
     <nav className="fixed z-50 bottom-5 left-1/2 -translate-x-1/2">
       <motion.div
         className="bg-background rounded-full flex items-center divide-x divide-primary/20 border border-primary/50"
-        initial="hidden" 
-        animate={scrollDirection} 
-        variants={popToUpVariants} 
+        initial="hidden"
+        animate={scrollDirection}
+        variants={popToUpVariants}
       >
         {/* Links */}
         <div className="flex overflow-hidden">
@@ -187,6 +198,14 @@ const NavigationBar = () => {
             </motion.div>
           )}
         </div>
+        {scrollHeight > 500 && (
+          <div
+            className="absolute -right-12 hover:-translate-y-1 transition duration-200 ease-in-out cursor-pointer bg-background border !border-r h-full !border-primary/50 px-2.5 flex items-center justify-center rounded-full hover:bg-primary/20"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            <ArrowUp size={18} />
+          </div>
+        )}
       </motion.div>
     </nav>
   );

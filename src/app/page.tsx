@@ -18,7 +18,7 @@ export default function Home() {
       <BlurFade>
         <div className="flex flex-col md:flex-row">
           <LeftSection />
-          <div className="px-5 space-y-8 w-full pb-16">
+          <div className="px-3 sm:px-5 space-y-8 w-full pb-16">
             <AboutMe />
             <Skills />
             <WorkExperience />
