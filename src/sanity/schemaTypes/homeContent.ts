@@ -1,6 +1,6 @@
-export const homepage = {
-  name: "homepage",
-  title: "Home Page",
+export const homeContent = {
+  name: "homeContent",
+  title: "Home - Content",
   type: "document",
   fields: [
     {

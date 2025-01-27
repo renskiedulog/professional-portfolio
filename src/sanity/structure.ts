@@ -10,18 +10,31 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("author").title("Authors"),
       S.divider(),
       S.listItem()
-        .title("Home Page")
+        .title("Home - Left Section")
         .child(
           S.editor()
-            .id("homepage")
-            .schemaType("homepage")
-            .documentId("homepage")
+            .id("leftSectionContent")
+            .schemaType("leftSectionContent")
+            .documentId("leftSectionContent")
+        ),
+      S.listItem()
+        .title("Home - Content")
+        .child(
+          S.editor()
+            .id("homeContent")
+            .schemaType("homeContent")
+            .documentId("homeContent")
         ),
       ...S.documentTypeListItems().filter(
         (item) =>
           item.getId() &&
-          !["post", "category", "author", "project", "homepage"].includes(
-            item.getId()!
-          )
+          ![
+            "post",
+            "category",
+            "author",
+            "project",
+            "leftSectionContent",
+            "homeContent",
+          ].includes(item.getId()!)
       ),
     ]);
