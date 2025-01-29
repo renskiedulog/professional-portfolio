@@ -66,7 +66,7 @@ const page = () => {
             <div className="relative">
               <Input
                 type="text"
-                className="h-max w-[120px] sm:w-[150px] bg-white dark:bg-primary/10 sm:text-base text-sm pl-8 peer focus:w-[250px] sm:focus:w-[300px] transition-all duration-200 ease-in-out"
+                className="h-max w-[120px] sm:w-[150px] bg-white dark:bg-primary/10 sm:text-base text-sm pl-8 peer focus:w-[180px] sm:focus:w-[300px] transition-all duration-200 ease-in-out"
                 placeholder="Search..."
               />
               <Search
@@ -74,35 +74,37 @@ const page = () => {
                 className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-400 opacity-50 transition-opacity duration-300 ease-in-out peer-focus:opacity-100"
               />
             </div>
-            {layout === "grid" ? (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleLayout();
-                }}
-              >
-                <BlurFade key="grid" duration={0.1} yOffset={0}>
-                  <IoGridOutline
-                    size={20}
-                    className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
-                  />
-                </BlurFade>
-              </button>
-            ) : (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleLayout();
-                }}
-              >
-                <BlurFade key="list" duration={0.1} yOffset={0}>
-                  <List
-                    size={20}
-                    className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
-                  />
-                </BlurFade>
-              </button>
-            )}
+            <div className="items-center gap-2 hidden md:flex">
+              {layout === "grid" ? (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleLayout();
+                  }}
+                >
+                  <BlurFade key="grid" duration={0.1} yOffset={0}>
+                    <IoGridOutline
+                      size={20}
+                      className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
+                    />
+                  </BlurFade>
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleLayout();
+                  }}
+                >
+                  <BlurFade key="list" duration={0.1} yOffset={0}>
+                    <List
+                      size={20}
+                      className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
+                    />
+                  </BlurFade>
+                </button>
+              )}
+            </div>
           </div>
         </div>
         <BlurFade key={layout}>
