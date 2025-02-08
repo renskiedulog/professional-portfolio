@@ -19,7 +19,6 @@ const LeftSection = () => {
               <Details />
               <Characteristics />
               <Statistics />
-              <Files />
             </div>
           </div>
         </ScrollArea>

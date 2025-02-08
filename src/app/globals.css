@@ -76,3 +76,10 @@ body {
   initial-value: 0;
   inherits: false;
 }
+
+.me {
+  mask-image: url("/mask-1.png");
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  filter: grayscale(0.8);
+}

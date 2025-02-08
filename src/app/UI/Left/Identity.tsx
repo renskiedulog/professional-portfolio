@@ -1,10 +1,11 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
 
 const Identity = () => {
   return (
     <div className="flex flex-col items-center">
-      <Avatar className="size-28 mb-3">
+      <Avatar className="size-28">
         <AvatarImage
           src="/me.webp"
           alt="renato-dulog"
