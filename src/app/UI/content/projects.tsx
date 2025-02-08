@@ -50,6 +50,7 @@ const projects: Project[] = [
       "Axios",
       "Mangadex API",
     ],
+    liveUrl: "https://manga-sensei-pro.vercel.app",
   },
   {
     title: "Portfolio",
@@ -65,6 +66,7 @@ const projects: Project[] = [
       "Shadcn UI",
       "Framer Motion",
     ],
+    liveUrl: "https://renato-dulog.vercel.app",
   },
   {
     title: "Quenique: Queueing Management System For Boats",
@@ -74,6 +76,7 @@ const projects: Project[] = [
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/renskiedulog/capstone",
     stacks: ["NextJS", "Typescript", "Tailwind CSS", "Mongo DB", "Shadcn UI"],
+    liveUrl: "https://quenique.onrender.com/login",
   },
 ];
 
@@ -195,15 +198,19 @@ const ProjectCard = async ({ project }: { project: Project }) => {
                 <FaGithub /> Code
               </Button>
             )}
-            <Button
-              disabled={project?.liveUrl ? false : true}
-              className="text-xs"
-              variant="default"
-              size="sm"
-            >
-              <FaLink />
-              {project?.liveUrl ? "Live Preview" : "No Preview"}
-            </Button>
+            {project?.liveUrl ? (
+              <Link href={project?.liveUrl as Url} target="_blank">
+                <Button className="text-xs" variant="default" size="sm">
+                  <FaLink />
+                  {project?.liveUrl ? "Live Preview" : "No Preview"}
+                </Button>
+              </Link>
+            ) : (
+              <Button disabled className="text-xs" variant="default" size="sm">
+                <FaLink />
+                {project?.liveUrl ? "Live Preview" : "No Preview"}
+              </Button>
+            )}
           </div>
         </div>
       </div>

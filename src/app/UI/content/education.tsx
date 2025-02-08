@@ -19,6 +19,12 @@ const experiences: EducationType[] = [
     logo: "/usc.jpg",
   },
   {
+    school: "Passarelles Numériques Philippines",
+    grade: "",
+    period: "August 2022 - February 2025",
+    logo: "/pn.png",
+  },
+  {
     school: "Pinamungajan National High School",
     grade: "Junior To Senior High School",
     period: "June 2015 - March 2022",

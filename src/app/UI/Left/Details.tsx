@@ -31,9 +31,9 @@ const addresses = [
     link: "https://facebook.com/renato.dulog",
   },
   {
-    label: "in/renato-dulog-004582276",
+    label: "in/renato-dulog",
     icon: FaLinkedin,
-    link: "https://www.linkedin.com/in/renato-dulog-004582276/",
+    link: "https://www.linkedin.com/in/renato-dulog/",
   },
 ];
 

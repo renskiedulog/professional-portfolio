@@ -112,7 +112,7 @@ const page = () => {
             className={`${layout === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "flex flex-col"} gap-5 py-5`}
           >
             {blogs.map((blog, idx) => (
-              <BlogCard blog={blog} key={idx} />
+              <BlogCard blog={blog} key={idx} layout={layout} />
             ))}
           </div>
         </BlurFade>

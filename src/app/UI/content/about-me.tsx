@@ -16,7 +16,7 @@ const AboutMe = () => {
           className="underline"
           target="_blank"
         >
-          Passarelles Numériques
+          Passarelles Numériques Philippines
         </a>{" "}
         where I pursued a Certificate in Computer Technology at the{" "}
         <a href="https://usc.edu.ph/" target="_blank" className="underline">

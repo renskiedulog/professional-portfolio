@@ -4,6 +4,7 @@ import Badges from "./Badges";
 import Details from "./Details";
 import Characteristics from "./Characteristics";
 import Statistics from "./Statistics";
+import Files from "./Files";
 
 const LeftSection = () => {
   return (
@@ -18,6 +19,7 @@ const LeftSection = () => {
               <Details />
               <Characteristics />
               <Statistics />
+              <Files />
             </div>
           </div>
         </ScrollArea>
