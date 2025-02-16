@@ -19,11 +19,11 @@ const links = [
     icon: Home,
     link: "/",
   },
-  {
-    label: "Blog",
-    icon: Notebook,
-    link: "/blog",
-  },
+  // {
+  //   label: "Blog",
+  //   icon: Notebook,
+  //   link: "/blog",
+  // },
 ];
 
 const socials = [

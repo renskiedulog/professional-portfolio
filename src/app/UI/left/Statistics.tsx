@@ -26,16 +26,16 @@ const Statistics = () => {
       label: "Avg. Typing Speed",
     },
     {
-      value: 5,
-      unit: "hours",
-      label: "Avg. Coding Hours Per Day ",
+      value: 50,
+      unit: "+",
+      label: "Projects Made and Done",
       duration: 1,
     },
   ];
 
   return (
     <div>
-      <h2 className="font-bold text-primary/90 text-lg">Stats</h2>
+      <h2 className="font-bold text-primary/90">Statistics</h2>
       <div className="flex flex-wrap mt-1 gap-y-5 justify-center">
         {stats.map((stat, index) => (
           <div key={index} className="flex flex-col items-center basis-1/3 px-2 sm:px-0">

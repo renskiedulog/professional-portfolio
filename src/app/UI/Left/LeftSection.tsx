@@ -5,6 +5,7 @@ import Details from "./Details";
 import Characteristics from "./Characteristics";
 import Statistics from "./Statistics";
 import Files from "./Files";
+import { Separator } from "@/components/ui/separator";
 
 const LeftSection = () => {
   return (
@@ -23,6 +24,7 @@ const LeftSection = () => {
           </div>
         </ScrollArea>
       </div>
+      <Separator className="my-2 sm:hidden block w-[calc(100%-23px)] mx-auto" />
     </div>
   );
 };

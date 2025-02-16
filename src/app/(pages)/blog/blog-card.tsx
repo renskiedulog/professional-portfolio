@@ -14,12 +14,11 @@ interface Blog {
   link: string;
 }
 
-const BlogCard = ({ blog, layout }: { blog: Blog, layout: string }) => {
-  console.log(layout)
+const BlogCard = ({ blog }: { blog: Blog }) => {
   return (
-    <article className={`${layout === "list" ? "flex mb-0" : "mb-4"} border rounded-md overflow-hidden shadow-sm bg-background h-max`}>
+    <article className="border rounded-md overflow-hidden shadow-sm bg-background h-max">
       <Image
-        className={`aspect-video object-cover ${layout === "list" && "w-[35%]"}`}
+        className="aspect-video object-cover"
         src={blog.image}
         width={800}
         height={800}

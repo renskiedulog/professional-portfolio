@@ -1,13 +1,10 @@
-"use client";
 import Container from "@/app/UI/global-components/container";
 import BackButton from "@/app/UI/global-components/back-button";
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import { List, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { IoGridOutline } from "react-icons/io5";
-import { useContext, useEffect, useState } from "react";
 import BlogCard from "./blog-card";
-import { useStorage } from "@/app/UI/global-components/storage-provider";
 
 const blogs = [
   {
@@ -43,19 +40,6 @@ const blogs = [
 ];
 
 const page = () => {
-  const { getItem, setItem } = useStorage();
-  const [layout, setLayout] = useState("grid");
-
-  const toggleLayout = () => {
-    setLayout((prev) => (prev === "grid" ? "list" : "grid"));
-    setItem("blog_orientation", layout === "grid" ? "list" : "grid");
-  };
-
-  useEffect(() => {
-    const initLayout = getItem("blog_orientation");
-    setLayout((initLayout as string) ?? "grid");
-  }, []);
-
   return (
     <Container>
       <BlurFade className="px-3 sm:px-5">
@@ -75,44 +59,19 @@ const page = () => {
               />
             </div>
             <div className="items-center gap-2 hidden md:flex">
-              {layout === "grid" ? (
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toggleLayout();
-                  }}
-                >
-                  <BlurFade key="grid" duration={0.1} yOffset={0}>
-                    <IoGridOutline
-                      size={20}
-                      className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
-                    />
-                  </BlurFade>
-                </button>
-              ) : (
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toggleLayout();
-                  }}
-                >
-                  <BlurFade key="list" duration={0.1} yOffset={0}>
-                    <List
-                      size={20}
-                      className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
-                    />
-                  </BlurFade>
-                </button>
-              )}
+              <BlurFade key="grid" duration={0.1} yOffset={0}>
+                <IoGridOutline
+                  size={20}
+                  className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
+                />
+              </BlurFade>
             </div>
           </div>
         </div>
-        <BlurFade key={layout}>
-          <div
-            className={`${layout === "grid" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "flex flex-col"} gap-5 py-5`}
-          >
+        <BlurFade key="blog">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 py-5">
             {blogs.map((blog, idx) => (
-              <BlogCard blog={blog} key={idx} layout={layout} />
+              <BlogCard blog={blog} key={idx} />
             ))}
           </div>
         </BlurFade>
