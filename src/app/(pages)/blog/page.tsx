@@ -1,10 +1,12 @@
+"use client";
 import Container from "@/app/UI/global-components/container";
 import BackButton from "@/app/UI/global-components/back-button";
 import BlurFade from "@/app/UI/animation-wrappers/fade";
-import { List, Search } from "lucide-react";
+import { Filter, Search, XIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { IoGridOutline } from "react-icons/io5";
-import BlogCard from "./blog-card";
+import { useState } from "react";
+import BlogCard from "@/app/UI/blog/blog-card";
+import Filters from "@/app/UI/blog/filters";
 
 const blogs = [
   {
@@ -40,6 +42,8 @@ const blogs = [
 ];
 
 const page = () => {
+  const [toggleFilter, setToggleFilter] = useState(false);
+
   return (
     <Container>
       <BlurFade className="px-3 sm:px-5">
@@ -58,18 +62,31 @@ const page = () => {
                 className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-400 opacity-50 transition-opacity duration-300 ease-in-out peer-focus:opacity-100"
               />
             </div>
-            <div className="items-center gap-2 hidden md:flex">
-              <BlurFade key="grid" duration={0.1} yOffset={0}>
-                <IoGridOutline
-                  size={20}
-                  className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
-                />
-              </BlurFade>
+            <div
+              className="items-center gap-2"
+              onClick={() => setToggleFilter((prev) => !prev)}
+            >
+              {!toggleFilter ? (
+                <BlurFade key="filter" duration={0.1} yOffset={0}>
+                  <Filter
+                    size={20}
+                    className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
+                  />
+                </BlurFade>
+              ) : (
+                <BlurFade key="close" duration={0.1} yOffset={0}>
+                  <XIcon
+                    size={20}
+                    className="opacity-70 cursor-pointer hover:scale-110 transition duration-200 ease-in-out"
+                  />
+                </BlurFade>
+              )}
             </div>
           </div>
         </div>
+        <Filters />
         <BlurFade key="blog">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 py-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {blogs.map((blog, idx) => (
               <BlogCard blog={blog} key={idx} />
             ))}

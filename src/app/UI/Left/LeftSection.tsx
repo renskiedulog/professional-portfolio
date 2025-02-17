@@ -24,7 +24,6 @@ const LeftSection = () => {
           </div>
         </ScrollArea>
       </div>
-      <Separator className="my-2 sm:hidden block w-[calc(100%-23px)] mx-auto" />
     </div>
   );
 };
