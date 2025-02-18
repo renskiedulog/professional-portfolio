@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import BlogCard from "@/app/UI/blog/blog-card";
 import Filters from "@/app/UI/blog/filters";
+import { motion } from "framer-motion";
 
 const blogs = [
   {
@@ -46,7 +47,7 @@ const page = () => {
 
   return (
     <Container>
-      <BlurFade className="px-3 sm:px-5">
+      <BlurFade className="px-3 sm:px-5" key="blog-page" yOffset={0}>
         <div className="w-full flex justify-between">
           <BackButton href="/" />
           {/* Filter Options */}
@@ -62,7 +63,7 @@ const page = () => {
                 className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-400 opacity-50 transition-opacity duration-300 ease-in-out peer-focus:opacity-100"
               />
             </div>
-            <div
+            <button
               className="items-center gap-2"
               onClick={() => setToggleFilter((prev) => !prev)}
             >
@@ -81,17 +82,24 @@ const page = () => {
                   />
                 </BlurFade>
               )}
-            </div>
+            </button>
           </div>
         </div>
-        <Filters />
-        <BlurFade key="blog">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+        <div>
+          {toggleFilter && (
+            <BlurFade key="filter" duration={0.3} yOffset={0}>
+              <Filters />
+            </BlurFade>
+          )}
+          <motion.div
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pt-5"
+          >
             {blogs.map((blog, idx) => (
               <BlogCard blog={blog} key={idx} />
             ))}
-          </div>
-        </BlurFade>
+          </motion.div>
+        </div>
       </BlurFade>
     </Container>
   );

@@ -41,34 +41,17 @@ export const leftSectionContent = {
       },
     },
     {
-      type: "object",
+      type: "array",
       name: "contact",
       title: "Contact Information",
-      fields: [
+      of: [
         {
-          type: "string",
-          name: "location",
-          title: "Location",
-        },
-        {
-          type: "string",
-          name: "email",
-          title: "Email",
-        },
-        {
-          type: "string",
-          name: "phone",
-          title: "Phone Number",
-        },
-        {
-          type: "string",
-          name: "facebook",
-          title: "Facebook Username",
-        },
-        {
-          type: "string",
-          name: "linkedin",
-          title: "LinkedIn Username",
+          type: "object",
+          fields: [
+            { type: "string", name: "label", title: "Label" },
+            { type: "string", name: "link", title: "Link" },
+            { type: "image", name: "icon", title: "Icon" },
+          ],
         },
       ],
     },
@@ -104,11 +87,6 @@ export const leftSectionContent = {
           fields: [
             {
               type: "string",
-              name: "title",
-              title: "Title",
-            },
-            {
-              type: "string",
               name: "value",
               title: "Value",
             },
@@ -116,6 +94,11 @@ export const leftSectionContent = {
               type: "string",
               name: "subtitle",
               title: "Subtitle",
+            },
+            {
+              type: "string",
+              name: "title",
+              title: "Title",
             },
           ],
         },

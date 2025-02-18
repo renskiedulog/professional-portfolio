@@ -6,7 +6,12 @@ export const homeContent = {
     {
       name: "aboutMe",
       title: "About Me",
-      type: "text",
+      type: "array",
+      of: [
+        {
+          type: "block",
+        },
+      ],
     },
     {
       name: "skills",
