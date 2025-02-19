@@ -16,7 +16,7 @@ interface WorkExperience {
 const experiences: WorkExperience[] = [
   {
     company: "WebriQ",
-    role: "Junior Web Developer",
+    role: "Web Developer",
     period: "Feb 2025 - Current",
     logo: "/webriq.webp",
     link: "https://webriq.com",

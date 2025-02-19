@@ -4,7 +4,7 @@ import React from "react";
 
 const NotFound = () => {
   return (
-    <div className="w-full min-h-[calc(100vh-40px)] flex items-center justify-center flex-col space-y-2">
+    <div className="w-full min-h-[calc(100vh-40px)] flex items-center justify-center flex-col space-y-2 text-center px-5">
       <p>
         It seems like there isn't a page for this link. Let's go back shall we?
       </p>

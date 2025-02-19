@@ -8,6 +8,7 @@ import { useState } from "react";
 import BlogCard from "@/app/UI/blog/blog-card";
 import Filters from "@/app/UI/blog/filters";
 import { motion } from "framer-motion";
+import Heading from "@/app/UI/global-components/heading";
 
 const blogs = [
   {
@@ -48,6 +49,7 @@ const page = () => {
   return (
     <Container>
       <BlurFade className="px-3 sm:px-5" key="blog-page" yOffset={0}>
+        {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/" />
           {/* Filter Options */}
@@ -85,19 +87,20 @@ const page = () => {
             </button>
           </div>
         </div>
-        <div>
+        <div className="pt-5">
           {toggleFilter && (
             <BlurFade key="filter" duration={0.3} yOffset={0}>
               <Filters />
             </BlurFade>
           )}
-          <motion.div
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 pt-5"
-          >
-            {blogs.map((blog, idx) => (
-              <BlogCard blog={blog} key={idx} />
-            ))}
+          {/* Blog Posts */}
+          <motion.div layout className="space-y-2">
+            <Heading>Browse</Heading>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+              {blogs.map((blog, idx) => (
+                <BlogCard blog={blog} key={idx} />
+              ))}
+            </div>
           </motion.div>
         </div>
       </BlurFade>
