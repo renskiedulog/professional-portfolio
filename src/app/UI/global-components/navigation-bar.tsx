@@ -200,7 +200,7 @@ const NavigationBar = () => {
         </div>
         {scrollHeight > 400 && (
           <div
-            className="absolute -right-12 hover:-translate-y-1 transition duration-200 ease-in-out cursor-pointer bg-background border !border-r h-full !border-primary/50 px-2.5 flex items-center justify-center rounded-full hover:bg-primary/20"
+            className="absolute -right-12 hover:-translate-y-1 transition duration-200 ease-in-out cursor-pointer bg-background border !border-r h-full !border-primary/50 px-2.5 flex items-center justify-center rounded-full"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <ArrowUp size={18} />
