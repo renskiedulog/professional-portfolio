@@ -29,7 +29,7 @@ const ScrollProgress = () => {
 
   return (
     <div
-      className="fixed top-0 left-0 w-full h-1 transition ease-in-out duration-200 bg-black/10 cursor-pointer"
+      className="fixed top-0 left-0 w-full h-0.5 transition ease-in-out duration-200 bg-black/10 cursor-pointer"
       onClick={handleClick}
     >
       <div

@@ -22,7 +22,6 @@ interface Project {
   githubLink?: String;
   liveUrl?: String;
   stacks?: String[];
-  disabled?: boolean;
 }
 
 const projects: Project[] = [
@@ -50,7 +49,7 @@ const projects: Project[] = [
       "Axios",
       "Mangadex API",
     ],
-    liveUrl: "https://manga-sensei-pro.vercel.app",
+    // liveUrl: "https://manga-sensei-pro.vercel.app",
   },
   {
     title: "Portfolio",
