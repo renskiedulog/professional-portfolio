@@ -2,6 +2,7 @@ import BlurFade from "@/app/UI/animation-wrappers/fade";
 import PhotoPaper from "@/app/UI/blog/photopaper";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
+import Heading from "@/app/UI/global-components/heading";
 import ScrollProgress from "@/app/UI/global-components/scroll-progress";
 import React from "react";
 
@@ -18,11 +19,19 @@ const page = () => {
           </p>
         </div>
         {/* Content */}
-        <div>
-          <PhotoPaper
-            src="/projects/capstone.webp"
-            size={{ width: 400, height: 400 }}
-          />
+        <div className="mt-20">
+          <div className="flex gap-5">
+            <PhotoPaper
+              src="/cat.jpg"
+              size={{ width: 500, height: 500 }}
+              wrapperClassName="!w-1/2"
+            />
+            <div className="w-1/2">
+              <Heading className="text-4xl">
+                A very long title for the blog as an example
+              </Heading>
+            </div>
+          </div>
         </div>
       </BlurFade>
     </Container>

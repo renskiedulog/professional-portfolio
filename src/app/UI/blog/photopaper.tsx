@@ -6,14 +6,21 @@ const PhotoPaper = ({
   alt,
   size,
   className,
+  wrapperClassName,
 }: {
   src: string;
   alt?: string;
   size?: { width: number; height: number };
   className?: string;
+  wrapperClassName?: string;
 }) => {
   return (
-    <div className="relative p-2 bg-white shadow-xl rounded-md border border-gray-300 rotate-[-4deg] w-fit">
+    <div
+      className={cn(
+        wrapperClassName,
+        "relative p-2 bg-white dark:bg-white/80 dark:shadow-primary/20 shadow-2xl rounded-md border border-gray-300 rotate-[-4deg] w-fit"
+      )}
+    >
       <Image
         src={src}
         alt={alt || "Photograph"}
