@@ -4,47 +4,40 @@ import BackButton from "@/app/UI/global-components/back-button";
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import { Filter, Search, XIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BlogCard from "@/app/UI/blog/blog-card";
 import Filters from "@/app/UI/blog/filters";
 import { motion } from "framer-motion";
 import Heading from "@/app/UI/global-components/heading";
-
-const blogs = [
-  {
-    image: "/projects/portfolio.webp",
-    title: "Mastering React: A Complete Guide",
-    description:
-      "Learn everything about React, from the basics to advanced concepts, and become a proficient developer.",
-    date: "2025-01-01",
-    author: "John Doe",
-    categories: ["React", "JavaScript", "Web Development"],
-    link: "https://example.com/react-guide",
-  },
-  {
-    image: "/projects/portfolio.webp",
-    title: "Top 10 Tips for Next.js Developers",
-    description:
-      "Enhance your Next.js projects with these practical tips and best practices for optimized performance and scalability.",
-    date: "2025-01-15",
-    author: "Alice Johnson",
-    categories: ["Next.js", "Web Development", "Performance"],
-    link: "https://example.com/nextjs-tips",
-  },
-  {
-    image: "/projects/portfolio.webp",
-    title: "CSS Tricks You Should Know",
-    description:
-      "A collection of useful CSS tricks and techniques to elevate your web design skills.",
-    date: "2025-01-20",
-    author: "Michael Brown",
-    categories: ["CSS", "Design", "Frontend"],
-    link: "https://example.com/css-tricks",
-  },
-];
+import { groq } from "next-sanity";
+import { sanityClient } from "@/lib/sanityClient";
 
 const page = () => {
   const [toggleFilter, setToggleFilter] = useState(false);
+  const [blogs, setBlogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const res = await fetch("/api/get-blogs");
+        const data = await res.json();
+        setBlogs(data);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  console.log(blogs);
+
+  if (loading) {
+    return <p className="text-center text-gray-500">Loading blogs...</p>;
+  }
 
   return (
     <Container>

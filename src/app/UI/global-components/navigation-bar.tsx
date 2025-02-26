@@ -19,11 +19,11 @@ const links = [
     icon: Home,
     link: "/",
   },
-  // {
-  //   label: "Blog",
-  //   icon: Notebook,
-  //   link: "/blog",
-  // },
+  {
+    label: "Blog",
+    icon: Notebook,
+    link: "/blog",
+  },
 ];
 
 const socials = [
@@ -51,7 +51,7 @@ const NavigationBar = () => {
   const pathname = usePathname();
   const [scrollHeight, setScrollHeight] = useState(0);
 
-  if (pathname?.split("/")[0] === "studio") return null;
+  if (pathname?.split("/")[1] === "studio") return null;
 
   const popToUpVariants: Variants = {
     hidden: {

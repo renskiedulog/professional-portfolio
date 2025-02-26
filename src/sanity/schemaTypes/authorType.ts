@@ -12,29 +12,11 @@ export const authorType = defineType({
       type: "string",
     }),
     defineField({
-      name: "slug",
-      type: "slug",
-      options: {
-        source: "name",
-      },
-    }),
-    defineField({
       name: "image",
       type: "image",
       options: {
         hotspot: true,
       },
-    }),
-    defineField({
-      name: "bio",
-      type: "array",
-      of: [
-        defineArrayMember({
-          type: "block",
-          styles: [{ title: "Normal", value: "normal" }],
-          lists: [],
-        }),
-      ],
     }),
   ],
   preview: {

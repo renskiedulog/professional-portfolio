@@ -5,7 +5,7 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title("Blog")
     .items([
-      S.documentTypeListItem("post").title("Posts"),
+      S.documentTypeListItem("blog").title("Blogs"),
       S.documentTypeListItem("category").title("Categories"),
       S.documentTypeListItem("author").title("Authors"),
       S.divider(),
@@ -29,7 +29,7 @@ export const structure: StructureResolver = (S) =>
         (item) =>
           item.getId() &&
           ![
-            "post",
+            "blog",
             "category",
             "author",
             "project",

@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  images: {
+    domains: ["cdn.sanity.io"],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
