@@ -18,7 +18,7 @@ const PhotoPaper = ({
     <div
       className={cn(
         wrapperClassName,
-        "relative p-2 bg-white dark:bg-white/80 dark:shadow-primary/20 shadow-2xl rounded-md border border-gray-300 rotate-[-4deg] w-fit"
+        "relative p-2 bg-white dark:bg-white/80 dark:shadow-primary/20 rounded-md border border-gray-300 w-fit"
       )}
     >
       <Image

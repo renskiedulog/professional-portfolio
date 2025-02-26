@@ -39,13 +39,13 @@ export default function RootLayout({
         {/* Dark */}
         <div className="dark:block hidden fixed bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
         {/* Breakpoints */}
-        {/* <div className="dark:bg-white dark:text-black bg-slate-700 text-white text-xs fixed top-2 left-2 w-8 aspect-square flex items-center justify-center rounded-full z-50 border-white/50 border group">
+        <div className="dark:bg-white dark:text-black bg-slate-700 text-white text-xs fixed top-2 left-2 w-8 aspect-square flex items-center justify-center rounded-full z-50 border-white/50 border group">
           <div className="block sm:hidden">SM</div>
           <div className="hidden sm:block md:hidden">MD</div>
           <div className="hidden md:block lg:hidden">LG</div>
           <div className="hidden lg:block xl:hidden">XL</div>
           <div className="hidden xl:block 2xl:hidden">2XL</div>
-        </div> */}
+        </div>
 
         {/* Content */}
         <main className="relative">
