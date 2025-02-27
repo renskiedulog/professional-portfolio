@@ -32,7 +32,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
   return (
     <Container>
       <ScrollProgress />
-      <BlurFade className="px-3 sm:px-5">
+      <BlurFade className="px-3 sm:px-5 pb-20">
         {/* Navigation Bar */}
         <div className="w-full flex items-center gap-5">
           <BackButton href="/blog" />

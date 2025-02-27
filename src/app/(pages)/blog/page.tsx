@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import Heading from "@/app/UI/global-components/heading";
 import { groq } from "next-sanity";
 import { sanityClient } from "@/lib/sanityClient";
+import BlogCardSkeleton from "@/app/UI/blog/blog-card-skeleton";
 
 const page = () => {
   const [toggleFilter, setToggleFilter] = useState(false);
@@ -32,12 +33,6 @@ const page = () => {
 
     fetchBlogs();
   }, []);
-
-  console.log(blogs);
-
-  if (loading) {
-    return <p className="text-center text-gray-500">Loading blogs...</p>;
-  }
 
   return (
     <Container>
@@ -87,14 +82,28 @@ const page = () => {
             </BlurFade>
           )}
           {/* Blog Posts */}
-          <motion.div layout className="space-y-2">
-            <Heading>Browse</Heading>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-              {blogs.map((blog, idx) => (
-                <BlogCard blog={blog} key={idx} />
-              ))}
-            </div>
-          </motion.div>
+          {!loading && (
+            <BlurFade id="blog-posts">
+              <motion.div layout className="space-y-2">
+                <Heading>Browse</Heading>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+                  {blogs.map((blog, idx) => (
+                    <BlogCard blog={blog} key={idx} />
+                  ))}
+                </div>
+              </motion.div>
+            </BlurFade>
+          )}
+          {loading && (
+            <motion.div layout className="space-y-2">
+              <Heading>Browse</Heading>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+                {Array.from({ length: 6 }, (_, idx) => (
+                  <BlogCardSkeleton key={idx} />
+                ))}
+              </div>
+            </motion.div>
+          )}
         </div>
       </BlurFade>
     </Container>

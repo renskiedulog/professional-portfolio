@@ -24,9 +24,8 @@ const PhotoPaper = ({
       <Image
         src={src}
         alt={alt || "Photograph"}
-        width={size?.width ?? 1000}
-        height={size?.height ?? 1000}
-        quality={100}
+        width={size?.width ?? 500}
+        height={size?.height ?? 500}
         loading="lazy"
         className={cn(className, "rounded-md")}
       />

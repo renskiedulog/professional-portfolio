@@ -23,8 +23,8 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
       <Image
         className="aspect-video object-cover"
         src={blog?.mainImage ?? "/placeholder.png"}
-        width={800}
-        height={800}
+        width={500}
+        height={500}
         alt={blog?.title}
       />
       <div className="px-3.5 py-3.5">

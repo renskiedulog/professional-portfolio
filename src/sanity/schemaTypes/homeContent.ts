@@ -2,6 +2,9 @@ export const homeContent = {
   name: "homeContent",
   title: "Home - Content",
   type: "document",
+  preview: {
+    title: "Home - Content",
+  },
   fields: [
     {
       name: "aboutMe",
