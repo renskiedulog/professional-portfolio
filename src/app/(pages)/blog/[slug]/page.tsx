@@ -36,7 +36,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         {/* Navigation Bar */}
         <div className="w-full flex items-center gap-5">
           <BackButton href="/blog" />
-          <p className="text-2xl font-bold text-primary/80 line-clamp-1 text-center w-full">
+          <p className="text-2xl font-bold text-primary/80 line-clamp-1 text-center w-full sm:block hidden">
             {title}
           </p>
         </div>

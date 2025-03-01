@@ -1,7 +1,15 @@
 import React from "react";
 
-const Container = ({ children }: { children: React.ReactNode }) => {
-  return <div className="max-w-5xl mx-auto py-5">{children}</div>;
+interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+}
+
+const Container: React.FC<ContainerProps> = ({ children, className, ...props }) => {
+  return (
+    <div className={`max-w-5xl mx-auto py-5 ${className ?? ""}`} {...props}>
+      {children}
+    </div>
+  );
 };
 
 export default Container;

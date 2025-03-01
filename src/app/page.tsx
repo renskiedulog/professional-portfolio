@@ -14,11 +14,11 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <Container>
+    <Container className="py-0">
       <BlurFade>
         <div className="flex flex-col md:flex-row">
           <LeftSection />
-          <div className="px-3 sm:px-5 space-y-8 w-full pb-16">
+          <div className="px-3 sm:px-5 space-y-8 w-full pb-16 pt-5">
             <AboutMe />
             <Skills />
             <WorkExperience />

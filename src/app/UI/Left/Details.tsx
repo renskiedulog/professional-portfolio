@@ -20,11 +20,11 @@ const addresses = [
     icon: MdOutlineMailOutline,
     link: "mailto:renato.larayos.dulog@gmail.com",
   },
-  {
-    label: "+639919016500",
-    icon: FaPhoneAlt,
-    link: "tel:09919016500",
-  },
+  // {
+  //   label: "+639919016500",
+  //   icon: FaPhoneAlt,
+  //   link: "tel:09919016500",
+  // },
   {
     label: "renato.dulog",
     icon: FaFacebookSquare,
@@ -40,6 +40,7 @@ const addresses = [
 const Details = () => {
   return (
     <div className="space-y-2.5">
+      <h2 className="font-bold text-primary/90">Contact</h2>
       {addresses?.length > 0 &&
         addresses?.map((address, idx) => (
           <div key={idx} className="flex items-center gap-2">

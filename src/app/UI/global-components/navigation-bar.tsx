@@ -35,7 +35,7 @@ const socials = [
   {
     label: "LinkedIn",
     icon: FaLinkedin,
-    link: "https://www.linkedin.com/in/renato-dulog-004582276/",
+    link: "https://www.linkedin.com/in/renato-dulog/",
   },
   {
     label: "Github",

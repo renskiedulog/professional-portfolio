@@ -75,7 +75,6 @@ const projects: Project[] = [
     videoUrl: "https://example.com/videos/animesensei-demo.mp4",
     githubLink: "https://github.com/renskiedulog/capstone",
     stacks: ["NextJS", "Typescript", "Tailwind CSS", "Mongo DB", "Shadcn UI"],
-    liveUrl: "https://quenique.onrender.com/login",
   },
 ];
 
