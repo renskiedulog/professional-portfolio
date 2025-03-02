@@ -4,18 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { format } from "date-fns";
-
-interface Blog {
-  mainImage: string;
-  title: string;
-  description: string;
-  publishedAt: string;
-  author: string;
-  categories: {
-    title: string;
-  }[];
-  slug: string;
-}
+import { Blog } from "@/lib/types";
 
 const BlogCard = ({ blog }: { blog: Blog }) => {
   return (

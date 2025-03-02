@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <Container className="py-0">
+    <Container className="!py-0">
       <BlurFade>
         <div className="flex flex-col md:flex-row">
           <LeftSection />
