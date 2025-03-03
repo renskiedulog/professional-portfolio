@@ -75,7 +75,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <div className="mt-5 md:mt-20 prose prose-lg">
             <PortableText
               value={blog.body}
-              components={PortableTextComponents}
+              components={PortableTextComponents as any}
             />
           </div>
         </div>
