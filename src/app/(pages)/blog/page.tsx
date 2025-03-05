@@ -100,7 +100,7 @@ const page = () => {
           <div>
             {selectedFilters?.length > 0 && (
               <BlurFade id="blog-posts">
-                <motion.div layout className="space-y-2">
+                <div className="space-y-3">
                   <Heading>Filter Results</Heading>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
                     {blogs
@@ -117,7 +117,7 @@ const page = () => {
                         </BlurFade>
                       ))}
                   </div>
-                </motion.div>
+                </div>
               </BlurFade>
             )}
           </div>
