@@ -7,8 +7,6 @@ export interface Blog {
     name: string;
     image: string;
   };
-  categories: {
-    title: string;
-  }[];
+  categories: string[];
   slug: string;
 }

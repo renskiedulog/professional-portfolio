@@ -16,6 +16,7 @@ interface BlurFadeProps {
   inView?: boolean;
   inViewMargin?: string;
   blur?: string;
+  id?: string;
 }
 const BlurFade = ({
   children,
@@ -27,6 +28,7 @@ const BlurFade = ({
   inView = false,
   inViewMargin = "-50px",
   blur = "6px",
+  id,
 }: BlurFadeProps) => {
   const ref = useRef(null);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
@@ -48,6 +50,7 @@ const BlurFade = ({
         duration,
         ease: "easeOut",
       }}
+      id={id}
       className={className}
     >
       {children}

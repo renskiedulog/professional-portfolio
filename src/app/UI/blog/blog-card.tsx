@@ -29,7 +29,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
               key={index}
               className="bg-primary-foreground dark:bg-white/20 text-primary text-[11px] py-0.5 px-1.5 border border-opacity-10 rounded text-nowrap font-semibold"
             >
-              {category?.title}
+              {category}
             </span>
           ))}
         </div>

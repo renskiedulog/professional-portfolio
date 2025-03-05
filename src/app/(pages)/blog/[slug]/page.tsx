@@ -41,7 +41,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           </p>
         </div>
         {/* Content */}
-        <div className="mt-20">
+        <div className="mt-5 sm:mt-20">
           <div className="flex gap-3 sm:gap-5 md:gap-8 sm:flex-row flex-col items-center">
             <PhotoPaper
               src="/cat.jpg"

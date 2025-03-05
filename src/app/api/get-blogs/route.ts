@@ -16,11 +16,7 @@ export async function GET() {
         },
         publishedAt,
         "mainImage": mainImage.asset->url,
-        "categories": categories[]->{
-          _id,
-          title,
-          slug
-        },
+        "categories": categories[]->title,
       }
     `;
 
