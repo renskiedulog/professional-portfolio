@@ -12,6 +12,7 @@ import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/sanity/portableTextComponents";
 
 const page = async ({ params }: { params: { slug: string } }) => {
+  const { slug } = await params;
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
     title,
     description,
@@ -21,7 +22,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
     mainImage
   }`;
 
-  const blog = await sanityClient.fetch(query, { slug: params.slug });
+  const blog = await sanityClient.fetch(query, { slug: slug });
 
   const { title, description, body, author, publishedAt, category } = blog;
 
@@ -36,9 +37,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
         {/* Navigation Bar */}
         <div className="w-full flex items-center gap-5">
           <BackButton href="/blog" />
-          <p className="text-2xl font-bold text-primary/80 line-clamp-1 text-center w-full sm:block hidden">
-            {title}
-          </p>
         </div>
         {/* Content */}
         <div className="mt-5 sm:mt-20">
@@ -74,7 +72,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           </div>
           <div className="mt-5 md:mt-20 prose prose-lg">
             <PortableText
-              value={blog.body}
+              value={body}
               components={PortableTextComponents as any}
             />
           </div>
