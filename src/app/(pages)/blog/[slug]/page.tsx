@@ -10,6 +10,7 @@ import { groq } from "next-sanity";
 import { sanityClient } from "@/lib/sanityClient";
 import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/sanity/portableTextComponents";
+import { format } from "date-fns";
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
@@ -61,6 +62,12 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 >
                   {description}
                 </p>
+                <div className="flex text-gray-500 dark:text-gray-200 w-full justify-between mt-3 font-semibold">
+                  {author?.name && <p>{author?.name}</p>}
+                  {publishedAt && (
+                    <p>{format(new Date(publishedAt), "MMM dd, yyyy")}</p>
+                  )}
+                </div>
               </div>
             </div>
             {/* Description - Mobile */}
@@ -69,6 +76,12 @@ const page = async ({ params }: { params: { slug: string } }) => {
             <p className="text-base leading-relaxed text-gray-700 dark:text-gray-200 md:hidden block">
               {description}
             </p>
+            <div className="flex text-gray-500 dark:text-gray-200 w-full justify-between mt-3 font-semibold md:hidden">
+              {author?.name && <p>{author?.name}</p>}
+              {publishedAt && (
+                <p>{format(new Date(publishedAt), "MMM dd, yyyy")}</p>
+              )}
+            </div>
           </div>
           <div className="mt-5 md:mt-20 prose prose-lg">
             <PortableText
