@@ -9,7 +9,9 @@ import Container from "./UI/global-components/container";
 import LeftSection from "./UI/Left/LeftSection";
 
 export const metadata = {
-  title: "Web Portfolio",
+  title: "Renato Dulog",
+  description:
+    "A digital portfolio showcasing the journey, technical expertise, achievements, and skills behind innovative web development.",
 };
 
 export default function Home() {

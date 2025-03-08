@@ -20,8 +20,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Web Portfolio",
-  description: "",
+  title: {
+    default: "Web Portfolio",
+    template: `%s | Web Portfolio`,
+  },
+  keywords: [
+    "web development",
+    "portfolio",
+    "react developer",
+    "programming",
+    "renato dulog",
+    "minimalist portfolio",
+    "fullstack",
+  ],
+  authors: [{ name: "Renato Dulog", url: "https://renato-dulog.vercel.app/" }],
 };
 
 export default function RootLayout({
