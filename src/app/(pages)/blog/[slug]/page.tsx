@@ -12,8 +12,7 @@ import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/sanity/portableTextComponents";
 import { format } from "date-fns";
 
-const page = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = await params;
+const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
     title,
     description,
@@ -23,13 +22,28 @@ const page = async ({ params }: { params: { slug: string } }) => {
     mainImage
   }`;
 
-  const blog = await sanityClient.fetch(query, { slug: slug });
+  const blog = await sanityClient.fetch(query, { slug });
 
-  const { title, description, body, author, publishedAt, category } = blog;
+  return blog;
+};
+
+export async function generateStaticParams() {
+  const query = groq`*[_type == "blog"] { "slug": slug.current }`;
+  const slugs = await sanityClient.fetch(query);
+
+  return slugs.map((blog: { slug: string }) => ({ slug: blog.slug }));
+}
+
+export const dynamic = "force-static";
+
+const page = async ({ params }: { params: { slug: string } }) => {
+  const blog = await getBlogPost(params.slug);
 
   if (!blog) {
     notFound();
   }
+
+  const { title, description, body, author, publishedAt } = blog;
 
   return (
     <Container>

@@ -9,12 +9,12 @@ import Container from "./UI/global-components/container";
 import LeftSection from "./UI/Left/LeftSection";
 
 export const metadata = {
-  title: "Renato Dulog",
+  title: "Renato Dulog | Web Portfolio",
   description:
     "A digital portfolio showcasing the journey, technical expertise, achievements, and skills behind innovative web development.",
 };
 
-export default function Home() {
+export default async function Home() {
   return (
     <Container className="!py-0">
       <BlurFade>

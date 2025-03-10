@@ -21,8 +21,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Web Portfolio",
     template: `%s | Web Portfolio`,
+    default: "Web Portfolio",
   },
   keywords: [
     "web development",
