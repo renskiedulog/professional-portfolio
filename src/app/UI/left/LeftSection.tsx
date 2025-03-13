@@ -5,13 +5,12 @@ import Details from "./Details";
 import Characteristics from "./Characteristics";
 import Statistics from "./Statistics";
 import Files from "./Files";
-import { Separator } from "@/components/ui/separator";
 
 const LeftSection = () => {
   return (
     <div className="max-w-6xl md:max-w-[325px] w-full">
       <div className="sticky top-5">
-        <ScrollArea className="h-full md:h-screen px-3 sm:px-4 border-r snap-y snap-mandatory">
+        <ScrollArea className="h-full md:h-screen px-3 sm:px-4 md:border-r snap-y snap-mandatory">
           <div className="pb-2 md:pb-12">
             {/* Personal Details */}
             <div className="space-y-5 mb-5">
@@ -20,6 +19,7 @@ const LeftSection = () => {
               <Details />
               <Characteristics />
               <Statistics />
+              {/* <Files /> */}
             </div>
           </div>
         </ScrollArea>

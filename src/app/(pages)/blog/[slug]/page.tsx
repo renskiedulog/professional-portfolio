@@ -11,6 +11,7 @@ import { sanityClient } from "@/lib/sanityClient";
 import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/sanity/portableTextComponents";
 import { format } from "date-fns";
+import Link from "next/link";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
@@ -19,7 +20,8 @@ const getBlogPost = async (slug: string) => {
     body,
     author-> { name },
     publishedAt,
-    mainImage
+    mainImage,
+    "categories": categories[]->title,
   }`;
 
   const blog = await sanityClient.fetch(query, { slug });
@@ -43,7 +45,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
     notFound();
   }
 
-  const { title, description, body, author, publishedAt } = blog;
+  const { title, description, body, author, publishedAt, categories } = blog;
 
   return (
     <Container>
@@ -70,13 +72,27 @@ const page = async ({ params }: { params: { slug: string } }) => {
               >
                 {title}
               </Heading>
+              {/* Description - Desktop */}
               <div className="mt-5 md:block hidden">
                 <p
                   className={`${title?.length > 90 ? "text-sm" : "text-base"} leading-relaxed text-gray-700 dark:text-gray-200`}
                 >
                   {description}
                 </p>
-                <div className="flex text-gray-500 dark:text-gray-200 w-full justify-between mt-3 font-semibold">
+                {categories?.length > 0 && (
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
+                    {categories?.map((category: string) => (
+                      <Link
+                        href={`/blog?category=${category}`}
+                        key={category}
+                        className="text-primary/80 text-sm hover:bg-foreground/10 px-1.5 py-1 mt-1 rounded"
+                      >
+                        # {category}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+                <div className="flex text-gray-500 dark:text-gray-200 w-full justify-between mt-1 font-semibold">
                   {author?.name && <p>{author?.name}</p>}
                   {publishedAt && (
                     <p>{format(new Date(publishedAt), "MMM dd, yyyy")}</p>
@@ -90,7 +106,20 @@ const page = async ({ params }: { params: { slug: string } }) => {
             <p className="text-base leading-relaxed text-gray-700 dark:text-gray-200 md:hidden block">
               {description}
             </p>
-            <div className="flex text-gray-500 dark:text-gray-200 w-full justify-between mt-3 font-semibold md:hidden">
+            {categories?.length > 0 && (
+              <div className="flex flex-wrap gap-x-4 gap-y-2 md:hidden mt-1.5">
+                {categories?.map((category: string) => (
+                  <Link
+                    href={`/blog?category=${category}`}
+                    key={category}
+                    className="text-primary/80 text-sm hover:bg-foreground/10 px-1.5 py-1 rounded"
+                  >
+                    # {category}
+                  </Link>
+                ))}
+              </div>
+            )}
+            <div className="flex text-gray-500 dark:text-gray-200 w-full justify-between mt-1.5 font-semibold md:hidden">
               {author?.name && <p>{author?.name}</p>}
               {publishedAt && (
                 <p>{format(new Date(publishedAt), "MMM dd, yyyy")}</p>
