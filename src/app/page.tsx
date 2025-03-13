@@ -6,7 +6,7 @@ import Projects from "./UI/content/projects";
 import Skills from "./UI/content/skills";
 import WorkExperience from "./UI/content/work-experience";
 import Container from "./UI/global-components/container";
-import LeftSection from "./UI/Left/LeftSection";
+import LeftSection from "./UI/left/LeftSection";
 
 export const metadata = {
   title: "Renato Dulog | Web Portfolio",
