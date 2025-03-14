@@ -36,7 +36,7 @@ export async function generateStaticParams() {
   return slugs.map((blog: { slug: string }) => ({ slug: blog.slug }));
 }
 
-export const dynamic = "force-static";
+export const revalidate = 60;
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const blog = await getBlogPost(params.slug);
