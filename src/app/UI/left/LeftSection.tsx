@@ -4,6 +4,7 @@ import Identity from "./Identity";
 import Badges from "./Badges";
 import Details from "./Details";
 import Statistics from "./Statistics";
+import JobBadge from "./JobBadge";
 
 const LeftSection = () => {
   return (
@@ -14,6 +15,7 @@ const LeftSection = () => {
             {/* Personal Details */}
             <div className="space-y-5 mb-5">
               <Identity />
+              {/* <JobBadge /> */}
               <Badges />
               <Details />
               <Characteristics />

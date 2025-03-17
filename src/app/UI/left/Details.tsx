@@ -20,11 +20,6 @@ const addresses = [
     icon: MdOutlineMailOutline,
     link: "mailto:renato.larayos.dulog@gmail.com",
   },
-  // {
-  //   label: "+639919016500",
-  //   icon: FaPhoneAlt,
-  //   link: "tel:09919016500",
-  // },
   {
     label: "renato.dulog",
     icon: FaFacebookSquare,
