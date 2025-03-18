@@ -1,14 +1,25 @@
 import React from "react";
 
-interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ContainerProps<T extends React.ElementType = "div">
+  extends React.HTMLAttributes<T> {
+  as?: T;
   children: React.ReactNode;
 }
 
-const Container: React.FC<ContainerProps> = ({ children, className, ...props }) => {
+const Container = <T extends React.ElementType = "div">({
+  as,
+  children,
+  className,
+  ...props
+}: ContainerProps<T>) => {
+  const Component = as || "div";
   return (
-    <div className={`max-w-5xl mx-auto py-5 ${className ?? ""}`} {...props}>
+    <Component
+      className={`max-w-5xl mx-auto py-5 ${className ?? ""}`}
+      {...props}
+    >
       {children}
-    </div>
+    </Component>
   );
 };
 
