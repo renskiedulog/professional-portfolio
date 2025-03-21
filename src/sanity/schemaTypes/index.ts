@@ -6,6 +6,7 @@ import { blogSchema } from "./blogSchema";
 import { authorType } from "./authorType";
 import { leftSectionContent } from "./leftSectionContent";
 import { homeContent } from "./homeContent";
+import { customBlockContent } from "./types/customBlockContent";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -15,5 +16,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     authorType,
     leftSectionContent,
     homeContent,
+    customBlockContent,
   ],
 };

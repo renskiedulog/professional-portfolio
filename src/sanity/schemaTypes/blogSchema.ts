@@ -52,7 +52,7 @@ export const blogSchema = defineType({
     }),
     defineField({
       name: "body",
-      type: "blockContent",
+      type: "customBlockContent",
     }),
   ],
   preview: {

@@ -1,18 +1,64 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { urlFor } from "@/sanity/lib/image";
+import { getSanityImageUrl } from "@/sanity/lib/sanity";
 
 export const PortableTextComponents = {
   types: {
     image: ({ value }: { value: any }) => (
       <div className="my-6">
         <Image
-          src={value.asset.url}
+          src={getSanityImageUrl(value.asset)}
           alt={value.alt || "Blog Image"}
-          width={800}
-          height={450}
-          className="rounded-lg"
+          width={1200}
+          height={600}
+          className="rounded-lg w-full h-auto"
         />
+      </div>
+    ),
+    youtube: ({ value }: { value: any }) => {
+      const extractVideoId = (url: string) => {
+        const match = url.match(
+          /(?:youtube\.com\/(?:[^\/]+\/[^\/]+|(?:v|e(?:mbed)?)|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/
+        );
+        return match ? match[1] : null;
+      };
+      const videoId = extractVideoId(value.url);
+
+      return videoId ? (
+        <div className="my-6 aspect-w-16 aspect-video">
+          <iframe
+            className="w-full h-full rounded-lg"
+            src={`https://www.youtube.com/embed/${videoId}`}
+            title="YouTube video"
+            allowFullScreen
+          />
+        </div>
+      ) : null;
+    },
+    border: ({ children }: { children: React.ReactNode }) => (
+      <div className="w-full h-0.5 bg-primary/10 rounded-lg my-2" />
+    ),
+    button: ({ value }: { value: any }) => (
+      <div>
+        {value?.href ? (
+          <Link
+            href={value.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            {value.text || "Click Here"}
+          </Link>
+        ) : (
+          <button
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            {value.text || "Click Here"}
+          </button>
+        )}
       </div>
     ),
   },
