@@ -53,12 +53,12 @@ const skills = [
     width: "half",
     items: [
       {
-        name: "Supabase",
-        icon: RiSupabaseFill,
+        name: "Node",
+        icon: FaNode,
       },
       {
-        name: "React Native",
-        icon: RiReactjsLine,
+        name: "Sanity",
+        icon: SiSanity,
       },
       {
         name: "Shadcn UI",

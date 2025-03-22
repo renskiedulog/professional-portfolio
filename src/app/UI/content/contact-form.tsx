@@ -115,9 +115,6 @@ export default function ContactForm() {
                       ))}
                     </RadioGroup>
                   </FormControl>
-                  <FormDescription className="w-full">
-                    Select the type of your email.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
