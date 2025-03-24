@@ -79,17 +79,18 @@ export const PortableTextComponents = {
   },
   block: {
     h1: ({ children }: { children: React.ReactNode }) => (
-      <h1 className="text-3xl font-bold mt-6">{children}</h1>
+      <h1 className="text-4xl font-extrabold mt-6 pb-2">{children}</h1>
     ),
     h2: ({ children }: { children: React.ReactNode }) => (
-      <h2 className="text-2xl font-semibold mt-5">{children}</h2>
+      <h2 className="text-3xl font-bold mt-5 pb-2">{children}</h2>
     ),
     h3: ({ children }: { children: React.ReactNode }) => (
-      <h3 className="text-xl font-medium mt-4">{children}</h3>
+      <h3 className="text-2xl font-semibold mt-4 pb-2">{children}</h3>
     ),
-    normal: ({ children }: { children: React.ReactNode }) => (
-      <p className="text-gray-700 leading-relaxed">{children}</p>
-    ),
+    normal: ({ children }: { children: React.ReactNode }) => {
+      if (children[0]?.length === 0) return <br />;
+      return <p className="text-gray-700 leading-relaxed">{children}</p>;
+    },
     blockquote: ({ children }: { children: React.ReactNode }) => (
       <blockquote className="border-l-4 border-gray-500 italic pl-4 my-4 text-gray-600">
         {children}

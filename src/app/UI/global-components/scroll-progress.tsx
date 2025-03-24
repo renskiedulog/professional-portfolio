@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const ScrollProgress = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -32,9 +33,11 @@ const ScrollProgress = () => {
       className="fixed top-0 left-0 w-full h-0.5 transition ease-in-out duration-200 bg-black/10 cursor-pointer"
       onClick={handleClick}
     >
-      <div
-        className="h-full bg-primary/30 transition-all duration-150"
-        style={{ width: `${scrollProgress}%` }}
+      <motion.div
+        className="h-full bg-primary/30"
+        initial={{ width: 0 }}
+        animate={{ width: `${scrollProgress}%` }}
+        transition={{ ease: "easeOut", duration: 0.15 }}
       />
     </div>
   );

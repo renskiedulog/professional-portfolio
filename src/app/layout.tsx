@@ -30,10 +30,11 @@ export const metadata: Metadata = {
     "react developer",
     "programming",
     "renato dulog",
-    "minimalist portfolio",
     "fullstack",
   ],
   authors: [{ name: "Renato Dulog", url: "https://renato-dulog.vercel.app/" }],
+  description:
+    "A digital portfolio showcasing the journey, technical expertise, achievements, and skills behind innovative web development.",
 };
 
 export default function RootLayout({

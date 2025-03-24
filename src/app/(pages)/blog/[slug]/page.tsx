@@ -9,9 +9,9 @@ import { notFound } from "next/navigation";
 import { groq } from "next-sanity";
 import { sanityClient } from "@/lib/sanityClient";
 import { PortableText } from "@portabletext/react";
-import PortableTextComponents from "@/components/sanity/portableTextComponents";
 import { format } from "date-fns";
 import Link from "next/link";
+import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
@@ -80,12 +80,12 @@ const page = async ({ params }: { params: { slug: string } }) => {
                   {description}
                 </p>
                 {categories?.length > 0 && (
-                  <div className="flex flex-wrap gap-x-4 gap-y-2">
+                  <div className="flex flex-wrap gap-x-4 my-1">
                     {categories?.map((category: string) => (
                       <Link
                         href={`/blog?category=${category}`}
                         key={category}
-                        className="text-primary/80 text-sm hover:bg-foreground/10 px-1.5 py-1 mt-1 rounded"
+                        className="text-primary/80 text-sm hover:bg-foreground/10 px-1.5 py-1 rounded"
                       >
                         # {category}
                       </Link>
