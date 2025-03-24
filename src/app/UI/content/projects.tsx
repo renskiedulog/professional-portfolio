@@ -80,7 +80,7 @@ const projects: Project[] = [
 
 const Projects = () => {
   return (
-    <div className="w-full max-w-2xl space-y-3">
+    <section id="projects" className="w-full max-w-2xl space-y-3">
       <Heading>Projects</Heading>
       <div className="columns-1 lg:columns-2">
         {projects?.length > 0 &&
@@ -88,7 +88,7 @@ const Projects = () => {
             <ProjectCard key={index} project={project} />
           ))}
       </div>
-    </div>
+    </section>
   );
 };
 

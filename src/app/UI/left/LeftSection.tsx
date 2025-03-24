@@ -8,7 +8,7 @@ import JobBadge from "./JobBadge";
 
 const LeftSection = () => {
   return (
-    <div className="max-w-6xl md:max-w-[325px] w-full">
+    <aside className="max-w-6xl md:max-w-[325px] w-full">
       <div className="sticky top-5">
         <ScrollArea className="h-full md:h-screen px-3 sm:px-4 md:border-r snap-y snap-mandatory">
           <div className="pb-2 md:pb-12">
@@ -25,7 +25,7 @@ const LeftSection = () => {
           </div>
         </ScrollArea>
       </div>
-    </div>
+    </aside>
   );
 };
 

@@ -10,8 +10,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTheme } from "next-themes";
-import { FaFacebookSquare, FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaDiscord, FaGithub } from "react-icons/fa";
 import { usePathname } from "next/navigation";
+import { FolderGit2 } from "lucide-react";
 
 const links = [
   {
@@ -24,19 +25,19 @@ const links = [
     icon: Notebook,
     link: "/blog",
   },
+  {
+    label: "Works",
+    icon: FolderGit2,
+    link: "/works"
+  }
 ];
 
 const socials = [
   {
-    label: "Facebook",
-    icon: FaFacebookSquare,
-    link: "https://web.facebook.com/renato.dulog",
-  },
-  {
-    label: "LinkedIn",
-    icon: FaLinkedin,
-    link: "https://www.linkedin.com/in/renato-dulog/",
-  },
+    label: "Discord",
+    icon: FaDiscord,
+    link: "https://discordapp.com/users/901746145095712768"
+  },  
   {
     label: "Github",
     icon: FaGithub,

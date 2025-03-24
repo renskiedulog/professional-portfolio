@@ -16,7 +16,7 @@ const Statistics = () => {
       duration: 1,
     },
     {
-      value: 20,
+      value: 30,
       unit: "+",
       label: "Websites Worked",
     },

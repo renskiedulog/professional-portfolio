@@ -39,7 +39,7 @@ const experiences: WorkExperience[] = [
 
 export default function WorkExperience() {
   return (
-    <div className="w-full max-w-xl space-y-3">
+    <section id="work-experience" className="w-full max-w-xl space-y-3">
       <Heading>Work Experience</Heading>
       <div className="space-y-3">
         {experiences.map((experience, index) => (
@@ -73,6 +73,6 @@ export default function WorkExperience() {
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

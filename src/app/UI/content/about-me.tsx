@@ -3,7 +3,7 @@ import Heading from "../global-components/heading";
 
 const AboutMe = () => {
   return (
-    <div className="space-y-3">
+    <section id="about-me" className="space-y-3">
       <Heading>About Me</Heading>
       <p>
         In late 2022, I discovered programming and immediately realized it was
@@ -29,7 +29,7 @@ const AboutMe = () => {
         , and am now dedicated to continuing this path, striving for growth and
         life stability.
       </p>
-    </div>
+    </section>
   );
 };
 

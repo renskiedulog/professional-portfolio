@@ -40,7 +40,7 @@ const experiences: EducationType[] = [
 
 export default function Education() {
   return (
-    <div className="w-full max-w-xl space-y-3">
+    <section id="education" className="w-full max-w-xl space-y-3">
       <Heading>Education</Heading>
       <div className="space-y-3">
         {experiences.map((experience, index) => {
@@ -115,6 +115,6 @@ export default function Education() {
           }
         })}
       </div>
-    </div>
+    </section>
   );
 }

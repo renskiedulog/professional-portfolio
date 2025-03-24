@@ -127,7 +127,7 @@ const skills = [
 
 const Skills = () => {
   return (
-    <div>
+    <section id="skills">
       <Heading>Skills</Heading>
       <div className="flex flex-wrap items-start">
         {skills?.length > 0 &&
@@ -162,7 +162,7 @@ const Skills = () => {
             </div>
           ))}
       </div>
-    </div>
+    </section>
   );
 };
 

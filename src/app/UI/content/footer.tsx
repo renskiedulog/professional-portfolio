@@ -3,7 +3,7 @@ import ContactForm from "./contact-form";
 
 const Footer = () => {
   return (
-    <div className="w-full pt-5 space-y-5">
+    <footer className="w-full pt-5 space-y-5">
       <div className="text-center">
         <h2 className="text-3xl font-bold font-geist">
           Want to work with me on projects?
@@ -32,7 +32,7 @@ const Footer = () => {
         <span className="bg-primary/30 h-[1px] w-28"></span>
       </div>
       <ContactForm />
-    </div>
+    </footer>
   );
 };
 
