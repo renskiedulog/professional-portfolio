@@ -40,7 +40,8 @@ export async function generateStaticParams() {
 export const revalidate = 60;
 
 const page = async ({ params }: { params: { slug: string } }) => {
-  const blog = await getBlogPost(params.slug);
+  const { slug } = await params;
+  const blog = await getBlogPost(slug);
 
   if (!blog) {
     notFound();
