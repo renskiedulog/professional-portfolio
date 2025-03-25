@@ -8,7 +8,8 @@
     "start": "concurrently \"next start\" \"sanity start\"",
     "lint": "next lint",
     "dev:site": "next dev",
-    "dev:sanity": "sanity dev"
+    "dev:sanity": "sanity dev",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

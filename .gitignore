@@ -43,3 +43,8 @@ next-env.d.ts
 # sanity
 .sanity/
 dist
+
+# robots
+robots.txt
+sitemap.xml
+sitemap-0.xml
