@@ -32,6 +32,10 @@ const Footer = () => {
         <span className="bg-primary/30 h-[1px] w-28"></span>
       </div>
       <ContactForm />
+      {/* Copyright */}
+      <p className="text-sm text-primary/70 text-center">
+        © 2025 RD Works. All rights reserved.
+      </p>
     </footer>
   );
 };

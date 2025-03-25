@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -28,12 +27,15 @@ const Filters = ({
   selectedFilters,
   setSelectedFilters,
   filters,
+  removeParams,
 }: {
   selectedFilters: string[];
   setSelectedFilters: (e: any) => void;
   filters: string[];
+  removeParams: () => void;
 }) => {
   const toggleFilter = (filterId: string) => {
+    removeParams();
     setSelectedFilters((prev: any) =>
       prev.includes(filterId)
         ? prev.filter((id: any) => id !== filterId)

@@ -1,5 +1,6 @@
 import React from "react";
 import BlogPage from "./blog-page";
+import { useSearchParams } from "next/navigation";
 
 export const revalidate = 3600;
 

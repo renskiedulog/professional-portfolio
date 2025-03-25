@@ -12,6 +12,7 @@ import { PortableText } from "@portabletext/react";
 import { format } from "date-fns";
 import Link from "next/link";
 import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
+import { getSanityImageUrl } from "@/sanity/lib/sanity";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
@@ -45,7 +46,15 @@ const page = async ({ params }: { params: { slug: string } }) => {
     notFound();
   }
 
-  const { title, description, body, author, publishedAt, categories } = blog;
+  const {
+    title,
+    description,
+    body,
+    author,
+    publishedAt,
+    categories,
+    mainImage,
+  } = blog;
 
   return (
     <Container as="article">
@@ -59,10 +68,10 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <div className="mt-5 sm:mt-20">
           <div className="flex gap-3 sm:gap-5 md:gap-8 sm:flex-row flex-col items-center">
             <PhotoPaper
-              src="/cat.jpg"
+              src={getSanityImageUrl(mainImage)}
               size={{ width: 500, height: 500 }}
               wrapperClassName="!w-full sm:!w-1/2 sm:rotate-[-4deg] rotate-0 sm:shadow-2xl shadow-md h-max"
-              className="w-full"
+              className="w-full object-cover"
             />
             <div className="w-full sm:w-1/2 translate-y-0 sm:-translate-y-5">
               <Heading

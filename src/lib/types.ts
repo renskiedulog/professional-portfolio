@@ -9,4 +9,5 @@ export interface Blog {
   };
   categories: string[];
   slug: string;
+  _id: string;
 }
