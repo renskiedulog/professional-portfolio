@@ -3,7 +3,8 @@ const config = {
   siteUrl:
     process.env.NEXT_PUBLIC_SITE_URL || "https://renato-dulog.vercel.app/", // Update with your domain
   generateRobotsTxt: true,
-  sitemapSize: 5000,
+  sitemapSize: 9999999,
+  generateIndexSitemap: false,
   exclude: ["/studio/*"],
   robotsTxtOptions: {
     policies: [
