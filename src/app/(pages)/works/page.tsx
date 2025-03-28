@@ -2,8 +2,9 @@ import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import Heading from "@/app/UI/global-components/heading";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+import Link from "next/link";
 
 const WorksPage = () => {
   return (
@@ -12,25 +13,28 @@ const WorksPage = () => {
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/" />
-          {/* Filter Options */}
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <Input
-                type="text"
-                className="h-max w-[120px] sm:w-[150px] bg-white dark:bg-primary/10 sm:text-base text-sm pl-8 peer focus:w-[180px] sm:focus:w-[300px] transition-all duration-200 ease-in-out"
-                placeholder="Search..."
-              />
-              <Search
-                size={18}
-                className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-400 opacity-50 transition-opacity duration-300 ease-in-out peer-focus:opacity-100"
-              />
-            </div>
-          </div>
         </div>
         <div>
-          <Heading className="w-full text-center my-5">
+          {/* <Heading className="w-full text-center my-5">
             Personal Projects
-          </Heading>
+          </Heading> */}
+          <div className="w-full min-h-[calc(80vh-40px)] flex items-center justify-center flex-col space-y-2 text-center px-5">
+            <p>
+              I'm currently working on this page to showcase my personal
+              projects.
+            </p>
+            <h1 className="text-5xl font-black text-primary/90 dark:text-primary">
+              Under Construction.
+            </h1>
+            <div className="flex justify-between items-center gap-5">
+              <Link prefetch={false} href="/" className="!mt-5">
+                <Button>Go Back To Homepage</Button>
+              </Link>
+              <Link prefetch={false} href="/blog" className="!mt-5">
+                <Button variant="secondary">Browse My Blogs</Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </BlurFade>
     </Container>
