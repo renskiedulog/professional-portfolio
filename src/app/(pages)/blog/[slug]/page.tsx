@@ -13,6 +13,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
 import { getSanityImageUrl } from "@/sanity/lib/sanity";
+import { Metadata } from "next";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
@@ -29,6 +30,51 @@ const getBlogPost = async (slug: string) => {
 
   return blog;
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${params.slug}`;
+  const blog = await getBlogPost(params.slug);
+
+  if (!blog) {
+    return {
+      title: "Blog not found",
+      description: "The requested blog post could not be found.",
+    };
+  }
+
+  return {
+    title: blog.title,
+    description: blog.description,
+    openGraph: {
+      title: blog.title,
+      description: blog.description,
+      type: "article",
+      publishedTime: blog.publishedAt,
+      images: [
+        {
+          url: blog?.mainImage
+            ? getSanityImageUrl(blog?.mainImage)
+            : "/placeholder.png",
+          alt: blog.title,
+        },
+      ],
+      authors: [blog.author?.name],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: blog.title,
+      description: blog.description,
+      images: [blog.mainImage],
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const query = groq`*[_type == "blog"] { "slug": slug.current }`;
@@ -69,13 +115,16 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <div className="mt-5 sm:mt-20">
           <div className="flex gap-3 sm:gap-5 md:gap-8 sm:flex-row flex-col items-center">
             <PhotoPaper
-              src={getSanityImageUrl(mainImage)}
+              src={
+                mainImage ? getSanityImageUrl(mainImage) : "/placeholder.png"
+              }
               size={{ width: 500, height: 500 }}
               wrapperClassName="!w-full sm:!w-1/2 sm:rotate-[-4deg] rotate-0 sm:shadow-2xl shadow-md h-max"
               className="w-full object-cover"
             />
             <div className="w-full sm:w-1/2 translate-y-0 sm:-translate-y-5">
               <Heading
+                as="h1"
                 style={{
                   fontSize: `clamp(1.8rem, ${310 / title?.length}vw, 2.5rem)`,
                 }}

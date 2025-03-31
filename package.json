@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev --turbopack\" \"sanity dev\"",
+    "dev": "concurrently \"next dev \" \"sanity dev\"",
     "build": "dotenv -- next build && dotenv -- sanity build",
     "start": "concurrently \"next start\" \"sanity start\"",
     "lint": "next lint",

@@ -104,7 +104,7 @@ const ProjectCard = async ({ project }: { project: Project }) => {
         alt={project?.title as string}
       />
       <div className="px-3.5 py-2">
-        <h3 className="font-bold text-lg">{project?.title}</h3>
+        <p className="font-bold text-lg">{project?.title}</p>
         {project?.description && (
           <div>
             <input

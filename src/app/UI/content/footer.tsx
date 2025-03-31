@@ -8,7 +8,7 @@ const Footer = () => {
         <h2 className="text-3xl font-bold font-geist">
           Want to work with me on projects?
         </h2>
-        <h3 className="text-lg px-3 sm:px-0">
+        <p className="text-lg px-3 sm:px-0">
           Feel free to send a message on{" "}
           <a
             className="text-blue-500 hover:text-blue-700"
@@ -24,7 +24,7 @@ const Footer = () => {
             Discord
           </a>
           .
-        </h3>
+        </p>
       </div>
       <div className="relative flex justify-center items-center gap-5">
         <span className="bg-primary/30 h-[1px] w-28"></span>

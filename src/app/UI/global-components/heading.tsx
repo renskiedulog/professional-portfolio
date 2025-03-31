@@ -1,20 +1,26 @@
 import React from "react";
 
-const Heading = ({
-  children,
-  className = "",
-  ...rest
-}: {
+type HeadingProps<T extends React.ElementType> = {
+  as?: T;
   className?: string;
   children: React.ReactNode;
-} & React.HTMLAttributes<HTMLHeadingElement>) => {
+  unset?: boolean;
+} & React.ComponentPropsWithoutRef<T>;
+
+const Heading = <T extends React.ElementType = "h2">({
+  as: Tag = "h2",
+  className = "",
+  children,
+  unset = false,
+  ...rest
+}: HeadingProps<T>) => {
   return (
-    <h2
-      className={`text-3xl font-black text-primary/80 dark:text-primary font-geist ${className}`}
+    <Tag
+      className={`${!unset ? "text-3xl font-black text-primary/80 dark:text-primary font-geist" : ""} ${className}`}
       {...rest}
     >
       {children}
-    </h2>
+    </Tag>
   );
 };
 

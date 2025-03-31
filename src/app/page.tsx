@@ -12,6 +12,9 @@ export const metadata = {
   title: "Renato Dulog | Web Portfolio",
   description:
     "A digital portfolio showcasing the journey, technical expertise, achievements, and skills behind innovative web development.",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+  },
 };
 
 export default async function Home() {
