@@ -13,6 +13,8 @@ import {
   SiAdobephotoshop,
   SiFigma,
   SiShadcnui,
+  SiNestjs,
+  SiZod,
 } from "react-icons/si";
 import {
   FaJava,
@@ -53,16 +55,20 @@ const skills = [
     width: "half",
     items: [
       {
-        name: "Node",
-        icon: FaNode,
+        name: "Supabase",
+        icon: RiSupabaseFill,
       },
       {
-        name: "Sanity",
-        icon: SiSanity,
+        name: "Nest JS",
+        icon: SiNestjs,
       },
       {
         name: "Shadcn UI",
         icon: SiShadcnui,
+      },
+      {
+        name: "Zod",
+        icon: SiZod,
       },
     ],
   },
