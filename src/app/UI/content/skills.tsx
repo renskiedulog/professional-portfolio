@@ -37,16 +37,16 @@ const skills = [
         icon: RiNextjsFill,
       },
       {
-        name: "MongoDB",
-        icon: DiMongodb,
-      },
-      {
         name: "Tailwind",
         icon: RiTailwindCssFill,
       },
       {
         name: "Typescript",
         icon: BiLogoTypescript,
+      },
+      {
+        name: "Shadcn UI",
+        icon: SiShadcnui,
       },
     ],
   },
@@ -62,10 +62,7 @@ const skills = [
         name: "Nest JS",
         icon: SiNestjs,
       },
-      {
-        name: "Shadcn UI",
-        icon: SiShadcnui,
-      },
+
       {
         name: "Zod",
         icon: SiZod,

@@ -65,7 +65,7 @@ const projects: Project[] = [
       "Shadcn UI",
       "Framer Motion",
     ],
-    liveUrl: "https://renato-dulog.vercel.app",
+    liveUrl: "https://renato-dulog.is-a.dev/",
   },
   {
     title: "Quenique: Queueing Management System For Boats",

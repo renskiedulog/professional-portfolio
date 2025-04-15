@@ -1,7 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 const config = {
-  siteUrl:
-    process.env.NEXT_PUBLIC_SITE_URL || "https://renato-dulog.vercel.app/", // Update with your domain
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://renato-dulog.is-a.dev/", // Update with your domain
   generateRobotsTxt: true,
   sitemapSize: 9999999,
   generateIndexSitemap: false,

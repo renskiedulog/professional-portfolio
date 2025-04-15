@@ -6,6 +6,11 @@ import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
 
+export const metadata = {
+  title: "Works",
+  description: "My personal projects and works.",
+};
+
 const WorksPage = () => {
   return (
     <Container as="main">
