@@ -11,6 +11,14 @@ const config = {
       { userAgent: "*", disallow: ["/studio"] },
     ],
   },
+  additionalPaths: async () => {
+    return [
+      {
+        loc: "/blog",
+        lastmod: new Date().toISOString(),
+      },
+    ];
+  },
 };
 
 module.exports = config;
