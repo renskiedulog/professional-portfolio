@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { sanityClient } from "@/lib/sanityClient";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +29,7 @@ const contactCategories = [
 ];
 
 const formSchema = z.object({
-  fullname: z.string().min(1),
+  email: z.string().email(),
   gameplan: z.string(),
   message: z.string(),
 });
@@ -36,19 +37,50 @@ const formSchema = z.object({
 export default function ContactForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      gameplan: "collaboration",
+      message: "",
+    },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
+      const response = await fetch("/api/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+          gameplan: values.gameplan,
+          message: values.message,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "An unknown error occurred.");
+      }
+
       toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
+        <div>
+          <p className="font-bold text-lg">Form Submitted Successfully.</p>
+          <span>
+            You can also connect with me through my other social media accounts
+            for faster communication.
+          </span>
+        </div>,
+        {
+          position: window?.innerWidth > 640 ? "bottom-right" : "top-left",
+        }
       );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      form.reset();
+    } catch (error: any) {
+      toast.error(
+        error.message || "Failed to submit the form. Please try again."
+      );
     }
   }
 
@@ -64,13 +96,13 @@ export default function ContactForm() {
         </FormDescription>
         <FormField
           control={form.control}
-          name="fullName"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>Email Address</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Please enter your full name..."
+                  placeholder="Please enter your email address..."
                   type=""
                   {...field}
                 />
@@ -85,7 +117,7 @@ export default function ContactForm() {
           <div className="col-span-full">
             <FormField
               control={form.control}
-              name="gamePlan"
+              name="gameplan"
               render={({ field }) => (
                 <FormItem className="space-y-3">
                   <FormLabel>What's the game plan?</FormLabel>
@@ -141,8 +173,15 @@ export default function ContactForm() {
           )}
         />
         <div className="w-full flex justify-end items-center">
-          <Button type="submit" disabled>
-            Under Construction
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting}
+            className="gap-2"
+          >
+            {form.formState.isSubmitting && (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            )}
+            {form.formState.isSubmitting ? "Sending..." : "Send Message"}
           </Button>
         </div>
       </form>

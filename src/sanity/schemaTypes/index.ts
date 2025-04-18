@@ -4,9 +4,8 @@ import { blockContentType } from "./blockContentType";
 import { categoryType } from "./categoryType";
 import { blogSchema } from "./blogSchema";
 import { authorType } from "./authorType";
-import { leftSectionContent } from "./leftSectionContent";
-import { homeContent } from "./homeContent";
 import { customBlockContent } from "./types/customBlockContent";
+import { formSubmissions } from "./formSubmission";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -14,8 +13,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     categoryType,
     blogSchema,
     authorType,
-    leftSectionContent,
-    homeContent,
     customBlockContent,
+    formSubmissions,
   ],
 };

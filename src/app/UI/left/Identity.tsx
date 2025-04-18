@@ -13,8 +13,10 @@ const Identity = () => {
         />
         <AvatarFallback>RD</AvatarFallback>
       </Avatar>
-      <h1 className="text-3xl font-medium/90">Renato Dulog</h1>
-      <p className="text-sm opacity-50 font-medium text-center">Fullstack Web Developer</p>
+      <h1 className="text-3xl text-primary mt-2">Renato Dulog</h1>
+      <p className="text-sm opacity-50 font-medium text-center">
+        Fullstack Web Developer
+      </p>
     </div>
   );
 };

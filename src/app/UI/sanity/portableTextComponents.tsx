@@ -79,38 +79,41 @@ export const PortableTextComponents = {
   },
   block: {
     h1: ({ children }: { children: React.ReactNode }) => (
-      <h1 className="text-3xl sm:text-4xl font-extrabold mt-6 pb-2">
+      <h1 className="text-3xl sm:text-4xl font-extrabold mt-6 pb-2 text-primary">
         {children}
       </h1>
     ),
     h2: ({ children }: { children: React.ReactNode }) => (
-      <h2 className="text-2xl sm:text-3xl font-bold mt-5 pb-2">{children}</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold mt-5 pb-2 text-primary">
+        {children}
+      </h2>
     ),
     h3: ({ children }: { children: React.ReactNode }) => (
-      <h3 className="text-xl sm:text-2xl font-semibold mt-4 pb-2">
+      <h3 className="text-xl sm:text-2xl font-semibold mt-4 pb-2 text-primary">
         {children}
       </h3>
     ),
     normal: ({ children }: { children: React.ReactNode }) => {
       if (children[0]?.length === 0) return <br />;
-      return (
-        <p className="text-primary/80 dark:text-primary leading-relaxed">
-          {children}
-        </p>
-      );
+      return <p className=" leading-relaxed">{children}</p>;
     },
     blockquote: ({ children }: { children: React.ReactNode }) => (
-      <blockquote className="border-l-4 border-gray-500 italic pl-4 text-primary/80 dark:text-primary dark:bg-primary/5 py-2 mt-4 text-gray-600">
+      <blockquote className="border-l-4 border-gray-500 italic pl-4 dark:bg-primary/5 py-2 mt-4 text-gray-600">
         {children}
       </blockquote>
     ),
   },
   list: {
     bullet: ({ children }: { children: React.ReactNode }) => (
-      <ul className="list-disc list-inside mt-2">{children}</ul>
+      <ul className="list-disc list-inside mt-2 pl-5">{children}</ul>
     ),
     number: ({ children }: { children: React.ReactNode }) => (
       <ol className="list-decimal list-inside mt-2">{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }: { children: React.ReactNode }) => (
+      <li className="mb-0.5">{children}</li>
     ),
   },
 };

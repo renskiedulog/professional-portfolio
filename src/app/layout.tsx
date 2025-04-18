@@ -8,6 +8,7 @@ import { StorageProvider } from "./UI/global-components/storage-provider";
 import NavigationBar from "./UI/global-components/navigation-bar";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -79,6 +80,7 @@ export default function RootLayout({
             </ThemeProvider>
           </StorageProvider>
         </main>
+        <Toaster />
       </body>
     </html>
   );
