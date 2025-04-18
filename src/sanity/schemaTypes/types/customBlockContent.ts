@@ -45,11 +45,15 @@ export const customBlockContent = defineType({
           name: "width",
           title: "Width In Percentage",
           type: "number",
+          description:
+            "Width of the border in percentage (0-100), Leave blank for full width.",
         }),
       ],
       preview: {
-        select: {
-          title: "Border",
+        prepare() {
+          return {
+            title: `Border`,
+          };
         },
       },
     }),

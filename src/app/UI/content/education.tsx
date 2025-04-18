@@ -32,7 +32,7 @@ const experiences: EducationType[] = [
   },
   {
     school: "Pinamungajan Central Elementary School",
-    grade: "Primary School",
+    grade: "Elementary School",
     period: "June 2008 - March 2015",
     logo: "/pces.jpg",
   },

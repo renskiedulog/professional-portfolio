@@ -27,7 +27,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
   };
 
   return (
-    <Container>
+    <Container className="pb-10 sm:pb-10">
       <BlurFade className="px-3 sm:px-5" key="blog-page" yOffset={0}>
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
@@ -123,15 +123,33 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                       ?.filter(
                         (blog) =>
                           !selectedFilters?.length ||
-                          blog.categories.some((category: string) =>
-                            selectedFilters.includes(category as never)
+                          selectedFilters.every((filter) =>
+                            blog.categories.includes(filter as never)
                           )
                       )
-                      ?.map((blog) => (
-                        <BlurFade key={blog._id}>
-                          <BlogCard blog={blog} />
+                      .map((blog, i, filtered) =>
+                        filtered.length ? (
+                          <BlurFade key={blog._id}>
+                            <BlogCard blog={blog} />
+                          </BlurFade>
+                        ) : null
+                      )}
+
+                    {blogs &&
+                      !blogs.some(
+                        (blog) =>
+                          !selectedFilters?.length ||
+                          selectedFilters.every((filter) =>
+                            blog.categories.includes(filter as never)
+                          )
+                      ) && (
+                        <BlurFade
+                          id="empty"
+                          className="col-span-full text-center text-xl font-bold text-primary/90 py-5"
+                        >
+                          No blogs match your selected filters.
                         </BlurFade>
-                      ))}
+                      )}
                   </div>
                 </div>
               </BlurFade>
