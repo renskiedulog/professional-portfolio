@@ -74,7 +74,7 @@ export const PortableTextComponents = {
       </Link>
     ),
     strong: ({ children }: { children: React.ReactNode }) => (
-      <strong className="font-semibold text-gray-800">{children}</strong>
+      <strong className="font-semibold">{children}</strong>
     ),
   },
   block: {
@@ -98,7 +98,7 @@ export const PortableTextComponents = {
       return <p className=" leading-relaxed">{children}</p>;
     },
     blockquote: ({ children }: { children: React.ReactNode }) => (
-      <blockquote className="border-l-4 border-gray-500 italic pl-4 dark:bg-primary/5 py-2 mt-4 text-gray-600">
+      <blockquote className="border-l-4 border-gray-500 italic pl-4 dark:bg-primary/5 py-2 mt-4 text-primary">
         {children}
       </blockquote>
     ),

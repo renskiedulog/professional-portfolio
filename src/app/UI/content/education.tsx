@@ -20,7 +20,7 @@ const experiences: EducationType[] = [
   },
   {
     school: "Passarelles Numériques Philippines",
-    grade: "",
+    grade: "Scholarship Program - IT Track",
     period: "August 2022 - February 2025",
     logo: "/pn.png",
   },
@@ -96,7 +96,7 @@ export default function Education() {
                     <AvatarFallback>{experience.school[0]}</AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-bold text-lg flex items-center group-hover:underline text-primary">
+                    <p className="font-bold text-lg flex items-center group-hover:underline text-primary h-max">
                       {experience.school}
                     </p>
                     <p className="text-sm text-muted-foreground">
