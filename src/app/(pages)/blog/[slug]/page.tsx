@@ -14,6 +14,7 @@ import Link from "next/link";
 import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
 import { getSanityImageUrl } from "@/sanity/lib/sanity";
 import { Metadata } from "next";
+import IncrementView from "./increment-view";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
@@ -36,8 +37,9 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${params.slug}`;
-  const blog = await getBlogPost(params.slug);
+  const { slug } = await params;
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
+  const blog = await getBlogPost(slug);
 
   if (!blog) {
     return {
@@ -106,6 +108,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
   return (
     <Container as="article">
       <ScrollProgress />
+      {blog?.slug && <IncrementView slug={blog.slug} />}
       <BlurFade className="px-3 sm:px-5 pb-20">
         {/* Navigation Bar */}
         <div className="w-full flex items-center gap-5">

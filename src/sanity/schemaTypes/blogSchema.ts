@@ -54,16 +54,44 @@ export const blogSchema = defineType({
       name: "body",
       type: "customBlockContent",
     }),
+    // Additional fields
+    defineField({
+      name: "viewCount",
+      type: "number",
+      readOnly: true,
+      initialValue: 0,
+    }),
+    defineField({
+      name: "likeCount",
+      type: "number",
+      title: "Like Count",
+      readOnly: true,
+      initialValue: 0,
+    }),
+    defineField({
+      name: "commentsEnabled",
+      type: "boolean",
+      title: "Enable Comments",
+      description: "Toggle to enable or disable comments on the post",
+      initialValue: true,
+    }),
   ],
   preview: {
     select: {
       title: "title",
       author: "author.name",
       media: "mainImage",
+      viewCount: "viewCount",
+      likeCount: "likeCount",
     },
     prepare(selection) {
-      const { author } = selection;
-      return { ...selection, subtitle: author && `by ${author}` };
+      const { author, viewCount, likeCount } = selection;
+      return {
+        ...selection,
+        subtitle: author
+          ? `by ${author} | Views: ${viewCount} | Likes: ${likeCount}`
+          : `Views: ${viewCount} | Likes: ${likeCount}`,
+      };
     },
   },
 });
