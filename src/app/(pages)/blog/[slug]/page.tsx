@@ -108,7 +108,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
   return (
     <Container as="article">
       <ScrollProgress />
-      {blog?.slug && <IncrementView slug={blog.slug} />}
+      <IncrementView slug={slug} />
       <BlurFade className="px-3 sm:px-5 pb-20">
         {/* Navigation Bar */}
         <div className="w-full flex items-center gap-5">
