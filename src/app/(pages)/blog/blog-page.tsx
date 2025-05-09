@@ -31,7 +31,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
       <BlurFade className="px-3 sm:px-5" key="blog-page" yOffset={0}>
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
-          <BackButton href="/" />
+          <BackButton href="/" label="Homepage" />
           {/* Filter Options */}
           <div className="flex items-center gap-3">
             {/* <div className="relative">

@@ -1,5 +1,6 @@
 import BlurFade from "./UI/animation-wrappers/fade";
 import AboutMe from "./UI/content/about-me";
+import Blogs from "./UI/content/blogs";
 import Education from "./UI/content/education";
 import Footer from "./UI/content/footer";
 import Projects from "./UI/content/projects";
@@ -29,6 +30,7 @@ export default async function Home() {
             <WorkExperience />
             <Education />
             <Projects />
+            <Blogs />
             <Footer />
           </div>
         </div>

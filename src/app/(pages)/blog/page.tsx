@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 const getData = async () => {
-  const [blogsRes, filtersRes] = await Promise.all([
+  const [blogsReq, filtersReq] = await Promise.all([
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-blogs`, {
       cache: "no-store",
     }),
@@ -17,13 +17,13 @@ const getData = async () => {
     }),
   ]);
 
-  if (!blogsRes.ok || !filtersRes.ok) {
+  if (!blogsReq.ok || !filtersReq.ok) {
     throw new Error("Failed to fetch data");
   }
 
   const [blogs, filters] = await Promise.all([
-    blogsRes.json(),
-    filtersRes.json(),
+    blogsReq.json(),
+    filtersReq.json(),
   ]);
 
   return { blogs, filters };

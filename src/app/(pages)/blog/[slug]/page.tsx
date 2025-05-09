@@ -112,7 +112,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
       <BlurFade className="px-3 sm:px-5 pb-20">
         {/* Navigation Bar */}
         <div className="w-full flex items-center gap-5">
-          <BackButton href="/blog" />
+          <BackButton href="/blog" label="Blogs" />
         </div>
         {/* Content */}
         <div className="mt-5 sm:mt-20">

@@ -5,12 +5,18 @@ import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { format } from "date-fns";
 import { Blog } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
-const BlogCard = ({ blog }: { blog: Blog }) => {
+const BlogCard = ({ blog, className }: { blog: Blog; className: string }) => {
   return (
-    <article className="border rounded-md overflow-hidden shadow-sm bg-background h-max">
+    <article
+      className={cn(
+        "border rounded-md overflow-hidden shadow-sm bg-background h-max",
+        className
+      )}
+    >
       <Image
-        className="aspect-video object-cover"
+        className="aspect-video object-cover w-full"
         src={blog?.mainImage ?? "/placeholder.png"}
         width={500}
         height={500}
