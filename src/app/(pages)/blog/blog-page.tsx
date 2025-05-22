@@ -163,7 +163,12 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                   <Heading>Browse</Heading>
                   <div className="columns-1 sm:columns-2 lg:columns-3">
                     {blogs.map((blog, idx) => (
-                      <BlogCard blog={blog} key={idx} className="mb-4" />
+                      <BlogCard
+                        blog={blog}
+                        key={idx}
+                        index={idx}
+                        className="mb-4"
+                      />
                     ))}
                   </div>
                 </motion.div>

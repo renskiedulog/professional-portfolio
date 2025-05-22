@@ -16,12 +16,13 @@ export default async function Blogs() {
       <Heading>Blogs And Case Studies</Heading>
       <div className="gap-2 flex sm:flex-row flex-col">
         {blogs.map((blog: Blog, idx: number) => {
-          if (idx > 2) return null;
+          if (idx >= 2) return null;
           return (
             <BlogCard
               className="flex-grow flex-1"
               key={blog.title}
               blog={blog}
+              index={idx}
             />
           );
         })}
