@@ -95,7 +95,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
               <BlurFade id="category-posts">
                 <div className="space-y-3">
                   <Heading>{category}</Heading>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+                  <div className="columns-1 sm:columns-2 lg:columns-3">
                     {blogs
                       ?.filter((blog) =>
                         blog.categories.some(
@@ -118,13 +118,13 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
               <BlurFade id="filter-posts">
                 <div className="space-y-3">
                   <Heading>Filter Results</Heading>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+                  <div className="columns-1 sm:columns-2 lg:columns-3">
                     {blogs
                       ?.filter(
                         (blog) =>
                           !selectedFilters?.length ||
-                          selectedFilters.every((filter) =>
-                            blog.categories.includes(filter as never)
+                          selectedFilters?.every((filter) =>
+                            blog?.categories?.includes(filter as never)
                           )
                       )
                       .map((blog, i, filtered) =>
@@ -140,7 +140,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                         (blog) =>
                           !selectedFilters?.length ||
                           selectedFilters.every((filter) =>
-                            blog.categories.includes(filter as never)
+                            blog?.categories?.includes(filter as never)
                           )
                       ) && (
                         <BlurFade
@@ -161,9 +161,9 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
               <BlurFade id="blog-posts">
                 <motion.div layout className="space-y-2">
                   <Heading>Browse</Heading>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+                  <div className="columns-1 sm:columns-2 lg:columns-3">
                     {blogs.map((blog, idx) => (
-                      <BlogCard blog={blog} key={idx} />
+                      <BlogCard blog={blog} key={idx} className="mb-4" />
                     ))}
                   </div>
                 </motion.div>

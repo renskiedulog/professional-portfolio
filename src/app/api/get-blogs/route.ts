@@ -5,7 +5,7 @@ import { sanityClient } from "@/lib/sanityClient";
 export async function GET() {
   try {
     const query = groq`
-      *[_type == "blog"] | order(publishedAt desc) {
+      *[_type == "blog" && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) {
         _id,
         title,
         description,
