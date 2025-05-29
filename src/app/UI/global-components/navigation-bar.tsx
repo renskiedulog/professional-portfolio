@@ -13,6 +13,7 @@ import { useTheme } from "next-themes";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { FolderGit2 } from "lucide-react";
+import { LiaFileContractSolid } from "react-icons/lia";
 
 const links = [
   {
@@ -28,16 +29,16 @@ const links = [
   {
     label: "Works",
     icon: FolderGit2,
-    link: "/works"
-  }
+    link: "/works",
+  },
+  {
+    label: "Services",
+    icon: LiaFileContractSolid,
+    link: "/services",
+  },
 ];
 
 const socials = [
-  {
-    label: "Discord",
-    icon: FaDiscord,
-    link: "https://discordapp.com/users/901746145095712768"
-  },  
   {
     label: "Github",
     icon: FaGithub,
