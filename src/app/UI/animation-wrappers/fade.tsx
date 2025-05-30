@@ -29,6 +29,7 @@ const BlurFade = ({
   inViewMargin = "-50px",
   blur = "6px",
   id,
+  ...rest
 }: BlurFadeProps) => {
   const ref = useRef(null);
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
@@ -52,6 +53,7 @@ const BlurFade = ({
       }}
       id={id}
       className={className}
+      {...rest}
     >
       {children}
     </motion.div>

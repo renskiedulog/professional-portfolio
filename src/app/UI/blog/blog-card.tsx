@@ -7,15 +7,7 @@ import { format } from "date-fns";
 import { Blog } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const BlogCard = ({
-  blog,
-  className,
-  index,
-}: {
-  blog: Blog;
-  className?: string;
-  index?: number;
-}) => {
+const BlogCard = ({ blog, className }: { blog: Blog; className?: string }) => {
   return (
     <article
       className={cn(
@@ -46,13 +38,6 @@ const BlogCard = ({
               {category}
             </span>
           ))}
-          {index !== undefined && index < 3 ? (
-            <span className="bg-primary-foreground dark:bg-white/20 text-primary text-[11px] py-0.5 px-1.5 border border-opacity-10 rounded text-nowrap font-semibold">
-              Latest
-            </span>
-          ) : (
-            ""
-          )}
         </div>
         <Separator className="mt-2" />
         <div className="mt-2 flex justify-between items-center">

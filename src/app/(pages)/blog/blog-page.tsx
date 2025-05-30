@@ -15,6 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
   const searchParams = useSearchParams();
   const [toggleFilter, setToggleFilter] = useState(false);
+  const [search, setSearch] = useState("");
   const [selectedFilters, setSelectedFilters] = useState([]);
   const category = searchParams.get("category");
   const router = useRouter();
@@ -26,6 +27,8 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
     router.push(`?${params.toString()}`, { scroll: false });
   };
 
+  console.log(search);
+
   return (
     <Container className="pb-10 sm:pb-10">
       <BlurFade className="px-3 sm:px-5" key="blog-page" yOffset={0}>
@@ -34,21 +37,22 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
           <BackButton href="/" label="Homepage" />
           {/* Filter Options */}
           <div className="flex items-center gap-3">
-            {/* <div className="relative">
+            <div className="relative">
               <Input
                 type="text"
-                className="h-max w-[120px] sm:w-[150px] bg-white dark:bg-primary/10 sm:text-base text-sm pl-8 peer focus:w-[180px] sm:focus:w-[300px] transition-all duration-200 ease-in-out"
+                className="h-max w-[125px] sm:w-[150px] bg-white dark:bg-primary/10 sm:text-base text-sm pl-8 peer sm:focus:w-[300px] transition-all duration-200 ease-in-out"
                 placeholder="Search..."
                 onFocus={() => {
                   setToggleFilter(false);
                   setSelectedFilters([]);
                 }}
+                onChange={(e) => setSearch(e.target.value)}
               />
               <Search
                 size={18}
                 className="absolute top-1/2 left-2 -translate-y-1/2 text-gray-400 opacity-50 transition-opacity duration-300 ease-in-out peer-focus:opacity-100"
               />
-            </div> */}
+            </div>
             <button
               className="items-center gap-2"
               onClick={() => {
@@ -155,6 +159,46 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
               </BlurFade>
             </section>
           )}
+          {/* Searrch Results */}
+          {search !== null && (
+            <section>
+              <BlurFade id="filter-posts">
+                <div className="space-y-3">
+                  <Heading>Search Results</Heading>
+                  <div className="columns-1 sm:columns-2 lg:columns-3">
+                    {search && blogs?.length > 0 ? (
+                      blogs
+                        .filter((blog) =>
+                          blog.title
+                            .toLowerCase()
+                            .includes(search.toLowerCase())
+                        )
+                        .map((blog) => (
+                          <BlurFade
+                            layout
+                            key={blog?._id}
+                            id={`${blog?._id}-search-result`}
+                          >
+                            <BlogCard
+                              blog={blog}
+                              key={blog._id}
+                              className="mb-4"
+                            />
+                          </BlurFade>
+                        ))
+                    ) : (
+                      <BlurFade
+                        id="empty"
+                        className="text-xl font-bold text-primary/90 py-5"
+                      >
+                        No blogs found.
+                      </BlurFade>
+                    )}
+                  </div>
+                </div>
+              </BlurFade>
+            </section>
+          )}
           {/* Browse Blog Posts */}
           {blogs && (
             <section>
@@ -166,7 +210,6 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                       <BlogCard
                         blog={blog}
                         key={idx}
-                        index={idx}
                         className="mb-4"
                       />
                     ))}
@@ -182,3 +225,20 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
 };
 
 export default BlogPage;
+
+function SearchedBlogs(search, blogs) {
+  if (!blogs) return null;
+
+  // Simple case-insensitive filter
+  const filteredBlogs = search
+    ? blogs.filter((blog) =>
+        blog.title.toLowerCase().includes(search.toLowerCase())
+      )
+    : blogs;
+
+  if (search && filteredBlogs.length === 0) {
+    return <div>No results found.</div>;
+  }
+
+  return filteredBlogs.map((blog) => <div key={blog.id}>{blog.title}</div>);
+}
