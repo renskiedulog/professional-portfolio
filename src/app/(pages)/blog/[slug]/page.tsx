@@ -15,6 +15,8 @@ import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
 import { getSanityImageUrl } from "@/sanity/lib/sanity";
 import { Metadata } from "next";
 import IncrementView from "./increment-view";
+import { Blog } from "@/lib/types";
+import BottomSection from "./bottom-section";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
@@ -30,6 +32,22 @@ const getBlogPost = async (slug: string) => {
   const blog = await sanityClient.fetch(query, { slug });
 
   return blog;
+};
+
+const getNextAndPrevBlogs = async (slug: string) => {
+  const query = groq`*[_type == "blog"] | order(publishedAt desc) {
+    "slug": slug.current,
+    title,
+  }`;
+
+  const blogs: Blog[] = await sanityClient.fetch(query);
+  const currentIndex = blogs.findIndex((blog: any) => blog?.slug === slug);
+
+  const previousBlog = currentIndex > 0 ? blogs[currentIndex - 1] : null;
+  const nextBlog =
+    currentIndex !== blogs?.length - 1 ? blogs[currentIndex + 1] : null;
+
+  return { previousBlog, nextBlog };
 };
 
 export async function generateMetadata({
@@ -89,7 +107,12 @@ export const revalidate = 60;
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;
-  const blog = await getBlogPost(slug);
+  const [blog, prevAndNextBlogs] = await Promise.all([
+    getBlogPost(slug),
+    getNextAndPrevBlogs(slug),
+  ]);
+
+  console.log(prevAndNextBlogs);
 
   if (!blog) {
     notFound();
@@ -195,6 +218,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
             />
           </div>
         </div>
+        <BottomSection prevAndNext={prevAndNextBlogs} />
       </BlurFade>
     </Container>
   );

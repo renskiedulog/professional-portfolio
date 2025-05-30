@@ -15,7 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
   const searchParams = useSearchParams();
   const [toggleFilter, setToggleFilter] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<null | string>(null);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const category = searchParams.get("category");
   const router = useRouter();
@@ -26,8 +26,6 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
 
     router.push(`?${params.toString()}`, { scroll: false });
   };
-
-  console.log(search);
 
   return (
     <Container className="pb-10 sm:pb-10">
@@ -46,7 +44,11 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                   setToggleFilter(false);
                   setSelectedFilters([]);
                 }}
-                onChange={(e) => setSearch(e.target.value)}
+                value={search === null ? "" : search}
+                onChange={(e) => {
+                  if (e.target.value === "") setSearch(null);
+                  else setSearch(e.target.value);
+                }}
               />
               <Search
                 size={18}
@@ -60,6 +62,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                   setSelectedFilters([]);
                   setToggleFilter((prev) => !prev);
                 } else {
+                  setSearch(null);
                   setToggleFilter((prev) => !prev);
                 }
               }}
@@ -134,7 +137,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                       .map((blog, i, filtered) =>
                         filtered.length ? (
                           <BlurFade key={blog._id}>
-                            <BlogCard blog={blog} />
+                            <BlogCard blog={blog} className="sm:mb-0 mb-4" />
                           </BlurFade>
                         ) : null
                       )}
@@ -166,9 +169,13 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                 <div className="space-y-3">
                   <Heading>Search Results</Heading>
                   <div className="columns-1 sm:columns-2 lg:columns-3">
-                    {search && blogs?.length > 0 ? (
+                    {search !== null &&
+                    blogs?.length > 0 &&
+                    blogs.filter((blog) =>
+                      blog.title.toLowerCase().includes(search.toLowerCase())
+                    ).length > 0 ? (
                       blogs
-                        .filter((blog) =>
+                        ?.filter((blog) =>
                           blog.title
                             .toLowerCase()
                             .includes(search.toLowerCase())
@@ -207,11 +214,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                   <Heading>Browse</Heading>
                   <div className="columns-1 sm:columns-2 lg:columns-3">
                     {blogs.map((blog, idx) => (
-                      <BlogCard
-                        blog={blog}
-                        key={idx}
-                        className="mb-4"
-                      />
+                      <BlogCard blog={blog} key={idx} className="mb-4" />
                     ))}
                   </div>
                 </motion.div>
@@ -225,20 +228,3 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
 };
 
 export default BlogPage;
-
-function SearchedBlogs(search, blogs) {
-  if (!blogs) return null;
-
-  // Simple case-insensitive filter
-  const filteredBlogs = search
-    ? blogs.filter((blog) =>
-        blog.title.toLowerCase().includes(search.toLowerCase())
-      )
-    : blogs;
-
-  if (search && filteredBlogs.length === 0) {
-    return <div>No results found.</div>;
-  }
-
-  return filteredBlogs.map((blog) => <div key={blog.id}>{blog.title}</div>);
-}
