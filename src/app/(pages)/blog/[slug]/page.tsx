@@ -17,6 +17,7 @@ import { Metadata } from "next";
 import IncrementView from "./increment-view";
 import { Blog } from "@/lib/types";
 import BottomSection from "./bottom-section";
+import LikeButton from "./like-button";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
@@ -26,6 +27,7 @@ const getBlogPost = async (slug: string) => {
     author-> { name },
     publishedAt,
     mainImage,
+    likeCount,
     "categories": categories[]->title,
   }`;
 
@@ -112,8 +114,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
     getNextAndPrevBlogs(slug),
   ]);
 
-  console.log(prevAndNextBlogs);
-
   if (!blog) {
     notFound();
   }
@@ -125,6 +125,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
     author,
     publishedAt,
     categories,
+    likeCount,
     mainImage,
   } = blog;
 
@@ -134,8 +135,9 @@ const page = async ({ params }: { params: { slug: string } }) => {
       <IncrementView slug={slug} />
       <BlurFade className="px-3 sm:px-5 pb-20">
         {/* Navigation Bar */}
-        <div className="w-full flex items-center gap-5">
+        <div className="w-full flex items-center justify-between gap-5">
           <BackButton href="/blog" label="Blogs" />
+          <LikeButton slug={slug} likeCount={likeCount} />
         </div>
         {/* Content */}
         <div className="mt-5 sm:mt-20">
