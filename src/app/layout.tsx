@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     "portfolio",
     "react developer",
     "programming",
+    "nextjs developer",
     "renato dulog",
     "fullstack",
   ],

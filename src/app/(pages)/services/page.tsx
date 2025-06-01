@@ -1,7 +1,6 @@
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
-import Heading from "@/app/UI/global-components/heading";
 import { Button } from "@/components/ui/button";
 
 import Link from "next/link";

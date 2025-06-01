@@ -19,6 +19,7 @@ const LikeButton = ({
 }) => {
   const { setItem, getItem } = useStorage();
   const likedBlogs: string[] | null = getItem("likedBlogs") || [];
+  const [renderedCount, setRenderedCount] = useState(likeCount ?? 0);
   const [liked, setLiked] = useState<"unliked" | "liked">(
     likedBlogs?.includes(slug) ? "liked" : "unliked"
   );
@@ -51,6 +52,7 @@ const LikeButton = ({
     likedBlogs?.push(slug);
     setItem("likedBlogs", likedBlogs);
     setLiked("liked");
+    setRenderedCount((prev) => prev + 1);
     incrementLikeCount();
   };
 
@@ -64,7 +66,7 @@ const LikeButton = ({
         className={`flex items-center gap-1.5 px-3 sm:px-4 py-1 sm:py-1.5 ${buttonState[liked]} ${liked === "liked" ? "cursor-auto" : "cursor-pointer"}`}
       >
         <ThumbsUp size={15} />
-        <span>{liked === "liked" ? likeCount + 1 : likeCount}</span>
+        <span>{renderedCount}</span>
       </Badge>
     </div>
   );
