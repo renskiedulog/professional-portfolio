@@ -22,7 +22,7 @@ const Identity = () => {
         </Avatar>
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="absolute size-5 rounded-full p-1 bg-yellow-500 bottom-2 right-2 border-primary/70 border-2 !z-50" />
+            <div className="absolute sm:block hidden size-5 rounded-full p-1 bg-yellow-500 bottom-2 right-2 border-primary/70 border-2 !z-50" />
           </TooltipTrigger>
           <TooltipContent className="max-w-xs bg-yellow-500 text-secondary">
             Currently Busy
