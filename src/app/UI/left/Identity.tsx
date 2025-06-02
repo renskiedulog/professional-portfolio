@@ -5,8 +5,15 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  getStatus,
+  states,
+  StatusType,
+} from "@/app/(pages)/services/test/page";
+import { Badge } from "@/components/ui/badge";
 
-const Identity = () => {
+const Identity = async () => {
+  const status: StatusType = (await getStatus()) ?? "busy";
   return (
     <div className="flex flex-col items-center">
       <div className="relative">
@@ -22,10 +29,14 @@ const Identity = () => {
         </Avatar>
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="absolute sm:block hidden size-5 rounded-full p-1 bg-yellow-500 bottom-2 right-2 border-primary/70 border-2 !z-50" />
+            <div
+              className={`absolute sm:block hidden size-5 rounded-full p-1 bottom-2 right-2 border-primary/70 border-2 !z-50 ${states[status]?.style}`}
+            />
           </TooltipTrigger>
-          <TooltipContent className="max-w-xs bg-yellow-500 text-secondary">
-            Currently Busy
+          <TooltipContent
+            className={`max-w-xs text-secondary ${states[status]?.style}`}
+          >
+            {states[status].text}
           </TooltipContent>
         </Tooltip>
       </div>
@@ -33,6 +44,11 @@ const Identity = () => {
       <p className="text-sm opacity-50 font-medium text-center">
         Software Engineer | Web Developer
       </p>
+              <Badge
+          className={`mt-1 shadow-sm sm:hidden block border-primary/10 border ${states[status]?.style}`}
+        >
+          {states[status]?.text}
+        </Badge>
     </div>
   );
 };

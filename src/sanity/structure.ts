@@ -10,4 +10,13 @@ export const structure: StructureResolver = (S) =>
       // S.documentTypeListItem("author").title("Authors"),
       S.divider(),
       S.documentTypeListItem("formSubmissions").title("Form Submissions"),
+      S.divider(),
+      S.listItem()
+        .title("Site Data")
+        .child(
+          S.editor()
+            .id("siteData")
+            .schemaType("siteData")
+            .documentId("siteData")
+        ),
     ]);
