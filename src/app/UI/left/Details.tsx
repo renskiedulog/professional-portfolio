@@ -4,6 +4,7 @@ import React from "react";
 import {
   FaFacebook,
   FaFacebookSquare,
+  FaGithub,
   FaLinkedin,
   FaPhoneAlt,
 } from "react-icons/fa";
@@ -29,6 +30,11 @@ const addresses = [
     label: "in/renato-dulog",
     icon: FaLinkedin,
     link: "https://www.linkedin.com/in/renato-dulog/",
+  },
+  {
+    label: "renskiedulog",
+    icon: FaGithub,
+    link: "https://github.com/renskiedulog",
   },
 ];
 

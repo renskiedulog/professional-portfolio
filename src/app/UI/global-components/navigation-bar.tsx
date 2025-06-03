@@ -10,7 +10,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTheme } from "next-themes";
-import { FaDiscord, FaGithub } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { FolderGit2 } from "lucide-react";
 import { LiaFileContractSolid } from "react-icons/lia";
@@ -36,14 +37,14 @@ const links = [
     icon: LiaFileContractSolid,
     link: "/services",
   },
+    {
+    label: "Extra",
+    icon: MdOutlineDashboardCustomize,
+    link: "/extra",
+  },
 ];
 
-const socials = [
-  {
-    label: "Github",
-    icon: FaGithub,
-    link: "https://github.com/renskiedulog",
-  },
+const socials: { label: string, icon: any, link: string}[] = [
 ];
 
 const NavigationBar = () => {

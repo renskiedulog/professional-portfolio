@@ -26,7 +26,7 @@ export const states = {
   },
   unavailable: {
     style: "bg-red-500 hover:bg-red-500",
-    text: "I am current unavailable.",
+    text: "I am currently unavailable.",
   },
 } as const;
 

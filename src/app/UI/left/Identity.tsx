@@ -44,11 +44,11 @@ const Identity = async () => {
       <p className="text-sm opacity-50 font-medium text-center">
         Software Engineer | Web Developer
       </p>
-              <Badge
-          className={`mt-1 shadow-sm sm:hidden block border-primary/10 border ${states[status]?.style}`}
-        >
-          {states[status]?.text}
-        </Badge>
+      <Badge
+        className={`mt-1 shadow-sm sm:hidden block border-primary/10 border ${states[status]?.style}`}
+      >
+        {states[status]?.text}
+      </Badge>
     </div>
   );
 };
