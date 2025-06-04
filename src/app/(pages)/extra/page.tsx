@@ -1,9 +1,11 @@
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
-import { Button } from "@/components/ui/button";
+import { FaArrowRight, FaInfo } from "react-icons/fa6";
+import { GrGift } from "react-icons/gr";
 
 import Link from "next/link";
+import { BiRightArrow } from "react-icons/bi";
 
 export const metadata = {
   title: "Extra",
@@ -13,12 +15,47 @@ export const metadata = {
 const Extra = () => {
   return (
     <Container as="main">
-      <BlurFade>
+      <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/" />
         </div>
-        <div></div>
+        <div className="h-[90dvh] flex items-center justify-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-2">
+            <Link
+              href="#"
+              className="border group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+            >
+              <FaInfo size={32} />
+              <p>Questions You Might Ask</p>
+              <p className="flex items-center gap-2 group-hover:opacity-100 opacity-60">
+                <span>EXPLORE</span>
+                <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
+              </p>
+            </Link>
+            <Link
+              href="#"
+              className="border group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+            >
+              <GrGift size={32} />
+              <p>Coming Soon...</p>
+            </Link>
+            <Link
+              href="#"
+              className="border group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+            >
+              <GrGift size={32} />
+              <p>Coming Soon...</p>
+            </Link>
+            <Link
+              href="#"
+              className="border group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+            >
+              <GrGift size={32} />
+              <p>Coming Soon...</p>
+            </Link>
+          </div>
+        </div>
       </BlurFade>
     </Container>
   );
