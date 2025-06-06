@@ -23,7 +23,7 @@ const Extra = () => {
         <div className="h-[90dvh] flex items-center justify-center">
           <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-2">
             <Link
-              href="#"
+              href="/extra/questions-you-might-ask"
               className="border group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <FaInfo size={32} />

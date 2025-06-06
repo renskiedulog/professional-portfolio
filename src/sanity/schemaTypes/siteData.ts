@@ -17,5 +17,33 @@ export const siteData = {
         layout: "dropdown",
       },
     },
+    {
+      name: "qnaItems",
+      type: "array",
+      title: "Questions You Might Ask - Items",
+      of: [
+        {
+          name: "item",
+          type: "object",
+          fields: [
+            {
+              name: "question",
+              type: "string",
+              title: "Question",
+            },
+            {
+              name: "answer",
+              type: "array",
+              title: "Answer",
+              of: [
+                {
+                  type: "block",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ],
 };

@@ -37,7 +37,7 @@ export type StatusType = "busy" | "open" | "project" | "unavailable";
 export const getStatus = async () => {
   try {
     const query = groq`*[_type == "siteData"][0] {
-    ...,
+    status
   }`;
     const req = await sanityClient.fetch(query);
     return req.status;

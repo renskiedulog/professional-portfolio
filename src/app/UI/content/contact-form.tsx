@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 const contactCategories = [
   ["Collaboration", "collaboration"],
   ["Help Request", "help-request"],
-  ["Job Offer", "job-offer", true],
+  ["Question", "question"],
   ["Freelance Work", "freelance-work", true],
   ["Feedback", "feedback"],
   ["Other", "other"],
@@ -87,6 +87,7 @@ export default function ContactForm() {
   return (
     <Form {...form}>
       <form
+        id="contact-form"
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-3 mx-auto border p-5 max-w-lg rounded-lg bg-background shadow"
       >
