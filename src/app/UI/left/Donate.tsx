@@ -21,6 +21,7 @@ const Donate = () => {
               src="/kofi-coin.gif"
               alt="kofi-gif"
               className="object-contain"
+              unoptimized
             />
 
             <Image

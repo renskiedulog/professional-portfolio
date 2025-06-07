@@ -18,13 +18,13 @@ const Extra = () => {
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
-          <BackButton href="/" />
+          <BackButton href="/" label="Homepage" />
         </div>
         <div className="h-[90dvh] flex items-center justify-center">
-          <div className="grid grid-cols-2 md:grid-cols-4 w-full gap-2">
+          <div className="flex flex-wrap w-full gap-2 justify-center">
             <Link
               href="/extra/questions-you-might-ask"
-              className="border group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <FaInfo size={32} />
               <p>Questions You Might Ask</p>
@@ -35,12 +35,12 @@ const Extra = () => {
             </Link>
             <Link
               href="#"
-              className="border group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <GrGift size={32} />
               <p>Coming Soon...</p>
             </Link>
-            <Link
+            {/* <Link
               href="#"
               className="border group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
@@ -53,7 +53,7 @@ const Extra = () => {
             >
               <GrGift size={32} />
               <p>Coming Soon...</p>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </BlurFade>

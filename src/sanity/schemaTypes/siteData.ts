@@ -38,6 +38,7 @@ export const siteData = {
               of: [
                 {
                   type: "block",
+                  styles: [],
                 },
               ],
             },
