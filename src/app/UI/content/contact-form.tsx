@@ -1,6 +1,5 @@
 "use client";
 import { Loader2 } from "lucide-react";
-import { sanityClient } from "@/lib/sanityClient";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -37,7 +37,7 @@ const getBlogPost = async (slug: string) => {
 };
 
 const getNextAndPrevBlogs = async (slug: string) => {
-  const query = groq`*[_type == "blog"] | order(publishedAt desc) {
+  const query = groq`*[_type == "blog" && defined(publishedAt) && publishedAt <= now()] | order(publishedAt desc) | order(publishedAt desc) {
     "slug": slug.current,
     title,
   }`;

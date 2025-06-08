@@ -1,5 +1,4 @@
 import React from "react";
-import { DiMongodb } from "react-icons/di";
 import { BiLogoTypescript, BiLogoJavascript } from "react-icons/bi";
 import {
   RiTailwindCssFill,

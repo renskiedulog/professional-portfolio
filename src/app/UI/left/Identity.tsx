@@ -17,7 +17,7 @@ const Identity = async () => {
   return (
     <div className="flex flex-col items-center">
       <div className="relative">
-        <Avatar className="size-28">
+        <Avatar className="size-28 border">
           <AvatarImage
             src="/me.webp"
             alt="renato-dulog"

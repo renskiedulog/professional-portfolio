@@ -18,5 +18,6 @@ export const structure: StructureResolver = (S) =>
             .id("siteData")
             .schemaType("siteData")
             .documentId("siteData")
+            .title("Site Data")
         ),
     ]);

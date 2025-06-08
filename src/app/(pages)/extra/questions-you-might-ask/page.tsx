@@ -43,7 +43,7 @@ const QuestionsPage = async () => {
         </div>
         <div>
           <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-1">
-            <Heading as="h1" className="text-4xl">
+            <Heading as="h1" className="text-3xl md:text-4xl">
               Questions You Might Ask
             </Heading>
             <p>

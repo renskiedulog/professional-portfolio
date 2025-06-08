@@ -2,11 +2,9 @@ import { MapPin } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import {
-  FaFacebook,
   FaFacebookSquare,
   FaGithub,
   FaLinkedin,
-  FaPhoneAlt,
 } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 

@@ -1,5 +1,3 @@
-import BlogCard from "@/app/UI/blog/blog-card";
-import Container from "@/app/UI/global-components/container";
 import Heading from "@/app/UI/global-components/heading";
 import { Blog } from "@/lib/types";
 import Link from "next/link";

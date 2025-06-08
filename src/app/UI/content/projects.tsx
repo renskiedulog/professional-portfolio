@@ -81,7 +81,13 @@ const projects: Project[] = [
 const Projects = () => {
   return (
     <section id="projects" className="w-full max-w-2xl space-y-3">
-      <Heading>Projects</Heading>
+      <div className="flex justify-between items-end">
+        <Heading>Projects</Heading>
+        <Link href="/works" className="text-sm hover:underline sm:block hidden">
+          See More
+        </Link>
+      </div>
+
       <div className="columns-1 lg:columns-2">
         {projects?.length > 0 &&
           projects?.map((project, index) => (

@@ -1,7 +1,6 @@
 import { Blog } from "@/lib/types";
 import BlogCard from "../blog/blog-card";
 import Heading from "../global-components/heading";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function Blogs() {
@@ -38,7 +37,6 @@ export default async function Blogs() {
                 className="flex-grow flex-1"
                 key={blog.title}
                 blog={blog}
-                index={idx}
               />
             );
           })}

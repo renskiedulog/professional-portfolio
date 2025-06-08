@@ -10,7 +10,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useTheme } from "next-themes";
-import { FaGithub } from "react-icons/fa";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { usePathname } from "next/navigation";
 import { FolderGit2 } from "lucide-react";

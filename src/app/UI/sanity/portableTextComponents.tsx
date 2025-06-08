@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { urlFor } from "@/sanity/lib/image";
 import { getSanityImageUrl } from "@/sanity/lib/sanity";
 
 export const PortableTextComponents = {
@@ -93,7 +92,7 @@ export const PortableTextComponents = {
         {children}
       </h3>
     ),
-    normal: ({ children }: { children: React.ReactNode }) => {
+    normal: ({ children }: { children: any }) => {
       if (children[0]?.length === 0) return <br />;
       return <p className=" leading-relaxed">{children}</p>;
     },
