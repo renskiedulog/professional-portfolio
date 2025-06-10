@@ -5,7 +5,8 @@ import Heading from "@/app/UI/global-components/heading";
 import { sanityClient } from "@/lib/sanityClient";
 import { groq } from "next-sanity";
 import { TypedObject } from "sanity";
-import QuestionCard from "./question-card";
+import QuestionCard from "./question-cards";
+import QuestionCards from "./question-cards";
 
 export const metadata = {
   title: "Questions You Might Ask",
@@ -33,7 +34,6 @@ export const getData = async () => {
 const QuestionsPage = async () => {
   const items: Item[] = await getData();
 
-  console.log(items);
   return (
     <Container as="main">
       <BlurFade className="px-3 sm:px-5">
@@ -51,12 +51,7 @@ const QuestionsPage = async () => {
               and included relevant information you may find useful.
             </p>
           </div>
-          <div className="flex flex-col gap-2 mt-5 items-center md:mb-20">
-            {items &&
-              items?.map((item, idx) => (
-                <QuestionCard key={idx} item={item} index={idx} />
-              ))}
-          </div>
+          {items?.length > 0 && <QuestionCards questions={items} />}
         </div>
       </BlurFade>
     </Container>

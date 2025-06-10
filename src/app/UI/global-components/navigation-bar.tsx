@@ -165,7 +165,7 @@ const NavigationBar = () => {
             ))}
         </div>
         {/* <ThemeToggler /> */}
-        <div className="relative px-2.5 h-[38px] flex items-center justify-center gap-2 pr-3">
+        <div className="relative px-2.5 h-[38px] flex items-center justify-center gap-2 pr-3 ml-0">
           {theme === "dark" ? (
             <motion.div
               key="sun"
