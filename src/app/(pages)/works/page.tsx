@@ -14,7 +14,7 @@ export const metadata = {
 const WorksPage = () => {
   return (
     <Container as="main">
-      <BlurFade>
+      <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/" />
@@ -24,11 +24,11 @@ const WorksPage = () => {
             Personal Projects
           </Heading> */}
           <div className="w-full min-h-[calc(80vh-40px)] flex items-center justify-center flex-col space-y-2 text-center px-5">
-            <p>
-              I'm currently working on this page to showcase my personal
-              projects.
+            <p className="text-sm md:text-base">
+              I'm currently working on this page to offer the best services I
+              can.
             </p>
-            <h1 className="text-5xl font-black text-primary/90 dark:text-primary">
+            <h1 className="text-4xl md:text-5xl font-black text-primary/90 dark:text-primary">
               Under Construction.
             </h1>
             <div className="flex justify-between items-center gap-5">

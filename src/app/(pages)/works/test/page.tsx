@@ -1,22 +1,20 @@
+"use client";
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import Heading from "@/app/UI/global-components/heading";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
-
-export const metadata = {
-  title: "Works",
-  description: "My personal projects and works.",
-};
+import CursorFollower from "@/app/UI/animation-wrappers/cursor-follower";
+import { useState } from "react";
 
 const WorksPage = () => {
+  const [hoveredProject, setHoveredProject] = useState(null);
+
   return (
     <Container as="main">
-      <BlurFade>
+      <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/" />
@@ -30,7 +28,7 @@ const WorksPage = () => {
             </Link>
           </div>
         </div>
-        <div>
+        <div className="cursor-none">
           <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-1">
             <Heading className="w-full text-center text-3xl md:text-4xl">
               Personal Projects
@@ -41,8 +39,24 @@ const WorksPage = () => {
               development and solve problems through code.
             </p>
           </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 relative mt-10">
+            <div
+              className="w-full aspect-square bg-black/20"
+              onMouseEnter={() => setHoveredProject(1)}
+              onMouseLeave={() => setHoveredProject(null)}
+            />
+            <div className="w-full aspect-square bg-black/20" />
+            <div className="w-full aspect-square bg-black/20" />
+            <div className="w-full aspect-square bg-black/20" />
+          </div>
         </div>
       </BlurFade>
+      <CursorFollower hovered={hoveredProject !== null}>
+        <div>
+          <h1 className="text-lg font-bold">Project Title</h1>
+          <p className="text-sm">More info about this project...</p>
+        </div>
+      </CursorFollower>
     </Container>
   );
 };

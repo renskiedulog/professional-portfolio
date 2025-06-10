@@ -51,7 +51,7 @@ const QuestionsPage = async () => {
               and included relevant information you may find useful.
             </p>
           </div>
-          <div className="flex flex-col gap-2 mt-5 items-center">
+          <div className="flex flex-col gap-2 mt-5 items-center md:mb-20">
             {items &&
               items?.map((item, idx) => (
                 <QuestionCard key={idx} item={item} index={idx} />
