@@ -10,7 +10,6 @@ import QuestionCards from "./question-cards";
 
 export const metadata = {
   title: "Questions You Might Ask",
-  description: "My personal projects and works.",
 };
 
 export interface Item {

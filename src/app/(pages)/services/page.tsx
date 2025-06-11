@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Works",
-  description: "My personal projects and works.",
+  title: "Services",
 };
 
 const WorksPage = () => {

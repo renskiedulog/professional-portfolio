@@ -34,6 +34,22 @@ export const metadata: Metadata = {
     "renato dulog",
     "fullstack",
   ],
+  openGraph: {
+    title: "Renato Dulog | Web Portfolio",
+    description:
+      "A digital portfolio showcasing the journey, technical expertise, achievements, and skills behind innovative web development.",
+    url: "https://renato-dulog.vercel.app/",
+    siteName: "Renato Dulog | Web Portfolio",
+    images: [
+      {
+        url: "https://renato-dulog.vercel.app/me.webp",
+        width: 600,
+        height: 600,
+        alt: "Renato Dulog | Web Portfolio",
+      },
+    ],
+    type: "website",
+  },
   authors: [{ name: "Renato Dulog", url: "https://renato-dulog.vercel.app/" }],
   description:
     "A digital portfolio showcasing the journey, technical expertise, achievements, and skills behind innovative web development.",

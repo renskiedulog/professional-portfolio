@@ -4,7 +4,7 @@ import BlogPage from "./blog-page";
 export const revalidate = 3600;
 
 export const metadata = {
-  title: "Blog | Web Portfolio",
+  title: "Blog",
 };
 
 const getData = async () => {

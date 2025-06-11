@@ -8,7 +8,6 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Extra",
-  description: "My personal projects and works.",
 };
 
 const Extra = () => {
