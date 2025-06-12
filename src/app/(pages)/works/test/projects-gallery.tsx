@@ -6,11 +6,18 @@ import Heading from "@/app/UI/global-components/heading";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
-import CursorFollower from "@/app/UI/animation-wrappers/cursor-follower";
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const projects = [
   {
@@ -67,7 +74,8 @@ const projects = [
 ];
 
 const ProjectsGallery = () => {
-  const [hoveredProject, setHoveredProject] = useState(null);
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [openDialogIndex, setOpenDialogIndex] = useState<number | null>(null);
 
   return (
     <Container as="main">
@@ -99,40 +107,93 @@ const ProjectsGallery = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 relative mt-10">
             {projects?.length > 0 &&
               projects?.map((project, index) => (
-                <motion.div
-                  key={`${project?.title}-${index}`}
-                  onMouseEnter={() => setHoveredProject(index)}
-                  onMouseLeave={() => setHoveredProject(null)}
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    delay: index * 0.15,
-                    duration: 0.5,
-                    ease: "easeOut",
-                  }}
-                  className="w-full aspect-square relative border-primary border rounded group flex-col justify-center items-center overflow-hidden flex"
-                >
-                  {project?.image && (
-                    <Image
-                      src={project?.image}
-                      width={400}
-                      height={400}
-                      alt={project?.title}
-                      className="absolute inset-0 w-full h-full object-cover rounded group-hover:brightness-[0.3] transition-all ease-in-out duration-300"
-                    />
-                  )}
-                  {project?.title && (
-                    <div className="transition-all ease-in-out duration-300 opacity-0 hidden group-hover:block group-hover:opacity-100 text-white z-50 font-semibold text-xl p-2 text-center">
-                      <p className="mb-2">{project?.title}</p>
-                      <Link
-                        href="#"
-                        className="transition ease-in-out duration-300 border background-transparent p-2 text-sm font-extralight hover:bg-white hover:border-primary hover:text-primary"
-                      >
-                        MORE INFO
-                      </Link>
+                <Dialog key={`${project?.title}-${index}`}>
+                  <DialogTrigger asChild>
+                    <motion.div
+                      onMouseEnter={() => setHoveredProject(index)}
+                      onMouseLeave={() => setHoveredProject(null)}
+                      onClick={() => setOpenDialogIndex(index)}
+                      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{
+                        delay: index * 0.15,
+                        duration: 0.5,
+                        ease: "easeOut",
+                      }}
+                      className="w-full aspect-square relative border-primary border rounded group flex-col justify-center items-center overflow-hidden flex cursor-pointer"
+                    >
+                      {project?.image && (
+                        <Image
+                          src={project?.image}
+                          width={400}
+                          height={400}
+                          alt={project?.title}
+                          className="absolute inset-0 w-full h-full object-cover rounded group-hover:brightness-[0.3] transition-all ease-in-out duration-300"
+                        />
+                      )}
+                      {project?.title && (
+                        <div className="transition-all ease-in-out duration-300 opacity-0 hidden group-hover:block group-hover:opacity-100 text-white z-50 font-semibold text-xl p-2 text-center">
+                          <p className="mb-2">{project?.title}</p>
+                          <span className="transition ease-in-out duration-300 border background-transparent p-2 text-sm font-extralight hover:bg-white hover:border-primary hover:text-primary">
+                            MORE INFO
+                          </span>
+                        </div>
+                      )}
+                    </motion.div>
+                  </DialogTrigger>
+                  <DialogContent
+                    className="max-w-2xl w-full p-0 overflow-hidden"
+                    onOpenAutoFocus={(e) => e.preventDefault()}
+                    open={openDialogIndex === index}
+                  >
+                    <div className="flex flex-col md:flex-row gap-6 p-6">
+                      <div className="flex-shrink-0 w-full md:w-1/2 flex items-center justify-center">
+                        <Image
+                          src={project.image}
+                          width={400}
+                          height={400}
+                          alt={project.title}
+                          className="rounded-lg object-cover w-full h-64 md:h-80"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-3 w-full md:w-1/2">
+                        <DialogHeader>
+                          <DialogTitle>{project.title}</DialogTitle>
+                          <DialogDescription>
+                            {project.description}
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {project.stacks?.map((stack, i) => (
+                            <Badge key={i} variant="secondary">
+                              {stack}
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="flex gap-3 mt-4">
+                          {project.githubLink && (
+                            <Link
+                              href={project.githubLink}
+                              target="_blank"
+                              className="underline text-primary font-medium flex items-center gap-1"
+                            >
+                              <FaGithub /> Github
+                            </Link>
+                          )}
+                          {project.liveUrl && (
+                            <Link
+                              href={project.liveUrl}
+                              target="_blank"
+                              className="underline text-primary font-medium"
+                            >
+                              Live Site
+                            </Link>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  )}
-                </motion.div>
+                  </DialogContent>
+                </Dialog>
               ))}
           </div>
         </div>

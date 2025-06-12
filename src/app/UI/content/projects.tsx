@@ -13,7 +13,7 @@ import { Star } from "lucide-react";
 import { getRepoStarsFromLink } from "@/lib/github";
 import { Url } from "next/dist/shared/lib/router/router";
 
-interface Project {
+export interface Project {
   title: String;
   description?: String;
   image?: String;
