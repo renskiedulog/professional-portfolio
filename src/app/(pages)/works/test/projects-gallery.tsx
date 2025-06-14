@@ -146,14 +146,14 @@ const ProjectsGallery = () => {
                     onOpenAutoFocus={(e) => e.preventDefault()}
                     open={openDialogIndex === index}
                   >
-                    <div className="flex flex-col md:flex-row gap-6 p-6">
+                    <div className="flex flex-col md:flex-row gap-6 p-6 border">
                       <div className="flex-shrink-0 w-full md:w-1/2 flex items-center justify-center">
                         <Image
                           src={project.image}
                           width={400}
                           height={400}
                           alt={project.title}
-                          className="rounded-lg object-cover w-full h-64 md:h-80"
+                          className="rounded-lg object-cover w-full h-64 md:h-80 border"
                         />
                       </div>
                       <div className="flex flex-col gap-3 w-full md:w-1/2">

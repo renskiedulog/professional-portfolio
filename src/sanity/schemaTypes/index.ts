@@ -7,6 +7,7 @@ import { authorType } from "./authorType";
 import { customBlockContent } from "./types/customBlockContent";
 import { formSubmissions } from "./formSubmission";
 import { siteData } from "./siteData";
+import { projects } from "./projects";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -16,6 +17,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     authorType,
     customBlockContent,
     formSubmissions,
-    siteData
+    siteData,
+    projects,
   ],
 };

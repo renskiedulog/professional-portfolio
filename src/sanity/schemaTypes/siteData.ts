@@ -1,7 +1,10 @@
+import { FaDatabase } from "react-icons/fa";
+
 export const siteData = {
   name: "siteData",
   title: "Site Data",
   type: "document",
+  icon: FaDatabase,
   fields: [
     {
       name: "status",
