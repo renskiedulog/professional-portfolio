@@ -31,9 +31,9 @@ const QuestionCards = ({ questions }: { questions: Item[] }) => {
             }
             className="w-full flex justify-between items-center text-left gap-5"
           >
-            <h3 className="text-base sm:text-lg font-semibold">
+            <h2 className="text-base sm:text-lg font-semibold">
               {item.question}
-            </h3>
+            </h2>
             <motion.div
               animate={{ rotate: openIndex === index ? 180 : 0 }}
               transition={{ duration: 0.3 }}

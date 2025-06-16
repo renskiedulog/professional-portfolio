@@ -9,6 +9,9 @@ import Link from "next/link";
 export const metadata = {
   title: "Works",
   description: "My personal projects and works.",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/works`,
+  },
 };
 
 const WorksPage = () => {

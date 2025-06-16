@@ -8,6 +8,9 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Extra",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra`,
+  },
 };
 
 const Extra = () => {

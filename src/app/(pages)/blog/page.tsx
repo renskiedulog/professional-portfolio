@@ -5,6 +5,9 @@ export const revalidate = 3600;
 
 export const metadata = {
   title: "Blog",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/blog`,
+  },
 };
 
 const getData = async () => {

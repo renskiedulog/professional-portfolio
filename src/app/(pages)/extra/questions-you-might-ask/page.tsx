@@ -10,6 +10,9 @@ import QuestionCards from "./question-cards";
 
 export const metadata = {
   title: "Questions You Might Ask",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra/questions-you-might-ask`,
+  },
 };
 
 export interface Item {
