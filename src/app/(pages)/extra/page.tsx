@@ -3,7 +3,6 @@ import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import { FaArrowRight, FaInfo } from "react-icons/fa6";
 import { GrGift } from "react-icons/gr";
-
 import Link from "next/link";
 
 export const metadata = {

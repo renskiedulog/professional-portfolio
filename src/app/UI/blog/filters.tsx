@@ -1,5 +1,4 @@
 "use client";
-
 import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";

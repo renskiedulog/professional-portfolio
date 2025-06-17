@@ -1,5 +1,4 @@
 import React from "react";
-
 interface ContainerProps<T extends React.ElementType = "div">
   extends React.HTMLAttributes<T> {
   as?: T;

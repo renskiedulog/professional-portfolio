@@ -1,5 +1,4 @@
 import React from "react";
-
 type HeadingProps<T extends React.ElementType> = {
   as?: T;
   className?: string;
