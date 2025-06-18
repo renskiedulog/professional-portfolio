@@ -17,6 +17,13 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const projects = [
   {
@@ -141,19 +148,46 @@ const ProjectsGallery = () => {
                     </motion.div>
                   </DialogTrigger>
                   <DialogContent
-                    className="max-w-2xl w-full p-0 overflow-hidden"
+                    className="max-w-3xl w-full p-0 overflow-hidden bg-background"
                     onOpenAutoFocus={(e) => e.preventDefault()}
                     open={openDialogIndex === index}
                   >
                     <div className="flex flex-col md:flex-row gap-6 p-6 border">
                       <div className="flex-shrink-0 w-full md:w-1/2 flex items-center justify-center">
-                        <Image
-                          src={project.image}
-                          width={400}
-                          height={400}
-                          alt={project.title}
-                          className="rounded-lg object-cover w-full h-64 md:h-80 border"
-                        />
+                        <div className="flex flex-col gap-2">
+                          <Image
+                            src={project.image}
+                            width={400}
+                            height={400}
+                            alt={project.title}
+                            className="rounded-lg object-cover w-full h-64 md:h-80 border"
+                          />
+                          <Carousel
+                            opts={{
+                              align: "start",
+                            }}
+                            className="w-full "
+                          >
+                            <CarouselContent>
+                              {Array.from({ length: 5 }).map((_, index) => (
+                                <CarouselItem
+                                  key={index}
+                                  className="basis-1/4 md:basis-1/3"
+                                >
+                                  <Image
+                                    src={project.image}
+                                    width={800}
+                                    height={800}
+                                    alt={project.title}
+                                    className="rounded-lg object-cover h-20 w-full border"
+                                  />
+                                </CarouselItem>
+                              ))}
+                            </CarouselContent>
+                            <CarouselPrevious className="translate-x-8" />
+                            <CarouselNext className="-translate-x-8" />
+                          </Carousel>
+                        </div>
                       </div>
                       <div className="flex flex-col gap-3 w-full md:w-1/2">
                         <DialogHeader>
