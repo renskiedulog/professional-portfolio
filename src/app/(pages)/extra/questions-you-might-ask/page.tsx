@@ -7,6 +7,7 @@ import { groq } from "next-sanity";
 import { TypedObject } from "sanity";
 import QuestionCard from "./question-cards";
 import QuestionCards from "./question-cards";
+import Crown from "@/app/UI/global-components/crown";
 
 export const metadata = {
   title: "Questions You Might Ask",
@@ -44,7 +45,8 @@ const QuestionsPage = async () => {
           <BackButton href="/extra" label="Extra" />
         </div>
         <div>
-          <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-1">
+          <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
+            <Crown>General Info</Crown>
             <Heading as="h1" className="text-3xl md:text-4xl">
               Questions You Might Ask
             </Heading>

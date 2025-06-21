@@ -24,6 +24,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Crown from "@/app/UI/global-components/crown";
 
 const projects = [
   {
@@ -100,9 +101,10 @@ const ProjectsGallery = () => {
           </div>
         </div>
         <div className="relative">
-          <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-1">
+          <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
+            <Crown>Work Portfolio</Crown>
             <Heading className="w-full text-center text-3xl md:text-4xl">
-              Personal Projects
+              Selected Projects
             </Heading>
             <p>
               Browse a variety of projects I’ve worked on, covering different

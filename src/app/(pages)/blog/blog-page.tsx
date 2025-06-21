@@ -14,7 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
   const searchParams = useSearchParams();
-  const [toggleFilter, setToggleFilter] = useState(false);
+  const [toggleFilter, setToggleFilter] = useState(true);
   const [search, setSearch] = useState<null | string>(null);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const category = searchParams.get("category");
@@ -141,23 +141,22 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                           </BlurFade>
                         ) : null
                       )}
-
-                    {blogs &&
-                      !blogs.some(
-                        (blog) =>
-                          !selectedFilters?.length ||
-                          selectedFilters.every((filter) =>
-                            blog?.categories?.includes(filter as never)
-                          )
-                      ) && (
-                        <BlurFade
-                          id="empty"
-                          className="col-span-full text-center text-xl font-bold text-primary/90 py-5"
-                        >
-                          No blogs match your selected filters.
-                        </BlurFade>
-                      )}
                   </div>
+                  {blogs &&
+                    !blogs.some(
+                      (blog) =>
+                        !selectedFilters?.length ||
+                        selectedFilters.every((filter) =>
+                          blog?.categories?.includes(filter as never)
+                        )
+                    ) && (
+                      <BlurFade
+                        id="empty"
+                        className="text-center text-lg font-bold text-primary/90 py-2"
+                      >
+                        No blogs match your selected filters.
+                      </BlurFade>
+                    )}
                 </div>
               </BlurFade>
             </section>

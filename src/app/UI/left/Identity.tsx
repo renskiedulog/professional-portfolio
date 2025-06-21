@@ -5,12 +5,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import {
-  getStatus,
-  states,
-  StatusType,
-} from "@/app/(pages)/services/test/page";
+
 import { Badge } from "@/components/ui/badge";
+import { getStatus, states, StatusType } from "@/app/(pages)/services/page";
 
 const Identity = async () => {
   const status: StatusType = (await getStatus()) ?? "busy";

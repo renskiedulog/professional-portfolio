@@ -31,7 +31,7 @@ const Donate = () => {
               className="h-auto w-16 object-contain translate-y-0.5"
             />
           </Link>
-          <a
+          {/* <a
             href="https://www.buymeacoffee.com/renatodulog"
             target="_blank"
             rel="noopener noreferrer"
@@ -40,7 +40,7 @@ const Donate = () => {
               alt="buy-me-a-coffee-logo"
               src="https://img.buymeacoffee.com/button-api/?text=Buy Me A Coffee&emoji=&slug=renatodulog&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"
             />
-          </a>
+          </a> */}
         </div>
       </div>
     </>
