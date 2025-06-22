@@ -92,7 +92,11 @@ const ProjectsGallery = () => {
           <BackButton href="/" />
           <div className="flex items-center gap-2">
             <p className="text-xs">Consider following me on</p>
-            <Link href="https://github.com/renskiedulog" target="_blank">
+            <Link
+              href="https://github.com/renskiedulog"
+              target="_blank"
+              aria-label="Visit My Github Profile"
+            >
               <Badge className="flex items-center gap-1.5 px-3 sm:px-4 py-1 sm:py-1.5">
                 <FaGithub size={15} />
                 <span>Github</span>
@@ -211,6 +215,7 @@ const ProjectsGallery = () => {
                               href={project.githubLink}
                               target="_blank"
                               className="underline text-primary font-medium flex items-center gap-1"
+                              aria-label={`Visit ${project?.title}'s github repository`}
                             >
                               <FaGithub /> Github
                             </Link>
@@ -220,6 +225,7 @@ const ProjectsGallery = () => {
                               href={project.liveUrl}
                               target="_blank"
                               className="underline text-primary font-medium"
+                              aria-label={`Visit ${project?.title}'s live site`}
                             >
                               Live Site
                             </Link>

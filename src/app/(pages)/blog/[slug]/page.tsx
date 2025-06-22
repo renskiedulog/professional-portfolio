@@ -173,6 +173,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
                         href={`/blog?category=${category}`}
                         key={category}
                         className="text-primary/80 text-sm hover:bg-foreground/10 px-1.5 py-1 rounded"
+                        aria-label={`View posts in the ${category} category`}
                       >
                         # {category}
                       </Link>
@@ -198,6 +199,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 {categories?.map((category: string) => (
                   <Link
                     href={`/blog?category=${category}`}
+                    aria-label={`View posts in the ${category} category`}
                     key={category}
                     className="text-primary/80 text-sm hover:bg-foreground/10 px-1.5 py-1 rounded"
                   >

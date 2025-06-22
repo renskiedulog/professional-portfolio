@@ -44,7 +44,10 @@ const BlogCard = ({ blog, className }: { blog: Blog; className?: string }) => {
           <p className="text-xs text-muted-foreground mt-1">
             {format(new Date(blog?.publishedAt), "MMM dd, yyyy")}
           </p>
-          <Link href={`/blog/${blog?.slug}`}>
+          <Link
+            href={`/blog/${blog?.slug}`}
+            aria-label={`Visit the blog post titled ${blog?.title}`}
+          >
             <Button className="text-xs" variant="default" size="sm">
               Read More
             </Button>

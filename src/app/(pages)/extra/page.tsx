@@ -24,7 +24,7 @@ const Extra = () => {
           <div className="flex flex-wrap w-full gap-2 justify-center">
             <Link
               href="/extra/questions-you-might-ask"
-              className="border flex-1 md:flex-none basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <FaInfo size={32} />
               <p>Questions You Might Ask</p>
@@ -35,7 +35,7 @@ const Extra = () => {
             </Link>
             <Link
               href="#"
-              className="border flex-1 md:flex-none basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <GrGift size={32} />
               <p>Coming Soon...</p>

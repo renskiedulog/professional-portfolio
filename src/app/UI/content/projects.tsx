@@ -192,7 +192,11 @@ const ProjectCard = async ({ project }: { project: Project }) => {
             </Tooltip> */}
             {/* )} */}
             {project?.githubLink ? (
-              <Link href={project?.githubLink as string} target="_blank">
+              <Link
+                href={project?.githubLink as string}
+                target="_blank"
+                aria-label={`Visit ${project?.githubLink}'s github repository`}
+              >
                 <Button className="text-xs" size="sm" variant="ghost">
                   <FaGithub /> Code
                 </Button>
@@ -203,14 +207,24 @@ const ProjectCard = async ({ project }: { project: Project }) => {
               </Button>
             )}
             {project?.liveUrl ? (
-              <Link href={project?.liveUrl as Url} target="_blank">
+              <Link
+                href={project?.liveUrl as Url}
+                target="_blank"
+                aria-label={`Visit ${project?.title}'s live site`}
+              >
                 <Button className="text-xs" variant="default" size="sm">
                   <FaLink />
                   {project?.liveUrl ? "Live Preview" : "No Preview"}
                 </Button>
               </Link>
             ) : (
-              <Button disabled className="text-xs" variant="default" size="sm">
+              <Button
+                disabled
+                className="text-xs"
+                variant="default"
+                size="sm"
+                aria-label={`Visit ${project?.title}'s live site`}
+              >
                 <FaLink />
                 {project?.liveUrl ? "Live Preview" : "No Preview"}
               </Button>

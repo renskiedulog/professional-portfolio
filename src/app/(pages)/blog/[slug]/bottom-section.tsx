@@ -14,17 +14,21 @@ const BottomSection = ({
         <div className="flex flex-col gap-2 max-w-xs">
           <Heading className="!text-xl sm:!text-3xl">Previous</Heading>
           <Link
+            aria-label={`Read previous post: ${prevAndNext?.previousBlog?.title}`}
             href={`/blog/${prevAndNext?.previousBlog?.slug}`}
             className="hover:text-blue-500 text-sm sm:text-base"
           >
             {prevAndNext?.previousBlog?.title}
           </Link>
         </div>
-      ) : <span></span>}
+      ) : (
+        <span></span>
+      )}
       {prevAndNext?.nextBlog !== null ? (
         <div className="flex flex-col gap-2 max-w-xs text-right">
           <Heading className="!text-xl sm:!text-3xl">Next</Heading>
           <Link
+            aria-label={`Read next post: ${prevAndNext?.nextBlog?.title}`}
             href={`/blog/${prevAndNext?.nextBlog?.slug}`}
             className="hover:text-blue-500 text-sm sm:text-base"
           >

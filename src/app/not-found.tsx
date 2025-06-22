@@ -11,7 +11,12 @@ const NotFound = () => {
       <h1 className="text-5xl font-black text-primary/90 dark:text-primary">
         Page Not Found.
       </h1>
-      <Link prefetch={false} href="/" className="!mt-5">
+      <Link
+        prefetch={false}
+        href="/"
+        className="!mt-5"
+        aria-label="Go Back To Homepage"
+      >
         <Button>Go Back To Homepage</Button>
       </Link>
     </div>

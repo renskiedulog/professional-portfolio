@@ -36,15 +36,14 @@ const links = [
     icon: LiaFileContractSolid,
     link: "/services",
   },
-    {
+  {
     label: "Extra",
     icon: MdOutlineDashboardCustomize,
     link: "/extra",
   },
 ];
 
-const socials: { label: string, icon: any, link: string}[] = [
-];
+const socials: { label: string; icon: any; link: string }[] = [];
 
 const NavigationBar = () => {
   const { setTheme, theme } = useTheme();
@@ -135,6 +134,7 @@ const NavigationBar = () => {
                   <Link
                     href={link?.link ?? "#"}
                     className="text-xs first:rounded-l-full first:pl-3.5 p-2.5 hover:bg-primary/10 transition-all duration-150 ease-linear"
+                    aria-label={`Go to ${link?.label || "link destination"}`}
                   >
                     {<link.icon size={18} fontWeight="light" />}
                   </Link>
