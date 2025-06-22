@@ -19,6 +19,7 @@ const Identity = async () => {
             src="/me.webp"
             alt="renato-dulog"
             className="object-cover object-bottom"
+            loading="eager"
             width={100}
             height={100}
           />
@@ -41,9 +42,12 @@ const Identity = async () => {
       <p className="text-sm opacity-50 font-medium text-center">
         Software Engineer | Web Developer
       </p>
-      <Badge
-        className={`mt-1 shadow-sm sm:hidden block border-primary/10 border ${states[status]?.style}`}
-      >
+      <Badge className="shadow-sm border-primary/50 rounded border bg-transparent text-primary mt-2 py-1 sm:hidden">
+        <div className={`w-2 h-2 mr-2 ${states[status]?.style}`}>
+          <div
+            className={`w-2 h-2 mr-2 animate-ping ${states[status]?.style}`}
+          ></div>
+        </div>
         {states[status]?.text}
       </Badge>
     </div>
