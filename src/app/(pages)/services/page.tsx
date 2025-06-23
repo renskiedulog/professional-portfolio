@@ -58,7 +58,7 @@ const ServicePage = async () => {
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/" />
-          <Badge className="shadow-sm border-primary border bg-transparent text-primary rounded-none">
+          <Badge className="shadow-sm hover:bg-transparent border-primary border bg-transparent text-primary rounded-none">
             <div className={`w-2 h-2 mr-2 ${states[status]?.style}`}>
               <div
                 className={`w-2 h-2 mr-2 animate-ping ${states[status]?.style}`}

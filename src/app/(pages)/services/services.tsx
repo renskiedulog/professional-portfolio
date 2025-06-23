@@ -47,7 +47,7 @@ const Services = () => {
                 <service.logo size={24} />
               </div>
               <div className="transition-all">
-                <h2 className="font-thin text-lg mt-2 transition-all">
+                <h2 className="font-normal sm:font-thin text-lg mt-2 transition-all">
                   {service?.title}
                 </h2>
                 <div className="w-10 h-[0.5px] group-hover:h-[2px] bg-primary group-hover:w-full transition-all ease-in-out duration-150" />
@@ -58,7 +58,7 @@ const Services = () => {
               {service?.stacks?.length > 0 &&
                 service?.stacks?.map((stack, index) => (
                   <div
-                    className="flex items-center gap-2 text-sm font-thin"
+                    className="flex items-center gap-2 text-sm font-normal sm:font-thin"
                     key={index}
                   >
                     <div className="w-1.5 h-1.5 bg-primary/80" />
