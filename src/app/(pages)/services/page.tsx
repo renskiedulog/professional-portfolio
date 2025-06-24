@@ -53,7 +53,7 @@ const ServicePage = async () => {
   const status: StatusType = (await getStatus()) ?? "busy";
 
   return (
-    <Container as="main">
+    <Container as="main" className="pb-20 sm:pb-10">
       <BlurFade className="px-3 sm:px-5" key="services-page">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
