@@ -18,6 +18,7 @@ import IncrementView from "./increment-view";
 import { Blog } from "@/lib/types";
 import BottomSection from "./bottom-section";
 import LikeButton from "./like-button";
+import BlogSchema from "./blog-schema";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && slug.current == $slug][0] {
@@ -131,6 +132,14 @@ const page = async ({ params }: { params: { slug: string } }) => {
 
   return (
     <Container as="article">
+      <BlogSchema
+        coverImage={getSanityImageUrl(mainImage)}
+        date={publishedAt}
+        description={description}
+        slug={params?.slug}
+        title={title}
+        key={title}
+      />
       <ScrollProgress />
       <IncrementView slug={slug} />
       <BlurFade className="px-3 sm:px-5 pb-20">

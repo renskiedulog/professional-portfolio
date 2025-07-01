@@ -10,7 +10,7 @@ export default async function Blogs() {
     const req = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/get-blogs`,
       {
-        cache: "no-store",
+        next: { revalidate: 86400 },
       }
     );
     blogs = await req.json();

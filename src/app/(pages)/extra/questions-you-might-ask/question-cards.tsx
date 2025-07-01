@@ -6,12 +6,14 @@ import { PortableText } from "@portabletext/react";
 import { ChevronDown } from "lucide-react";
 import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
 import { Item } from "./page";
+import QymaSchema from "./qyma-schema";
 
 const QuestionCards = ({ questions }: { questions: Item[] }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <div className="w-full flex flex-col gap-2 mt-5 items-center md:mb-20">
+      <QymaSchema questions={questions} />
       {questions?.map((item, index) => (
         <motion.div
           key={`question-card-${index}`}
@@ -26,6 +28,10 @@ const QuestionCards = ({ questions }: { questions: Item[] }) => {
         >
           {/* Question Toggle */}
           <button
+            aria-expanded={openIndex === index}
+            aria-controls={`answer-${index}`}
+            id={`question-${index}`}
+            type="button"
             onClick={() =>
               setOpenIndex((prev) => (prev === index ? null : index))
             }
@@ -52,6 +58,9 @@ const QuestionCards = ({ questions }: { questions: Item[] }) => {
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className="overflow-hidden mt-3 text-primary/80 dark:text-primary"
+                id={`answer-${index}`}
+                role="region"
+                aria-labelledby={`question-${index}`}
               >
                 <PortableText
                   value={item.answer}
