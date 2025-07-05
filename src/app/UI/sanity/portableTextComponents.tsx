@@ -16,25 +16,30 @@ export const PortableTextComponents = {
         />
       </div>
     ),
-    youtube: ({ value }: { value: any }) => {
-      const extractVideoId = (url: string) => {
+    youtube: ({ value }: { value: { url: string } }) => {
+      const extractVideoId = (url: string): string | null => {
         const match = url.match(
-          /(?:youtube\.com\/(?:[^\/]+\/[^\/]+|(?:v|e(?:mbed)?)|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/
+          /(?:youtube\.com\/(?:[^/]+\/[^/]+|(?:v|e(?:mbed)?)|.*[?&]v=)|youtu\.be\/)([^"&?/ ]{11})/
         );
         return match ? match[1] : null;
       };
+
       const videoId = extractVideoId(value.url);
 
-      return videoId ? (
+      if (!videoId) return null;
+
+      return (
         <div className="my-6 aspect-w-16 aspect-video">
           <iframe
             className="w-full h-full rounded-lg"
-            src={`https://www.youtube.com/embed/${videoId}`}
-            title="YouTube video"
+            src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
+            loading="lazy"
           />
         </div>
-      ) : null;
+      );
     },
     border: ({ children }: { children: React.ReactNode }) => (
       <div className="w-full h-0.5 bg-primary/10 rounded-lg my-2" />

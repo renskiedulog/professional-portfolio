@@ -56,6 +56,7 @@ const BlogCard = ({ blog, className }: { blog: Blog; className?: string }) => {
               size="sm"
             >
               Read More
+              <span className="sr-only">Read more about {blog?.title}</span>
             </Button>
           </Link>
         </div>

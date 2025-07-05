@@ -1,5 +1,6 @@
 import React from "react";
 import ContactForm from "./contact-form";
+import Crown from "../global-components/crown";
 
 const Footer = () => {
   return (
@@ -27,9 +28,7 @@ const Footer = () => {
         </p>
       </div>
       <div className="relative flex justify-center items-center gap-5">
-        <span className="bg-primary/30 h-[1px] w-28"></span>
-        <p className="font-bold text-primary/50">OR</p>
-        <span className="bg-primary/30 h-[1px] w-28"></span>
+        <Crown>Or Use The Form Below</Crown>
       </div>
       <ContactForm />
       {/* Copyright */}

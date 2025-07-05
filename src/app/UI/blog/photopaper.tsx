@@ -26,7 +26,7 @@ const PhotoPaper = ({
         alt={alt || "Photograph"}
         width={size?.width ?? 500}
         height={size?.height ?? 500}
-        loading="lazy"
+        loading="eager"
         className={cn(className, "rounded-md")}
       />
     </div>
