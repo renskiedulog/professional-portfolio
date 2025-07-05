@@ -26,10 +26,13 @@ export default async function Blogs() {
         <Heading>Blogs And Case Studies</Heading>
         <Link
           href="/blog"
-          aria-label="See more blogs"
+          aria-label="Go to blogs page"
           className="text-sm hover:underline sm:block hidden"
         >
           See More
+          <span className="sr-only">
+            Navigate to the Blogs page to view more blog posts
+          </span>
         </Link>
       </div>
       <div className="gap-2 flex md:flex-col lg:flex-row sm:flex-row flex-col">

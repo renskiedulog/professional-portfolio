@@ -89,6 +89,9 @@ const Projects = () => {
           className="text-sm hover:underline sm:block hidden"
         >
           See More
+          <span className="sr-only">
+            Navigate to the Works page to view more projects
+          </span>
         </Link>
       </div>
 
