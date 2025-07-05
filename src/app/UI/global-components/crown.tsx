@@ -17,9 +17,9 @@ const Crown = ({
         className
       )}
     >
-      <div className={`${width ? width : "w-10"} h-[0.5px] bg-black`}></div>
+      <div className={`${width ? width : "w-10"} h-[0.5px] bg-primary`}></div>
       <span>{children}</span>
-      <div className={`${width ? width : "w-10"} h-[0.5px] bg-black`}></div>
+      <div className={`${width ? width : "w-10"} h-[0.5px] bg-primary`}></div>
     </div>
   );
 };

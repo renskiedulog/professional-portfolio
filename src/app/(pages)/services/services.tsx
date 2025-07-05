@@ -2,21 +2,36 @@ import { Database } from "lucide-react";
 import React from "react";
 import { FaComputer } from "react-icons/fa6";
 import { HiLightningBolt } from "react-icons/hi";
+import { FaRegKeyboard } from "react-icons/fa";
+import { GiRobotGrab } from "react-icons/gi";
+import { LuNotebookPen } from "react-icons/lu";
 
 const services = [
   {
     logo: FaComputer,
     title: "Frontend Development",
     description:
-      "Modern, responsive web applications using React, Next.js, and TypeScript with pixel-perfect design implementation",
-    stacks: ["Next JS", "Typescript", "React", "Responsive Design"],
+      "Modern, responsive websites and apps using React, Next.js, and TypeScript with pixel-perfect design implementation.",
+    stacks: [
+      "One-Page Websites",
+      "Portfolios",
+      "Product Sites",
+      "Landing Pages",
+      "Full Websites",
+    ],
   },
   {
     logo: Database,
     title: "Backend Development",
     description:
-      "Scalable server-side solutions with Node.js, databases, and API development for robust applications.",
-    stacks: ["Node JS", "Express", "REST API", "Sanity", "Supabase"],
+      "Scalable server-side solutions using Node.js, Express, Supabase, and Sanity for API development and database management.",
+    stacks: [
+      "Content Management",
+      "Admin Panels",
+      "REST APIs",
+      "Auth Systems",
+      "Dashboards",
+    ],
   },
   {
     logo: HiLightningBolt,
@@ -24,18 +39,52 @@ const services = [
     description:
       "Speed optimization, SEO improvements, and best practices for exceptional user experiences.",
     stacks: [
-      "Core Web Vitals",
       "SEO",
       "Lighthouse",
       "Google Search Console",
       "Speed Optimizations",
+      "UI/UX Testing",
+      "QA Testing",
+    ],
+  },
+  {
+    logo: FaRegKeyboard,
+    title: "Data Entry Services",
+    description:
+      "Accurate and efficient data input across CMS platforms, documents, spreadsheets, and more.",
+    stacks: [
+      "CMS (Wordpress, Sanity, etc.)",
+      "Google Docs",
+      "Spreadsheets",
+      "Content Uploads",
+      "Database Entry",
+    ],
+  },
+  {
+    logo: GiRobotGrab,
+    title: "Workflow Automation",
+    description:
+      "Streamline repetitive tasks with no-code tools, custom scripts, and smart integrations.",
+    stacks: ["n8n", "Google Apps Script", "Zapier", "Sheet Integrations"],
+  },
+  {
+    logo: LuNotebookPen,
+    title: "Technical Consulting",
+    description:
+      "Expert guidance on choosing the right tech stack, improving infrastructure, and solving complex problems.",
+    stacks: [
+      "Architecture Planning",
+      "Tech Stack Advising",
+      "API Integrations",
+      "System Optimization",
+      "Scalability Planning",
     ],
   },
 ];
 
 const Services = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 mt-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 mt-10">
       {services?.length > 0 &&
         services?.map((service, idx) => (
           <div
