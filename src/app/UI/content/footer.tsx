@@ -11,14 +11,14 @@ const Footer = () => {
         <p className="text-lg px-3 sm:px-0">
           Feel free to send a message on{" "}
           <a
-            className="text-blue-500 hover:text-blue-700"
+            className="text-blue-700 hover:text-blue-900"
             href="https://web.facebook.com/renato.dulog"
           >
             Facebook
           </a>{" "}
           or{" "}
           <a
-            className="text-blue-500 hover:text-blue-700"
+            className="text-blue-700 hover:text-blue-900"
             href="https://discord.com/users/901746145095712768"
           >
             Discord

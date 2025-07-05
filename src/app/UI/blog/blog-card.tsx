@@ -47,8 +47,14 @@ const BlogCard = ({ blog, className }: { blog: Blog; className?: string }) => {
           <Link
             href={`/blog/${blog?.slug}`}
             aria-label={`Visit the blog post titled ${blog?.title}`}
+            id={`${blog?.title} blog page`}
           >
-            <Button className="text-xs" variant="default" size="sm">
+            <Button
+              className="text-xs"
+              aria-labelledby={`${blog?.title} blog page`}
+              variant="default"
+              size="sm"
+            >
               Read More
             </Button>
           </Link>

@@ -12,23 +12,12 @@ const Donate = () => {
             href="https://ko-fi.com/X7X31EMD3Z"
             target="_blank"
             rel="noopener noreferrer"
-            className="group pl-2 pr-4 rounded-xl pb-1.5 pt-1 flex gap-1 item-end bg-red-400 w-max"
           >
             <Image
-              width={40}
-              height={40}
-              src="/kofi-coin.gif"
-              alt="kofi-gif"
-              className="object-contain"
-              unoptimized
-            />
-
-            <Image
-              width={100}
-              height={100}
-              src="/kofi-logo.png"
+              src="/kofi.webp"
               alt="Buy Me a Coffee at ko-fi.com"
-              className="h-auto w-16 object-contain translate-y-0.5"
+              height={150}
+              width={150}
             />
           </Link>
           {/* <a

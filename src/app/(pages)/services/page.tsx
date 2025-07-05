@@ -67,6 +67,7 @@ const ServicePage = async () => {
             {states[status]?.text}
           </Badge>
         </div>
+        {/* Services */}
         <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
           <Crown>Services Offered</Crown>
           <Heading className="w-full text-center text-3xl md:text-4xl">
@@ -77,8 +78,18 @@ const ServicePage = async () => {
             life with modern technologies and best practices.
           </p>
         </div>
-        {/* Services */}
         <Services />
+        {/* How I Work */}
+        <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
+          <Crown>How It Goes</Crown>
+          <Heading className="w-full text-center text-3xl md:text-4xl">
+            From Task To Deliver
+          </Heading>
+          <p>
+            A streamlined process that transforms your ideas into fully
+            delivered, high-quality digital solutions.
+          </p>
+        </div>
       </BlurFade>
     </Container>
   );

@@ -24,7 +24,11 @@ export default async function Blogs() {
     <section id="blogs" className="w-full space-y-3">
       <div className="flex justify-between items-end">
         <Heading>Blogs And Case Studies</Heading>
-        <Link href="/blog" className="text-sm hover:underline sm:block hidden">
+        <Link
+          href="/blog"
+          aria-label="See more blogs"
+          className="text-sm hover:underline sm:block hidden"
+        >
           See More
         </Link>
       </div>

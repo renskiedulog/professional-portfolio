@@ -99,14 +99,14 @@ export async function generateMetadata({
   };
 }
 
-// export async function generateStaticParams() {
-//   const query = groq`*[_type == "blog"] { "slug": slug.current }`;
-//   const slugs = await sanityClient.fetch(query);
+export async function generateStaticParams() {
+  const query = groq`*[_type == "blog"] { "slug": slug.current }`;
+  const slugs = await sanityClient.fetch(query);
 
-//   return slugs.map((blog: { slug: string }) => ({ slug: blog.slug }));
-// }
+  return slugs.map((blog: { slug: string }) => ({ slug: blog.slug }));
+}
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 const page = async ({ params }: { params: { slug: string } }) => {
   const { slug } = await params;

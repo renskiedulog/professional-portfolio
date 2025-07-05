@@ -6,7 +6,7 @@ import React from "react";
 const BottomSection = ({
   prevAndNext,
 }: {
-  prevAndNext: { previousBlog: Blog; nextBlog: Blog };
+  prevAndNext: { previousBlog?: Blog | null; nextBlog?: Blog | null };
 }) => {
   return (
     <section className="flex justify-between mt-5 sm:mt-10 sm:gap-0 gap-5">

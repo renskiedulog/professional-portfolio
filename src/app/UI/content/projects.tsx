@@ -83,7 +83,11 @@ const Projects = () => {
     <section id="projects" className="w-full max-w-2xl space-y-3">
       <div className="flex justify-between items-end">
         <Heading>Projects</Heading>
-        <Link href="/works" className="text-sm hover:underline sm:block hidden">
+        <Link
+          href="/works"
+          aria-label="See more works"
+          className="text-sm hover:underline sm:block hidden"
+        >
           See More
         </Link>
       </div>
