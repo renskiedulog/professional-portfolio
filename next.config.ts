@@ -21,6 +21,16 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
   },
+  async redirects() {
+    return [
+      {
+        source: "/blog/underrated-micro-skills-you-didn-t-know-was-helpful",
+        destination:
+          "/blog/underrated-micro-skills-you-didnt-know-was-helpful-in-programming",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
