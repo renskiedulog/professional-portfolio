@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { sanityClient } from "@/lib/sanityClient";
 import { groq } from "next-sanity";
 import Services from "./services";
+import WorkFlow from "./workflow";
 
 export const metadata = {
   title: "Works",
@@ -90,6 +91,7 @@ const ServicePage = async () => {
             delivered, high-quality digital solutions.
           </p>
         </div>
+        <WorkFlow />
       </BlurFade>
     </Container>
   );
