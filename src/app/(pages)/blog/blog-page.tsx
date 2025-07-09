@@ -4,7 +4,7 @@ import BackButton from "@/app/UI/global-components/back-button";
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import { Filter, Search, XIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BlogCard from "@/app/UI/blog/blog-card";
 import Filters from "@/app/UI/blog/filters";
 import { motion } from "framer-motion";

@@ -1,5 +1,5 @@
 import { IoConstructOutline } from "react-icons/io5";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineArrayMember, defineType } from "sanity";
 
 export const projects = defineType({
   name: "projects",

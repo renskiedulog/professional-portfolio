@@ -5,7 +5,6 @@ import Heading from "@/app/UI/global-components/heading";
 import { sanityClient } from "@/lib/sanityClient";
 import { groq } from "next-sanity";
 import { TypedObject } from "sanity";
-import QuestionCard from "./question-cards";
 import QuestionCards from "./question-cards";
 import Crown from "@/app/UI/global-components/crown";
 
