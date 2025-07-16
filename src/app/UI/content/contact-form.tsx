@@ -88,7 +88,7 @@ export default function ContactForm() {
       <form
         id="contact-form"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-3 mx-auto border p-5 max-w-lg rounded-lg bg-background shadow"
+        className="space-y-3 mx-auto border p-5 max-w-lg rounded-lg bg-background shadow scroll-mt-16"
       >
         <FormDescription>
           Please fill out the form below and I'll get back to you as soon as

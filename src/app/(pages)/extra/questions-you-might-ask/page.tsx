@@ -7,6 +7,9 @@ import { groq } from "next-sanity";
 import { TypedObject } from "sanity";
 import QuestionCards from "./question-cards";
 import Crown from "@/app/UI/global-components/crown";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { TfiWrite } from "react-icons/tfi";
 
 export const metadata = {
   title: "Questions You Might Ask",
@@ -42,6 +45,17 @@ const QuestionsPage = async () => {
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/extra" label="Extra" />
+          {/* <div className="flex items-center gap-2">
+            <p className="text-xs">Or you can personally </p>
+            <Link
+              href="/#contact-form"
+              aria-label="Go to home and contact form section"
+            >
+              <Badge className="shadow-sm hover:bg-transparent border-primary border bg-transparent text-primary rounded-none flex items-center px-3 py-1.5 gap-1">
+                <span className="!font-extrabold">CONTACT ME</span>
+              </Badge>
+            </Link>
+          </div> */}
         </div>
         <div>
           <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">

@@ -10,8 +10,9 @@ import Services from "./services";
 import WorkFlow from "./workflow";
 
 export const metadata = {
-  title: "Works",
-  description: "My personal projects and works.",
+  title: "Services",
+  description:
+    "Explore the web development services I offer — from responsive design to full-stack solutions tailored to your needs.",
 };
 
 export const states = {
