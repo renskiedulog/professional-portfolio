@@ -62,10 +62,10 @@ const WorkFlow = () => {
           {/* Content */}
           <div className="flex flex-col w-full group-even:text-right gap-2">
             {/* Title */}
-            <p className="text-2xl font-thin">{step?.title}</p>
+            <p className="text-2xl font-normal md:font-thin">{step?.title}</p>
             {/* Line */}
             <div className="w-full flex group-even:flex-row-reverse items-center gap-2">
-              <div className="w-max whitespace-nowrap break-keep text-xs">
+              <div className="w-max whitespace-nowrap break-keep text-xs font-thin">
                 STEP {index + 1}
               </div>
               <div className="h-px w-full bg-gradient-to-r group-even:bg-gradient-to-l from-primary to-transparent" />
