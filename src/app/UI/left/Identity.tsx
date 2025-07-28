@@ -9,6 +9,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { getStatus, states, StatusType } from "@/app/(pages)/services/page";
 
+export const revalidate = 3600;
+
 const Identity = async () => {
   const status: StatusType = (await getStatus()) ?? "busy";
   return (
