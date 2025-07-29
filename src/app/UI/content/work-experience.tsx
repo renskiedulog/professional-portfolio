@@ -48,8 +48,13 @@ export default function WorkExperience() {
             className="flex items-center justify-between gap-4 group"
           >
             <div className="flex items-center gap-2">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={experience.logo} alt={experience.company} />
+              <Avatar>
+                <AvatarImage
+                  width={40}
+                  height={40}
+                  src={experience.logo}
+                  alt={experience.company}
+                />
                 <AvatarFallback>{experience.company[0]}</AvatarFallback>
               </Avatar>
               <div>

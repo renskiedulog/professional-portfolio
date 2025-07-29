@@ -53,10 +53,13 @@ export default function Education() {
                 className="flex items-center justify-between gap-4 group"
               >
                 <div className="flex items-center gap-2">
-                  <Avatar className="h-10 w-10">
+                  <Avatar>
                     <AvatarImage
+                      width={40}
+                      height={40}
                       src={experience.logo}
                       alt={experience.school}
+                      loading="lazy"
                     />
                     <AvatarFallback>{experience.school[0]}</AvatarFallback>
                   </Avatar>

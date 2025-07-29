@@ -5,7 +5,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
 import { Badge } from "@/components/ui/badge";
 import { getStatus, states, StatusType } from "@/app/(pages)/services/page";
 
@@ -22,6 +21,7 @@ const Identity = async () => {
             alt="renato-dulog"
             className="object-cover object-bottom"
             loading="eager"
+            fetchPriority="high"
             width={100}
             height={100}
           />
