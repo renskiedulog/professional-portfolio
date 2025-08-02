@@ -41,7 +41,7 @@ const Extra = () => {
               </p>
             </Link>
             <Link
-              href="/extra/questions-you-might-ask"
+              href="/extra/recommendations"
               className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <BiLike size={32} />
