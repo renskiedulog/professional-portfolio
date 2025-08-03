@@ -3,6 +3,7 @@ import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import Crown from "@/app/UI/global-components/crown";
 import Heading from "@/app/UI/global-components/heading";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -28,24 +29,59 @@ const page = () => {
           </div>
         </div>
         {/* Link Cards */}
-        <div className="grid grid-cols-3 mt-10 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 mt-10 gap-5">
           <Link
             href="/extra/recommendations/anime"
-            className="w-full h-80 bg-white/20"
+            className="w-full h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
-            Anime
+            <Image
+              src="/anime.jpg"
+              width={500}
+              height={500}
+              loading="eager"
+              alt="anime-img"
+              className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
+            />
+            <p className="text-4xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+              Anime
+            </p>
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
           </Link>
+
           <Link
             href="/extra/recommendations/manga"
-            className="w-full h-80 bg-white/20"
+            className="w-full h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
-            Manga
+            <Image
+              src="/manga.jpg"
+              width={500}
+              height={500}
+              loading="eager"
+              alt="manga-img"
+              className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
+            />
+            <p className="text-4xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+              Manga
+            </p>
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
           </Link>
+
           <Link
-            href="/extra/recommendations/manhwa"
-            className="w-full h-80 bg-white/20"
+            href="/extra/recommendations/manga"
+            className="w-full h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
-            Manhwa
+            <Image
+              src="/manhwa.jpg"
+              width={500}
+              height={500}
+              loading="eager"
+              alt="manhwa-img"
+              className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
+            />
+            <p className="text-4xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+              Manhwa
+            </p>
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
           </Link>
         </div>
       </BlurFade>
