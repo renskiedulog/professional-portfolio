@@ -56,7 +56,7 @@ const WorkFlow = () => {
           className="flex even:flex-row-reverse items-center w-full gap-5 group"
         >
           {/* Icon */}
-          <div className="border border-primary/50 bg-primary/5 dark:bg-primary/10 aspect-square w-28 flex items-center justify-center">
+          <div className="border border-primary/50 dark:bg-primary/10 aspect-square w-28 flex items-center justify-center">
             <step.icon className="size-8" />
           </div>
           {/* Content */}

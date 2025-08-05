@@ -32,7 +32,7 @@ const page = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 mt-10 gap-5">
           <Link
             href="/extra/recommendations/anime"
-            className="w-full h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full h-60 md:h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/anime.jpg"
@@ -50,7 +50,7 @@ const page = () => {
 
           <Link
             href="/extra/recommendations/manga"
-            className="w-full h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full h-60 md:h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/manga.jpg"
@@ -68,7 +68,7 @@ const page = () => {
 
           <Link
             href="/extra/recommendations/manga"
-            className="w-full h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full h-60 md:h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/manhwa.jpg"
