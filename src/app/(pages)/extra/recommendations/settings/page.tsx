@@ -1,11 +1,17 @@
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
-import { Badge } from "@/components/ui/badge";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import React from "react";
-import { FaRandom } from "react-icons/fa";
 
 const page = async () => {
+  const cookieStore = cookies();
+  const auth = cookieStore.get("auth");
+
+  if (auth?.value !== "true") {
+    redirect("/extra/recommendations/settings/login"); // Redirect if cookie missing or invalid
+  }
   // const req = await fetch(
   //   "https://api.jikan.moe/v4/manga?q=mercenary%20enrollment"
   // );
@@ -17,12 +23,6 @@ const page = async () => {
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/extra/recommendations" label="Recommendations" />
-          <button>
-            <Badge className="flex items-center gap-1.5 px-3 sm:px-4 py-1 sm:py-1.5 bg-blue-500 hover:bg-blue-400">
-              <FaRandom size={15} />
-              <span>Random</span>
-            </Badge>
-          </button>
         </div>
       </BlurFade>
     </Container>

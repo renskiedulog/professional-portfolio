@@ -7,7 +7,7 @@ const config = {
   experimental: {
     appDir: true,
   },
-  exclude: ["/studio/*"],
+  exclude: ["/studio/*", "/extra/recommendations/settings/*"],
   transform: async (config, path) => {
     return {
       loc: path,
