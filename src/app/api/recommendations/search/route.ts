@@ -1,22 +1,18 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-// const req = await fetch(
-//   "https://api.jikan.moe/v4/manga?q=mercenary%20enrollment"
-// );
-// const res = await req.json();
-
 const API_URL = "https://api.jikan.moe/v4";
 
 export async function POST(req: NextRequest) {
-  //   const cookieStore = await cookies();
-  //   const auth = cookieStore.get("auth");
+  const cookieStore = await cookies();
+  const auth = cookieStore.get("auth");
 
-  //   if (auth?.value !== "true") {
-  //     return NextResponse.redirect(
-  //       new URL("/extra/recommendations/settings/login", req.url)
-  //     );
-  //   }
+  if (auth?.value !== "true") {
+    return NextResponse.json(
+      { error: "Request Denied, Permission not granted." },
+      { status: 401 }
+    );
+  }
 
   try {
     const body = await req.json();
@@ -41,15 +37,35 @@ export async function POST(req: NextRequest) {
     // Fetch Search Results
     const searchReq = await fetch(url);
 
-    const searchRes = await searchReq.json();
+    const data = await searchReq.json();
+
+    // Sanitize Data
+    let returnedData: any = {
+      hasNextPage: data.pagination.has_next_page,
+    };
+    if (data && data?.data) {
+      // Returns only the necessary data
+      const processedSearchResults = data.data.map((item: any) => {
+        return {
+          id: item.mal_id,
+          title: item.title,
+          image: item.images?.jpg?.image_url || item.images?.webp?.image_url,
+          type: item.type,
+        };
+      });
+      returnedData = {
+        ...returnedData,
+        data: processedSearchResults,
+      };
+    }
 
     return NextResponse.json({
       message: "Search Successful.",
       status: 200,
-      data: searchRes,
+      ...returnedData,
     });
   } catch (error) {
-    console.error("POST /api/search error:", error);
+    console.error("POST /api/recommendations/search error:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -58,7 +74,18 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: Request) {
-  return NextResponse.json({
-    message: "Search request received",
-  });
+  const cookieStore = await cookies();
+  const auth = cookieStore.get("auth");
+
+  if (auth?.value !== "true") {
+    return NextResponse.json(
+      { error: "Request Denied, Permission not granted." },
+      { status: 401 }
+    );
+  } else {
+    return NextResponse.json(
+      { error: "All systems running." },
+      { status: 200 }
+    );
+  }
 }

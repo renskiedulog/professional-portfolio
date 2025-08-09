@@ -11,36 +11,42 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
 import React, { useState } from "react";
+import SearchResult from "./search-result";
 
 export default function ControllerTab() {
   const [searchType, setSearchType] = useState("anime");
   const [searchTerm, setSearchTerm] = useState("");
+  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<any>(null);
+  const [lastSearchTerm, setLastSearchTerm] = useState("");
 
   const handleEnterPress = async (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
+    if (lastSearchTerm === searchTerm) return;
+    if (e.key !== "Enter" || loading) return;
+    e.preventDefault();
+    setLastSearchTerm(searchTerm);
+    handleSearch();
+  };
 
-      try {
-        const res = await fetch("/api/recommendations/search", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            searchTerm,
-            searchType,
-          }),
-        });
+  const handleSearch = async (pageTransition?: boolean) => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/recommendations/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ searchTerm, searchType, limit, page }),
+      });
 
-        if (!res.ok) {
-          throw new Error(`Error: ${res.status}`);
-        }
+      if (!res.ok) throw new Error(`Error: ${res.status}`);
 
-        const data = await res.json();
-        console.log("Server response:", data);
-      } catch (err) {
-        console.error("Search request failed:", err);
-      }
+      const result = await res.json();
+      setData((prev: any) => (pageTransition ? [...prev, ...result] : result));
+    } catch (err) {
+      console.error("Search request failed:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,11 +82,17 @@ export default function ControllerTab() {
                   <SelectContent>
                     <SelectItem value="anime">Anime</SelectItem>
                     <SelectItem value="manga">Manga</SelectItem>
-                    <SelectItem value="manhwa">Manhwa</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
+            <SearchResult
+              page={page}
+              setPage={setPage}
+              data={data}
+              loading={loading}
+              handleSearch={handleSearch}
+            />
           </Card>
         </TabsContent>
         <TabsContent value="manage"></TabsContent>
