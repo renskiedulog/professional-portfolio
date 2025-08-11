@@ -1,6 +1,8 @@
 import { Recommendation } from "@/lib/types";
+import { PlusIcon } from "lucide-react";
 import Image from "next/image";
 import React, { Dispatch, KeyboardEvent, SetStateAction } from "react";
+import { FaQuestion } from "react-icons/fa";
 
 const SearchResult = ({
   data,
@@ -26,7 +28,7 @@ const SearchResult = ({
         {data?.data &&
           data?.data?.length > 0 &&
           data?.data?.map((item, idx) => (
-            <div key={idx} className="relative rounded overflow-hidden">
+            <div key={idx} className="relative rounded overflow-hidden group">
               {item?.image && (
                 <Image
                   src={item?.image}
@@ -43,6 +45,15 @@ const SearchResult = ({
                 </p>
               )}
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/70" />
+              {/* Button Options */}
+              <div className="absolute top-0 left-0 z-40 w-full h-full flex justify-between items-end">
+                <div className="w-20 h-16 pt-3 pr-5 bg-black/40 rounded-tr-full flex justify-center items-center group-hover:scale-100 scale-0 transition-all ease-in-out duration-200 origin-bottom-left">
+                  <FaQuestion className="text-background" />
+                </div>
+                <div className="w-20 h-16 pt-3 pl-5 bg-black/40 rounded-tl-full flex justify-center items-center group-hover:scale-100 scale-0 transition-all ease-in-out duration-200 origin-bottom-right">
+                  <PlusIcon className="text-background" />
+                </div>
+              </div>
             </div>
           ))}
       </div>
