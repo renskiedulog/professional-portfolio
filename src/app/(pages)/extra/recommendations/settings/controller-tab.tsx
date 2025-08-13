@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
 import React, { useState } from "react";
 import SearchResult from "./search-result";
+import RecommendationChecklist from "../recommendation-checklist";
 
 export default function ControllerTab() {
   const [searchType, setSearchType] = useState("anime");
@@ -93,6 +94,7 @@ export default function ControllerTab() {
               loading={loading}
               handleSearch={handleSearch}
             />
+            <RecommendationChecklist />
           </Card>
         </TabsContent>
         <TabsContent value="manage"></TabsContent>

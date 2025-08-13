@@ -18,7 +18,8 @@ const SearchResult = ({
   loading: boolean;
   handleSearch: (pageTransition?: boolean) => void;
 }) => {
-  console.log(data);
+  if (!data) return null;
+
   if (loading) {
     return "Loading...";
   }
