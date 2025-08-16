@@ -26,22 +26,6 @@ const page = async () => {
         <div>
           <ControllerTab />
         </div>
-        {/* <div className="grid grid-cols-4">
-          {res?.data?.map((item, idx) => (
-            <div key={idx}>
-              {item?.images?.jpg?.large_image_url && (
-                <Image
-                  unoptimized
-                  src={item?.images?.jpg?.large_image_url}
-                  width={200}
-                  height={200}
-                  className="object-cover"
-                />
-              )}
-              <p>{item?.title}</p>
-            </div>
-          ))}
-        </div> */}
       </BlurFade>
     </Container>
   );

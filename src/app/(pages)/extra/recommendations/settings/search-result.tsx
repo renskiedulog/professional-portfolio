@@ -18,14 +18,25 @@ const SearchResult = ({
   loading: boolean;
   handleSearch: (pageTransition?: boolean) => void;
 }) => {
-  if (!data) return null;
-
   if (loading) {
-    return "Loading...";
+    return (
+      <div className="flex justify-center items-center h-screen flex-col">
+        <div className="dot-spinner">
+          <div className="dot-spinner__dot before:bg-primary"></div>
+          <div className="dot-spinner__dot before:bg-primary"></div>
+          <div className="dot-spinner__dot before:bg-primary"></div>
+          <div className="dot-spinner__dot before:bg-primary"></div>
+          <div className="dot-spinner__dot before:bg-primary"></div>
+          <div className="dot-spinner__dot before:bg-primary"></div>
+          <div className="dot-spinner__dot before:bg-primary"></div>
+          <div className="dot-spinner__dot before:bg-primary"></div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <section className="mt-5">
+    <section className={`${!data ? "mt-0" : "mt-5"}`}>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {data?.data &&
           data?.data?.length > 0 &&

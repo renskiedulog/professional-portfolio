@@ -8,6 +8,7 @@ import { customBlockContent } from "./types/customBlockContent";
 import { formSubmissions } from "./formSubmission";
 import { siteData } from "./siteData";
 import { projects } from "./projects";
+import { recommendations } from "./recommendations";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -19,5 +20,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     formSubmissions,
     siteData,
     projects,
+    recommendations,
   ],
 };

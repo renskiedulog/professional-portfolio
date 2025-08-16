@@ -21,4 +21,5 @@ export const structure: StructureResolver = (S) =>
             .title("Site Data")
         ),
       S.documentTypeListItem("projects").title("Projects"),
+      S.documentTypeListItem("recommendations").title("Recommendations"),
     ]);

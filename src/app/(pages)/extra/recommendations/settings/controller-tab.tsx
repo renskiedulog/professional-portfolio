@@ -52,7 +52,7 @@ export default function ControllerTab() {
   };
 
   return (
-    <div className="flex w-full flex-col gap-6 py-5">
+    <div className="flex w-full flex-col gap-6 pt-5 pb-3">
       <Tabs defaultValue="add">
         <TabsList>
           <TabsTrigger value="add">Add</TabsTrigger>
@@ -94,11 +94,11 @@ export default function ControllerTab() {
               loading={loading}
               handleSearch={handleSearch}
             />
-            <RecommendationChecklist />
           </Card>
         </TabsContent>
         <TabsContent value="manage"></TabsContent>
       </Tabs>
+      <RecommendationChecklist />
     </div>
   );
 }
