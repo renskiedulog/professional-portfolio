@@ -18,6 +18,23 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { searchTerm, searchType, limit, page } = body;
 
+    let resultsType = searchType;
+    let type = searchType;
+
+    if (searchType === "anime") {
+      resultsType = "tv";
+    }
+
+    if (searchType === "manhwa") {
+      resultsType = searchType;
+      type = "manga";
+    }
+
+    if (searchType === "movie") {
+      resultsType = "movie";
+      type = "anime";
+    }
+
     if (!searchTerm || !searchType) {
       return NextResponse.json(
         { error: "Search Term and Search Type are required." },
@@ -31,8 +48,10 @@ export async function POST(req: NextRequest) {
 
     if (limit) params.append("limit", limit.toString());
     if (page) params.append("page", page.toString());
+    if (resultsType) params.append("type", resultsType);
 
-    const url = `${API_URL}/${searchType}?${params.toString()}`;
+    const url = `${API_URL}/${type}?${params.toString()}`;
+    console.log(url);
 
     // Fetch Search Results
     const searchReq = await fetch(url);

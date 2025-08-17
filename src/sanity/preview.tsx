@@ -4,11 +4,11 @@ import type { DocumentBadgeDescription, DocumentBadgeProps } from "sanity";
 export function LiveURLBadge(
   props: DocumentBadgeProps
 ): DocumentBadgeDescription | null {
-  const doc = props?.published;
+  const doc = props?.published || props?.draft;
   const isPublished = !props?.draft;
 
-  if (doc?._type === "recommendations" && doc?.id) {
-    const slug = doc.id;
+  if (doc?._type === "blog" && doc?.slug?.current) {
+    const slug = doc?.slug?.current;
     const url = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
 
     return {
@@ -20,17 +20,16 @@ export function LiveURLBadge(
           style={{
             marginRight: 5,
             padding: 8,
-            fontSize: "1.5em",
+            fontSize: "1.2em",
             textTransform: "lowercase",
             color: isPublished ? "#31975e" : "#958228",
-            cursor: isPublished ? "pointer" : "default",
+            cursor: "pointer",
           }}
         >
           {url}
         </a>
       ),
-      color: "success",
-      title: "Open live page",
+      title: "Open Blog Page",
     };
   }
 

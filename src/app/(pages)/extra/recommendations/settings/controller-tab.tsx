@@ -83,6 +83,8 @@ export default function ControllerTab() {
                   <SelectContent>
                     <SelectItem value="anime">Anime</SelectItem>
                     <SelectItem value="manga">Manga</SelectItem>
+                    <SelectItem value="manhwa">Manhwa</SelectItem>
+                    <SelectItem value="movie">Movie</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -93,6 +95,7 @@ export default function ControllerTab() {
               data={data}
               loading={loading}
               handleSearch={handleSearch}
+              searchType={searchType}
             />
           </Card>
         </TabsContent>

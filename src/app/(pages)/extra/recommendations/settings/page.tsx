@@ -1,9 +1,7 @@
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
-import Heading from "@/app/UI/global-components/heading";
 import { cookies } from "next/headers";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
 import ControllerTab from "./controller-tab";

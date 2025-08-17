@@ -13,9 +13,9 @@ export const recommendations = defineType({
       title: "ID",
     }),
     defineField({
-      name: "name",
+      name: "title",
       type: "string",
-      title: "Name",
+      title: "Title",
     }),
     defineField({
       name: "type",
