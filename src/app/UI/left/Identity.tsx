@@ -44,7 +44,7 @@ const Identity = async () => {
       <p className="text-sm opacity-50 font-medium text-center">
         Software Engineer | Web Developer
       </p>
-      <Badge className="shadow-sm border-primary/50 rounded border bg-transparent text-primary mt-2 py-1 md:hidden">
+      <Badge className="shadow-sm border-primary/50 hover:bg-transparent rounded border bg-transparent text-primary mt-2 py-1 md:hidden">
         <div className={`w-2 h-2 mr-2 ${states[status]?.style}`}>
           <div
             className={`w-2 h-2 mr-2 animate-ping ${states[status]?.style}`}

@@ -51,7 +51,6 @@ export async function POST(req: NextRequest) {
     if (resultsType) params.append("type", resultsType);
 
     const url = `${API_URL}/${type}?${params.toString()}`;
-    console.log(url);
 
     // Fetch Search Results
     const searchReq = await fetch(url);
