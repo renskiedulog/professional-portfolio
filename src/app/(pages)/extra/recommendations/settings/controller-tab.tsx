@@ -13,6 +13,7 @@ import { Search } from "lucide-react";
 import React, { useState } from "react";
 import SearchResult from "./search-result";
 import RecommendationChecklist from "../recommendation-checklist";
+import ManageRecommendations from "./manage-recommendations";
 
 export default function ControllerTab() {
   const [searchType, setSearchType] = useState("anime");
@@ -99,7 +100,11 @@ export default function ControllerTab() {
             />
           </Card>
         </TabsContent>
-        <TabsContent value="manage"></TabsContent>
+        <TabsContent value="manage">
+          <Card className="w-full bg-background p-5">
+            <ManageRecommendations />
+          </Card>
+        </TabsContent>
       </Tabs>
       <RecommendationChecklist />
     </div>

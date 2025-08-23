@@ -10,13 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { SearchResult } from "@/lib/types";
 import { PlusIcon, Loader2 } from "lucide-react";
 import React, { useState, useTransition } from "react";
