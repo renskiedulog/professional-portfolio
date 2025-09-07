@@ -25,6 +25,8 @@ const AddRecommendationBtn = ({
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
 
+  console.log(item);
+
   const handleAddRecommendation = async (close: () => void) => {
     startTransition(async () => {
       try {
@@ -37,6 +39,7 @@ const AddRecommendationBtn = ({
             id: item.id,
             title: item.title,
             type: searchType,
+            image: item?.image ?? "",
           }),
         });
 
@@ -73,7 +76,7 @@ const AddRecommendationBtn = ({
     <Dialog open={open} onOpenChange={(set) => setOpen(set)}>
       <DialogTrigger asChild>
         <button className="w-16 h-14 pb-3 pl-3 aspect-square bg-black/80 rounded-bl-full flex justify-center items-center group-hover:scale-100 scale-0 transition-all ease-in-out duration-200 origin-top-right hover:bg-green-400">
-          <PlusIcon className="text-background" />
+          <PlusIcon className="text-background dark:text-white" />
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
