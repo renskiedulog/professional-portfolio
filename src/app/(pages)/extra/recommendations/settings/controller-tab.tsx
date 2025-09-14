@@ -12,7 +12,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search } from "lucide-react";
 import React, { useState } from "react";
 import SearchResult from "./search-result";
-import RecommendationChecklist from "../recommendation-checklist";
 import ManageRecommendations from "./manage-recommendations";
 
 export default function ControllerTab() {
@@ -106,7 +105,6 @@ export default function ControllerTab() {
           </Card>
         </TabsContent>
       </Tabs>
-      <RecommendationChecklist />
     </div>
   );
 }

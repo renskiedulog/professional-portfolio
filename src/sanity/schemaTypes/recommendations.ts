@@ -22,5 +22,10 @@ export const recommendations = defineType({
       type: "string",
       title: "Type",
     }),
+    defineField({
+      name: "image",
+      type: "string",
+      title: "Image",
+    }),
   ],
 });

@@ -81,7 +81,7 @@ const SearchResult = ({
                     target="_blank"
                     className="w-16 h-14 pb-3 pr-3 aspect-square bg-black/80 rounded-br-full flex justify-center items-center group-hover:scale-100 scale-0 transition-all ease-in-out duration-200 origin-top-left hover:bg-blue-400"
                   >
-                    <FaQuestion className="text-background" />
+                    <FaQuestion className="text-background dark:text-white" />
                   </Link>
                   {/* Add Button */}
                   <AddRecommendationBtn item={item} searchType={searchType} />

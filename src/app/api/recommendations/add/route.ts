@@ -3,9 +3,9 @@ import { sanityClient } from "@/lib/sanityClient";
 
 export async function POST(req: NextRequest) {
   try {
-    const { id, type, title } = await req.json();
+    const { id, type, title, image } = await req.json();
 
-    if (!id || !type || !title) {
+    if (!id || !type || !title || !image) {
       return NextResponse.json({ error: "Missing details." }, { status: 400 });
     }
 
@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
       _type: "recommendations",
       title,
       type,
+      image,
     };
 
     await sanityClient.create(newRecommendation);

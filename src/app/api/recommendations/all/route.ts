@@ -8,7 +8,8 @@ export async function GET() {
         _id,
         id,
         title,
-        type
+        type,
+        image
       }`
     );
     return NextResponse.json({ recommendations });
