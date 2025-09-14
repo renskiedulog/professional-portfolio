@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const API_URL = "https://api.jikan.moe/v4";
+const API_URL = process.env.NEXT_PUBLIC_JIKAN_API_URL!;
 
 export async function POST(req: NextRequest) {
   const cookieStore = await cookies();

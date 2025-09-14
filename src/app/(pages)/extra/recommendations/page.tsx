@@ -18,7 +18,7 @@ const page = () => {
         {/* Heading */}
         <div>
           <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
-            <Heading as="h1" className="text-3xl md:text-4xl sm:px-0 px-5">
+            <Heading as="h1" className="text-3xl md:text-3xl sm:px-0 px-5">
               Recommendations
             </Heading>
             <p>
@@ -29,10 +29,10 @@ const page = () => {
           </div>
         </div>
         {/* Link Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 mt-10 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 mt-10 gap-5">
           <Link
             href="/extra/recommendations/anime"
-            className="w-full h-60 md:h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/anime.jpg"
@@ -42,7 +42,7 @@ const page = () => {
               alt="anime-img"
               className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
             />
-            <p className="text-4xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
               Anime
             </p>
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
@@ -50,7 +50,7 @@ const page = () => {
 
           <Link
             href="/extra/recommendations/manga"
-            className="w-full h-60 md:h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/manga.jpg"
@@ -60,7 +60,7 @@ const page = () => {
               alt="manga-img"
               className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
             />
-            <p className="text-4xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
               Manga
             </p>
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
@@ -68,7 +68,7 @@ const page = () => {
 
           <Link
             href="/extra/recommendations/manga"
-            className="w-full h-60 md:h-80 bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/manhwa.jpg"
@@ -78,8 +78,26 @@ const page = () => {
               alt="manhwa-img"
               className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
             />
-            <p className="text-4xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
               Manhwa
+            </p>
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
+          </Link>
+
+          <Link
+            href="/extra/recommendations/movie"
+            className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+          >
+            <Image
+              src="/movies.avif"
+              width={500}
+              height={500}
+              loading="eager"
+              alt="movie-img"
+              className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
+            />
+            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+              Movie
             </p>
             <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
           </Link>

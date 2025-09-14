@@ -45,17 +45,17 @@ const QuestionsPage = async () => {
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/extra" label="Extra" />
-          {/* <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2">
             <p className="text-xs">Or you can personally </p>
             <Link
               href="/#contact-form"
               aria-label="Go to home and contact form section"
             >
-              <Badge className="shadow-sm hover:bg-transparent border-primary border bg-transparent text-primary rounded-none flex items-center px-3 py-1.5 gap-1">
+              <Badge className="shadow-sm hover:bg-black/80 dark:hover:bg-white/80 dark:hover:text-black hover:text-white border-primary border bg-transparent text-primary rounded-none flex items-center px-3 py-1.5 gap-1">
                 <span className="!font-extrabold">CONTACT ME</span>
               </Badge>
             </Link>
-          </div> */}
+          </div>
         </div>
         <div>
           <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">

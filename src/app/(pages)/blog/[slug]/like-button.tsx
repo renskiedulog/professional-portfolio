@@ -63,7 +63,7 @@ const LikeButton = ({
       </p>
       <Badge
         onClick={handleLike}
-        className={`flex items-center gap-1.5 px-3 sm:px-4 py-1 sm:py-1.5 ${buttonState[liked]} ${liked === "liked" ? "cursor-auto" : "cursor-pointer"}`}
+        className={`flex items-center gap-1.5 px-3 dark:text-white sm:px-4 py-1 sm:py-1.5 ${buttonState[liked]} ${liked === "liked" ? "cursor-auto" : "cursor-pointer"}`}
       >
         <ThumbsUp size={15} />
         <span>{renderedCount}</span>
