@@ -2,11 +2,20 @@ import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
-import React from "react";
+import { notFound } from "next/navigation";
 import { FaRandom } from "react-icons/fa";
 
-const page = () => {
+const Page = async ({
+  params,
+}: {
+  params: { type: "anime" | "manga" | "manhwa" | "movie" };
+}) => {
+  const { type } = params;
+
+  if (!["anime", "manga", "manhwa", "movie"].includes(type)) {
+    return notFound();
+  }
+
   return (
     <Container as="main" className="pb-20 sm:pb-10">
       <BlurFade className="px-3 sm:px-5">
@@ -26,4 +35,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
