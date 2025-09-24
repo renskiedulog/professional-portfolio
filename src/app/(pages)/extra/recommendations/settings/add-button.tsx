@@ -59,7 +59,6 @@ const AddRecommendationBtn = ({
         close();
         setOpen(false);
       } catch (error: any) {
-        console.error(error);
         toast(
           <div>
             <p className="font-bold text-base">Something Went Wrong.</p>

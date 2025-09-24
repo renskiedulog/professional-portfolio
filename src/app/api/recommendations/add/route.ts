@@ -9,7 +9,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing details." }, { status: 400 });
     }
 
-    // Create a new "recommendations" document
+    const query = `
+      *[_type == "recommendations" && id == $id && type == $type][0]{
+        _id, id, type, title
+      }
+    `;
+
+    const existing = await sanityClient.fetch(query, {
+      id: String(id),
+      type,
+      title,
+    });
+
+    if (existing) {
+      return NextResponse.json(
+        {
+          error: "Duplicate recommendation found. Cannot create duplicate.",
+          existing,
+        },
+        { status: 409 }
+      );
+    }
+
     const newRecommendation = {
       id: String(id),
       _type: "recommendations",

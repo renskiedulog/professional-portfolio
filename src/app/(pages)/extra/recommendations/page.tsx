@@ -67,7 +67,7 @@ const page = () => {
           </Link>
 
           <Link
-            href="/extra/recommendations/manga"
+            href="/extra/recommendations/manhwa"
             className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
