@@ -5,6 +5,7 @@ import { getRecommendations } from "@/lib/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import RandomButton from "./random-button";
+import RecommendationCard from "./recommendation-card";
 
 export interface GetRecommendationsParams {
   type: "anime" | "manga" | "manhwa" | "movie";
@@ -37,21 +38,11 @@ const Page = async ({
           {recommendations &&
             recommendations?.length > 0 &&
             recommendations?.map((rec) => (
-              <Link
-                href={`/extra/recommendations/${type}/${rec?.id}`}
-                className="relative rounded overflow-hidden group cursor-pointer hover:scale-[1.01] transition-transform duration-200 ease-in-out"
+              <RecommendationCard
+                recommendation={rec}
+                type={type}
                 key={rec?.id}
-              >
-                <img
-                  src={rec.image}
-                  alt={rec.title}
-                  className="w-full aspect-[1/1.3] object-cover"
-                />
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/70" />
-                <p className="absolute bottom-2 left-2 right-2 text-white text-sm font-medium line-clamp-2 z-20">
-                  {rec.title}
-                </p>
-              </Link>
+              />
             ))}
         </div>
       </BlurFade>

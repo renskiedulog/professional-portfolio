@@ -68,7 +68,7 @@ const SearchResult = ({
                   </Badge>
                 )}
                 {item?.title && (
-                  <p className="absolute bottom-2 left-0 p-2 pb-0 line-clamp-2 text-white z-20">
+                  <p className="absolute bottom-2 left-0 p-2 pb-0 line-clamp-2 text-white z-20 group-hover:line-clamp-none">
                     {item?.title}
                   </p>
                 )}

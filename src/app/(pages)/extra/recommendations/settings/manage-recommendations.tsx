@@ -142,7 +142,7 @@ function ManageRecommendations() {
                 <span className="absolute text-[10px] uppercase top-1.5 left-1.5 pb-0 line-clamp-2 text-white z-20 bg-black/60 px-2 py-1 rounded">
                   {rec.type}
                 </span>
-                <p className="absolute bottom-2 left-0 p-2 pb-0 line-clamp-2 text-white z-20">
+                <p className="absolute bottom-2 left-0 p-2 pb-0 line-clamp-2 text-white z-20 group-hover:line-clamp-none">
                   {rec.title}
                 </p>
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/70" />
