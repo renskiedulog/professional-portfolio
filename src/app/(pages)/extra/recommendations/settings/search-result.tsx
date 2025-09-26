@@ -21,7 +21,6 @@ const SearchResult = ({
   handleSearch: (pageTransition?: boolean) => void;
   searchType: string;
 }) => {
-  console.log(searchType);
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen flex-col">

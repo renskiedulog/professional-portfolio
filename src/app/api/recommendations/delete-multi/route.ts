@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sanityClient } from "@/lib/sanityClient";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -14,6 +15,8 @@ export async function POST(req: Request) {
     }));
 
     await sanityClient.mutate(mutations);
+
+    revalidateTag("recommendations");
 
     return NextResponse.json({ success: true });
   } catch (error) {

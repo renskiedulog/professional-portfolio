@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sanityClient } from "@/lib/sanityClient";
+import { revalidateTag } from "next/cache";
 
 export async function POST(req: NextRequest) {
   try {
@@ -40,6 +41,8 @@ export async function POST(req: NextRequest) {
     };
 
     await sanityClient.create(newRecommendation);
+
+    revalidateTag("recommendations");
 
     return NextResponse.json({ success: true, data: newRecommendation });
   } catch (error) {

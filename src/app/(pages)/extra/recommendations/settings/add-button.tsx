@@ -25,8 +25,6 @@ const AddRecommendationBtn = ({
   const [isPending, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
 
-  console.log(item);
-
   const handleAddRecommendation = async (close: () => void) => {
     startTransition(async () => {
       try {
