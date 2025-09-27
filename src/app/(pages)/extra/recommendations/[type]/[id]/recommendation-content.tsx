@@ -8,13 +8,13 @@ import {
   Link as LinkIcon,
 } from "lucide-react";
 import Image from "next/image";
+import Heading from "@/app/UI/global-components/heading";
 
 const RecommendationContent = ({
   recommendationInfo,
 }: {
   recommendationInfo: RecommendationInfo;
 }) => {
-  console.log(recommendationInfo);
   return (
     <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[250px_1fr] lg:gap-5">
       {/* Sticky Sidebar */}
@@ -98,18 +98,18 @@ const RecommendationContent = ({
       <section className="space-y-8">
         {/* Title Section */}
         <div className="space-y-1">
-          <h1 className="text-2xl sm:text-3xl font-bold text-center lg:text-left">
+          <Heading as="h1" className="text-center lg:text-left">
             {recommendationInfo.title}
-          </h1>
+          </Heading>
           {recommendationInfo.titles &&
             recommendationInfo.titles.length > 0 && (
-              <div className="flex flex-wrap justify-center lg:justify-start gap-2">
+              <div className="flex flex-wrap justify-center lg:justify-start gap-x-2">
                 {recommendationInfo.titles.map((titleObj, index) => {
                   if (titleObj?.type?.toLowerCase() === "default") return null;
                   return (
                     <p
                       key={`${titleObj.title}-${index}`}
-                      className="opacity-70 hover:opacity-90 border-b border-dashed border-transparent hover:border-black"
+                      className="opacity-70 hover:opacity-90 border-b border-dashed border-transparent hover:border-black text-sm"
                     >
                       {titleObj.title}
                     </p>
@@ -122,7 +122,9 @@ const RecommendationContent = ({
         {/* Synopsis */}
         {recommendationInfo.synopsis && (
           <div className="prose dark:prose-invert max-w-none text-justify">
-            <h2 className="text-xl font-semibold mb-2">Synopsis</h2>
+            <Heading as="h2" className="text-xl mb-2">
+              Synopsis
+            </Heading>
             <p>{recommendationInfo.synopsis}</p>
           </div>
         )}
@@ -130,7 +132,7 @@ const RecommendationContent = ({
         {/* Trailer */}
         {recommendationInfo.trailer?.youtube_id && (
           <div className="space-y-3">
-            <h2 className="text-xl font-semibold">Trailer</h2>
+            <Heading className="text-xl">Trailer</Heading>
             <div className="aspect-video rounded-lg overflow-hidden shadow-lg">
               <iframe
                 src={`https://www.youtube.com/embed/${recommendationInfo.trailer.youtube_id}`}
@@ -147,13 +149,15 @@ const RecommendationContent = ({
           (recommendationInfo.theme.openings?.length > 0 ||
             recommendationInfo.theme.endings?.length > 0) && (
             <div className="space-y-3">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
+              <Heading as="h2" className="text-xl flex items-center gap-2">
                 <Music className="w-5 h-5" /> Theme Music
-              </h2>
+              </Heading>
               <div className="space-y-3">
                 {recommendationInfo.theme.openings?.length > 0 && (
                   <div>
-                    <h3 className="font-semibold">Openings:</h3>
+                    <Heading as="h3" className="text-base">
+                      Openings:
+                    </Heading>
                     <ul className="list-disc list-inside text-sm sm:text-base">
                       {recommendationInfo.theme.openings.map((opening, idx) => (
                         <li key={idx}>{opening}</li>
@@ -163,7 +167,9 @@ const RecommendationContent = ({
                 )}
                 {recommendationInfo.theme.endings?.length > 0 && (
                   <div>
-                    <h3 className="font-semibold">Endings:</h3>
+                    <Heading as="h3" className="text-base">
+                      Endings:
+                    </Heading>
                     <ul className="list-disc list-inside text-sm sm:text-base">
                       {recommendationInfo.theme.endings.map((ending, idx) => (
                         <li key={idx}>{ending}</li>
@@ -179,9 +185,9 @@ const RecommendationContent = ({
         {recommendationInfo.relations &&
           recommendationInfo.relations.length > 0 && (
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
+              <Heading as="h2" className="text-xl flex items-center gap-2">
                 <Shuffle className="w-5 h-5" /> Related
-              </h2>
+              </Heading>
               <ul className="space-y-1">
                 {recommendationInfo.relations.map((relation, idx) => (
                   <li key={idx} className="text-sm">
@@ -208,9 +214,9 @@ const RecommendationContent = ({
         {recommendationInfo.external &&
           recommendationInfo.external.length > 0 && (
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
+              <Heading as="h2" className="text-xl flex items-center gap-2">
                 <LinkIcon className="w-5 h-5" /> External Links
-              </h2>
+              </Heading>
               <ul className="space-y-1">
                 {recommendationInfo.external.map((link, idx) => (
                   <li key={idx}>
@@ -233,9 +239,9 @@ const RecommendationContent = ({
         {recommendationInfo.streaming &&
           recommendationInfo.streaming.length > 0 && (
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold flex items-center gap-2">
+              <Heading as="h2" className="text-xl flex items-center gap-2">
                 <Tv className="w-5 h-5" /> Streaming Platforms
-              </h2>
+              </Heading>
               <ul className="space-y-1">
                 {recommendationInfo.streaming.map((platform, idx) => (
                   <li key={idx}>

@@ -40,7 +40,7 @@ const Extra = () => {
                 <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
               </p>
             </Link>
-            {/* <Link
+            <Link
               href="/extra/recommendations"
               className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
@@ -52,18 +52,20 @@ const Extra = () => {
                     <TooltipTrigger asChild>
                       <InfoIcon size={18} />
                     </TooltipTrigger>
-                    <TooltipContent>Manga / Manhwa / Anime</TooltipContent>
+                    <TooltipContent>
+                      Anime / Manga / Manhwa / Movie
+                    </TooltipContent>
                   </Tooltip>
                 </div>
                 <span className="text-xs italic md:hidden block">
-                  Manga / Manhwa / Anime
+                  Anime / Manga / Manhwa / Movie
                 </span>
               </div>
               <p className="flex items-center gap-2 group-hover:opacity-100 opacity-60">
                 <span>EXPLORE</span>
                 <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
               </p>
-            </Link> */}
+            </Link>
             <Link
               href="#"
               className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"

@@ -23,7 +23,6 @@ const Page = async ({
   });
 
   const recommendationInfo: RecommendationInfo = req?.data;
-  console.log(recommendationInfo);
 
   return (
     <Container as="main" className="pb-20 sm:pb-10">

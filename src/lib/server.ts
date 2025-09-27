@@ -1,3 +1,4 @@
+"use server";
 import { sanityClient } from "./sanityClient";
 import { SearchResult } from "./types";
 

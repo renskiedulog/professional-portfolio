@@ -14,6 +14,16 @@ const page = () => {
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
           <BackButton href="/extra" label="Extra" />
+          <div className="flex justify-center items-center gap-1 text-sm text-muted-foreground">
+            Powered By
+            <Link
+              className="hover:text-black"
+              href="https://jikan.moe/"
+              target="_blank"
+            >
+              Jikan API
+            </Link>
+          </div>
         </div>
         {/* Heading */}
         <div>
@@ -29,10 +39,10 @@ const page = () => {
           </div>
         </div>
         {/* Link Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 mt-10 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-10 gap-5">
           <Link
             href="/extra/recommendations/anime"
-            className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full aspect-[1/0.5] sm:aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/anime.jpg"
@@ -50,7 +60,7 @@ const page = () => {
 
           <Link
             href="/extra/recommendations/manga"
-            className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full aspect-[1/0.5] sm:aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/manga.jpg"
@@ -68,7 +78,7 @@ const page = () => {
 
           <Link
             href="/extra/recommendations/manhwa"
-            className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full aspect-[1/0.5] sm:aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/manhwa.jpg"
@@ -86,7 +96,7 @@ const page = () => {
 
           <Link
             href="/extra/recommendations/movie"
-            className="w-full aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
+            className="w-full aspect-[1/0.5] sm:aspect-square bg-white/20 rounded-lg relative overflow-hidden flex flex-col justify-end items-center p-5 group"
           >
             <Image
               src="/movies.avif"
