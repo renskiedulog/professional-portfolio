@@ -23,3 +23,125 @@ export interface SearchResult {
   image: string;
   type: string;
 }
+
+export interface ImageSet {
+  image_url: string;
+  small_image_url?: string;
+  large_image_url?: string;
+}
+
+export interface TrailerImages {
+  image_url?: string;
+  small_image_url?: string;
+  medium_image_url?: string;
+  large_image_url?: string;
+  maximum_image_url?: string;
+}
+
+export interface Trailer {
+  youtube_id?: string;
+  url?: string;
+  embed_url?: string;
+  images?: TrailerImages;
+}
+
+export interface Title {
+  type: string;
+  title: string;
+}
+
+export interface DateProp {
+  day?: number;
+  month?: number;
+  year?: number;
+}
+
+export interface Aired {
+  from?: string;
+  to?: string;
+  prop?: {
+    from?: DateProp;
+    to?: DateProp;
+  };
+  string?: string;
+}
+
+export interface Broadcast {
+  day?: string;
+  time?: string;
+  timezone?: string;
+  string?: string;
+}
+
+export interface Entity {
+  mal_id: number;
+  type: string;
+  name: string;
+  url: string;
+}
+
+export interface Relation {
+  relation: string;
+  entry: Entity[];
+}
+
+export interface ThemeMusic {
+  openings: string[];
+  endings: string[];
+}
+
+export interface ExternalLink {
+  name: string;
+  url: string;
+}
+
+export interface StreamingPlatform {
+  name: string;
+  url: string;
+}
+
+export interface RecommendationInfo {
+  mal_id: number;
+  url: string;
+  images: {
+    jpg: ImageSet;
+    webp?: ImageSet;
+  };
+  trailer?: Trailer;
+  approved?: boolean;
+  titles: Title[];
+  title: string;
+  title_english?: string;
+  title_japanese?: string;
+  title_synonyms?: string[];
+  type?: string;
+  source?: string;
+  episodes?: number;
+  status?: string;
+  airing?: boolean;
+  aired?: Aired;
+  duration?: string;
+  rating?: string;
+  score?: number;
+  scored_by?: number;
+  rank?: number;
+  popularity?: number;
+  members?: number;
+  favorites?: number;
+  synopsis?: string;
+  background?: string;
+  season?: string;
+  year?: number;
+  broadcast?: Broadcast;
+  producers?: Entity[];
+  licensors?: Entity[];
+  studios?: Entity[];
+  genres?: Entity[];
+  explicit_genres?: Entity[];
+  themes?: Entity[];
+  demographics?: Entity[];
+  relations?: Relation[];
+  theme?: ThemeMusic;
+  external?: ExternalLink[];
+  streaming?: StreamingPlatform[];
+}
