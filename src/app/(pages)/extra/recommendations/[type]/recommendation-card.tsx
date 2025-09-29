@@ -33,7 +33,7 @@ const RecommendationCard = ({
         <img
           src={recommendation.image}
           alt={recommendation.title}
-          className="w-full aspect-[1/1.3] object-cover"
+          className="w-full aspect-[1/1.4] sm:aspect-[1/1.3] object-cover"
         />
         {/* Gradient overlay */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/80" />

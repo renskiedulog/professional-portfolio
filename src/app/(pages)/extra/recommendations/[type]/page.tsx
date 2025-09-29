@@ -42,7 +42,7 @@ const Page = async ({
             {type} Recommendations
           </Heading>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4 mt-5 sm:mt-10">
           {recommendations &&
             recommendations?.length > 0 &&
             recommendations?.map((rec, idx) => (

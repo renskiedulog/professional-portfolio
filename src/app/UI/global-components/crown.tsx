@@ -13,13 +13,17 @@ const Crown = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-5 uppercase text-xs font-thin justify-center",
+        "flex items-center gap-3 sm:gap-5 uppercase text-[10px] sm:text-xs font-thin justify-center",
         className
       )}
     >
-      <div className={`${width ? width : "w-10"} h-[0.5px] bg-primary`}></div>
+      <div
+        className={`${width ? width : "w-5 sm:w-10"} h-[0.5px] bg-primary`}
+      ></div>
       <span>{children}</span>
-      <div className={`${width ? width : "w-10"} h-[0.5px] bg-primary`}></div>
+      <div
+        className={`${width ? width : "w-5 sm:w-10"} h-[0.5px] bg-primary`}
+      ></div>
     </div>
   );
 };

@@ -34,7 +34,7 @@ export default function LoginPage() {
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
-          <BackButton href="/" label="Homepage" />
+          <BackButton href="/extra/recommendations" label="Recommendations" />
         </div>
         <div className="w-full min-h-[calc(100vh-150px)] flex items-center justify-center flex-col space-y-2 text-center px-5">
           <p>
@@ -45,7 +45,7 @@ export default function LoginPage() {
             Welcome Back.
           </h1>
           <form
-            className="flex gap-3 pt-2 w-full max-w-md"
+            className="flex gap-3 pt-2 w-full max-w-md flex-col sm:flex-row"
             onSubmit={handleSubmit}
           >
             <Input
