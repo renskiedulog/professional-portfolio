@@ -58,7 +58,7 @@ const SearchResult = ({
                     height={300}
                     alt={item?.title}
                     unoptimized
-                    className="w-60 h-80 lg:h-60 object-cover"
+                    className="w-60 h-48 sm:h-80 lg:h-60 object-cover"
                   />
                 )}
                 {item?.title && (

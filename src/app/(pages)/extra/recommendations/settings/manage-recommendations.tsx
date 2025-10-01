@@ -73,7 +73,7 @@ function ManageRecommendations() {
 
   return (
     <>
-      <section className={`${!recs.length ? "mt-0" : "mt-5"}`}>
+      <section className={`${!recs.length ? "mt-0" : "sm:mt-5"}`}>
         <div className="flex items-center gap-2 mb-4 flex-wrap">
           {categories.map((cat) => (
             <Button
@@ -132,10 +132,10 @@ function ManageRecommendations() {
                   <img
                     src={rec.image}
                     alt={rec.title}
-                    className="w-60 h-80 lg:h-60 object-cover"
+                    className="w-60 h-48 sm:h-80 lg:h-60 object-cover"
                   />
                 ) : (
-                  <div className="w-60 h-80 lg:h-60 bg-gray-200 flex items-center justify-center text-gray-400">
+                  <div className="w-60 h-48 sm:h-80 lg:h-60 bg-gray-200 flex items-center justify-center text-gray-400">
                     No image
                   </div>
                 )}

@@ -59,10 +59,10 @@ export default function ControllerTab() {
           <TabsTrigger value="manage">Manage</TabsTrigger>
         </TabsList>
         <TabsContent value="add">
-          <Card className="w-full bg-background p-5">
+          <Card className="w-full bg-background p-4 sm:p-5">
             <div className="max-w-xl mx-auto relative">
               <Input
-                className="!border-black/20 border-2 rounded-full px-4 peer pl-9"
+                className="!border-black/20 border-2 rounded-full px-4 peer pl-9 sm:pr-0 pr-24"
                 type="text"
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search for an anime, manga, or manhwa..."

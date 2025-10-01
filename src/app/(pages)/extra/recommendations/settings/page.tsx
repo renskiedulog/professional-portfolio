@@ -21,9 +21,7 @@ const page = async () => {
         <div className="w-full flex justify-between">
           <BackButton href="/extra/recommendations" label="Recommendations" />
         </div>
-        <div>
-          <ControllerTab />
-        </div>
+        <ControllerTab />
       </BlurFade>
     </Container>
   );

@@ -2,7 +2,10 @@
  * This configuration file lets you run `$ sanity [command]` in this folder
  * Go to https://www.sanity.io/docs/cli to learn more.
  **/
+import dotenv from "dotenv";
 import { defineCliConfig } from "sanity/cli";
+
+dotenv.config();
 
 if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
   throw new Error("Missing NEXT_PUBLIC_SANITY_PROJECT_ID environment variable");
