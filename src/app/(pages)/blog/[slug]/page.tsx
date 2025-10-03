@@ -21,7 +21,7 @@ import LikeButton from "./like-button";
 import BlogSchema from "./blog-schema";
 
 const getBlogPost = async (slug: string) => {
-  const query = groq`*[_type == "blog" && slug.current == $slug][0] {
+  const query = groq`*[_type == "blog" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
     title,
     description,
     body,
