@@ -157,7 +157,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
               }
               size={{ width: 500, height: 500 }}
               wrapperClassName="!w-full sm:!w-1/2 sm:rotate-[-4deg] rotate-0 sm:shadow-2xl shadow-md h-max"
-              className="w-full object-cover"
+              className="w-full object-cover aspect-square"
             />
             <div className="w-full sm:w-1/2 translate-y-0 sm:-translate-y-5">
               <Heading
