@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Heading from "@/app/UI/global-components/heading";
+import CharacterCarousel from "./character-carousel";
 
 const RecommendationContent = ({
   recommendationInfo,
@@ -132,6 +133,11 @@ const RecommendationContent = ({
             <p>{recommendationInfo.synopsis}</p>
           </div>
         )}
+
+        {recommendationInfo?.characters &&
+          recommendationInfo.characters.length > 0 && (
+            <CharacterCarousel characters={recommendationInfo?.characters} />
+          )}
 
         {/* Trailer */}
         {recommendationInfo.trailer?.youtube_id && (

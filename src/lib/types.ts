@@ -144,4 +144,48 @@ export interface RecommendationInfo {
   theme?: ThemeMusic;
   external?: ExternalLink[];
   streaming?: StreamingPlatform[];
+  characters?: CharacterData[];
+}
+
+// Character
+interface CharacterImage {
+  image_url: string;
+  small_image_url?: string;
+}
+
+interface CharacterImages {
+  jpg: CharacterImage;
+  webp: CharacterImage;
+}
+
+interface PersonImage {
+  jpg: {
+    image_url: string;
+  };
+}
+
+interface Person {
+  mal_id: number;
+  url: string;
+  images: PersonImage;
+  name: string;
+}
+
+interface VoiceActor {
+  person: Person;
+  language: string;
+}
+
+interface Character {
+  mal_id: number;
+  url: string;
+  images: CharacterImages;
+  name: string;
+}
+
+export interface CharacterData {
+  character: Character;
+  role: string;
+  favorites: number;
+  voice_actors: VoiceActor[];
 }
