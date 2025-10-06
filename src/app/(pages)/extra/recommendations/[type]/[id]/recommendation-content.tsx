@@ -105,7 +105,11 @@ const RecommendationContent = ({
             recommendationInfo.titles.length > 0 && (
               <div className="flex flex-wrap justify-center lg:justify-start gap-x-2">
                 {recommendationInfo.titles.map((titleObj, index) => {
-                  if (titleObj?.type?.toLowerCase() === "default") return null;
+                  if (
+                    titleObj?.type?.toLowerCase() === "default" ||
+                    recommendationInfo?.title === titleObj?.title
+                  )
+                    return null;
                   return (
                     <p
                       key={`${titleObj.title}-${index}`}

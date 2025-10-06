@@ -55,8 +55,11 @@ export const GetRecommendationInfo = async ({
   }
   try {
     const req = await fetch(`${API_URL}/${type}/${id}/full`);
+    const chars = (await fetch(`${API_URL}/${type}/${id}/characters`)) ?? [];
     if (req.ok) {
       const data = await req.json();
+      const charactersData = await chars.json();
+      data.data.characters = charactersData.data;
       return data;
     }
   } catch (error) {
