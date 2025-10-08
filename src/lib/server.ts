@@ -37,23 +37,29 @@ export const GetRecommendationInfo = async ({
   id: string;
   searchType: "anime" | "movie" | "manhwa" | "manga" | "tv";
 }) => {
-  let resultsType = searchType;
   let type = searchType;
 
-  if (searchType === "anime") {
-    resultsType = "tv";
-  }
-
   if (searchType === "manhwa") {
-    resultsType = searchType;
     type = "manga";
   }
 
   if (searchType === "movie") {
-    resultsType = "movie";
     type = "anime";
   }
+
   try {
+    const query = `*[_type == "recommendations"]{
+      id,
+    }`;
+
+    const recommendations = await sanityClient.fetch<SearchResult[]>(query, {
+      type,
+    });
+
+    if (!recommendations?.map((rec) => rec.id).includes(Number(id)) === false) {
+      return null;
+    }
+
     const req = await fetch(`${API_URL}/${type}/${id}/full`);
     const chars = (await fetch(`${API_URL}/${type}/${id}/characters`)) ?? [];
     if (req.ok) {

@@ -6,6 +6,7 @@ import { GetRecommendationsParams } from "../page";
 import { GetRecommendationInfo } from "@/lib/server";
 import { RecommendationInfo } from "@/lib/types";
 import RecommendationContent from "./recommendation-content";
+import { notFound } from "next/navigation";
 
 const Page = async ({
   params,
@@ -23,6 +24,10 @@ const Page = async ({
   });
 
   const recommendationInfo: RecommendationInfo = req?.data;
+
+  if (!req) {
+    return notFound();
+  }
 
   return (
     <Container as="main" className="pb-20 sm:pb-10">
