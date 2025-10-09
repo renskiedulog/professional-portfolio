@@ -9,6 +9,7 @@ import NavigationBar from "./UI/global-components/navigation-bar";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,6 +78,43 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Renato Dulog",
+              url: "https://renato-dulog.is-a.dev/",
+              image: "https://renato-dulog.is-a.dev/me.webp",
+              jobTitle: "Full Stack Engineer",
+              email: "mailto:renato.larayos.dulog@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Pandacan, Pinamungajan, Cebu",
+                addressCountry: "Philippines",
+              },
+              sameAs: [
+                "https://facebook.com/renato.dulog",
+                "https://www.linkedin.com/in/renato-dulog/",
+                "https://github.com/renskiedulog",
+              ],
+              worksFor: [
+                {
+                  "@type": "Organization",
+                  name: "WebriQ",
+                  url: "https://www.webriq.com/",
+                },
+                {
+                  "@type": "Organization",
+                  name: "Freelance / Self-Employed",
+                },
+              ],
+            }),
+          }}
+        />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
