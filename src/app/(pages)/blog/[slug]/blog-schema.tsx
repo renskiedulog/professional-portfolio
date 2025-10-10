@@ -19,6 +19,7 @@ export default function BlogSchema({
     headline: title,
     description,
     author: {
+      url: "https://renato-dulog.is-a.dev/",
       "@type": "Person",
       name: "Renato Dulog",
     },
