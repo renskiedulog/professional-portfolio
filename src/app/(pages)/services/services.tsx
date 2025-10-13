@@ -92,14 +92,14 @@ const Services = () => {
             className="col-span-1 w-full border-primary/60 border p-4 group"
           >
             <div className="flex items-center gap-4">
-              <div className="border w-max p-2.5 border-primary">
+              <div className="border w-max p-2.5 border-primary bg-background z-20">
                 <service.logo size={24} />
               </div>
               <div className="transition-all">
                 <h2 className="font-normal sm:font-thin text-lg mt-2 transition-all">
                   {service?.title}
                 </h2>
-                <div className="w-10 h-[0.5px] group-hover:h-[2px] bg-primary group-hover:w-full transition-all ease-in-out duration-150" />
+                <div className="w-8 h-[0.5px] group-hover:h-[2px] bg-primary -translate-x-14 group-hover:translate-x-0 group-hover:w-full transition-all ease-in-out duration-300" />
               </div>
             </div>
             <p className="mt-4">{service?.description}</p>

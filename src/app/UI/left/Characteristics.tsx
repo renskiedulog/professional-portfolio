@@ -57,12 +57,17 @@ const characters = [
   {
     label: "Articulate Reader",
     description:
-      "I have a strong understanding of English and excel at reading and interpreting texts. While my verbal communication may not always be as fluent, I am able to articulate ideas and express myself clearly through writing."
-  },  
+      "I have a strong understanding of English and excel at reading and interpreting texts. While my verbal communication may not always be as fluent, I am able to articulate ideas and express myself clearly through writing.",
+  },
   {
     label: "Prompt Connoisseur",
     description:
       "I excel at crafting precise prompts, articulating ideas clearly, and finding the right information when needed. My ability to ask thoughtful questions and research effectively transforms curiosity into clarity, enabling impactful and insightful conversations.",
+  },
+  {
+    label: "Curious Researcher",
+    description:
+      "I have an insatiable curiosity that drives me to explore new topics and ideas. I love diving deep into research, uncovering hidden gems of information, and connecting the dots to form a bigger picture.",
   },
 ];
 
