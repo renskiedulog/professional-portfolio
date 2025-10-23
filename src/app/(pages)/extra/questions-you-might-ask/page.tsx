@@ -10,6 +10,7 @@ import Crown from "@/app/UI/global-components/crown";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { TfiWrite } from "react-icons/tfi";
+import QymaSchema from "./qyma-schema";
 
 export const metadata = {
   title: "Questions You Might Ask",
@@ -41,6 +42,7 @@ const QuestionsPage = async () => {
 
   return (
     <Container as="main" className="pb-20 sm:pb-10">
+      <QymaSchema questions={items} />
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">

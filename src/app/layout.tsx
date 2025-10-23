@@ -79,6 +79,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      {/* Personal Information Script */}
       <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -111,9 +112,18 @@ export default function RootLayout({
                 name: "Freelance / Self-Employed",
               },
             ],
+            knowsAbout: [
+              "Web Development",
+              "React",
+              "Next.js",
+              "Node.js",
+              "TypeScript",
+              "UI/UX Design",
+            ],
           }),
         }}
       />
+      {/* Services Script */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >

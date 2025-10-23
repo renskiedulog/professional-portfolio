@@ -5,14 +5,12 @@ import { PortableText } from "@portabletext/react";
 import { ChevronDown } from "lucide-react";
 import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
 import { Item } from "./page";
-import QymaSchema from "./qyma-schema";
 
 const QuestionCards = ({ questions }: { questions: Item[] }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <div className="w-full flex flex-col gap-2 mt-5 items-center md:mb-20">
-      <QymaSchema questions={questions} />
       {questions?.map((item, index) => (
         <motion.div
           key={`question-card-${index}`}
