@@ -1,11 +1,7 @@
 import { MapPin } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import {
-  FaFacebookSquare,
-  FaGithub,
-  FaLinkedin,
-} from "react-icons/fa";
+import { FaFacebookSquare, FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 
 const addresses = [

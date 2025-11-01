@@ -4,7 +4,6 @@ import Identity from "./Identity";
 import Badges from "./Badges";
 import Details from "./Details";
 import Statistics from "./Statistics";
-import JobBadge from "./JobBadge";
 import Donate from "./Donate";
 
 const LeftSection = () => {

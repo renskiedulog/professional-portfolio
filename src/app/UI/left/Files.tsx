@@ -16,7 +16,7 @@ const Files = () => {
         {files.map((file, idx) => (
           <div
             key={idx}
-            className="flex flex-col items-center cursor-pointer group w-max"
+            className="flex flex-col items-center cursor-pointer group w-max group"
           >
             <FcFolder
               size={50}
@@ -26,7 +26,7 @@ const Files = () => {
               size={50}
               className="hidden group-hover:block transition duration-300"
             />
-            <span className="text-gray-800 text-xs font-semibold text-center">
+            <span className="text-gray-800 text-xs font-semibold text-center group-hover:opacity-80">
               {file.title}
             </span>
           </div>
