@@ -9,6 +9,7 @@ import { formSubmissions } from "./formSubmission";
 import { siteData } from "./siteData";
 import { projects } from "./projects";
 import { recommendations } from "./recommendations";
+import testimonials from "./testimonials";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -21,5 +22,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     siteData,
     projects,
     recommendations,
+    testimonials,
   ],
 };

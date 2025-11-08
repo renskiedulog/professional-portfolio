@@ -1,4 +1,7 @@
 "use server";
+
+import { sanityClient } from "./sanityClient";
+
 export async function getRepoStarsFromLink(repoUrl: string) {
   if (!repoUrl) {
     return null;
@@ -29,6 +32,66 @@ export async function getRepoStarsFromLink(repoUrl: string) {
     const data = await response.json();
     return data.stargazers_count;
   } catch (error) {
-    return null
+    return null;
   }
+}
+
+export async function getGitHubProfile(username: string) {
+  if (!username) return null;
+
+  const url = `https://api.github.com/users/${username}`;
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/vnd.github+json",
+      },
+    });
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+
+    return {
+      login: data.login,
+      name: data.name,
+      avatar_url: data.avatar_url,
+      html_url: data.html_url,
+      blog: data.blog,
+    };
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getEnrichedTestimonials() {
+  const testimonials = await sanityClient.fetch(`*[_type == "testimonial"]{
+    name,
+    position,
+    "photoUrl": photo.asset->url,
+    github,
+    linkedin,
+    portfolio,
+    testimonial
+  }`);
+
+  const enriched = await Promise.all(
+    testimonials.map(async (t: any) => {
+      let githubProfile = null;
+      if (t.github) {
+        const username = t.github.split("/").filter(Boolean).pop()!;
+        githubProfile = await getGitHubProfile(username);
+      }
+
+      return {
+        ...t,
+        displayName: t.name || githubProfile?.name || "",
+        displayPhoto: t.photoUrl || githubProfile?.avatar_url || "",
+        displayBio: t.position,
+        portfolio: githubProfile?.blog || t.portfolio || "",
+      };
+    })
+  );
+
+  return enriched;
 }

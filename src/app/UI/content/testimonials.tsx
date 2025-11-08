@@ -1,0 +1,170 @@
+"use client";
+import { useEffect, useRef, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import Heading from "../global-components/heading";
+import Link from "next/link";
+import { FaGithub, FaGlobeAsia, FaLinkedin } from "react-icons/fa";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+type Testimonial = {
+  displayName: string;
+  displayPhoto: string;
+  displayBio: string;
+  testimonial: string;
+  github?: string;
+  linkedin?: string;
+  portfolio?: string;
+};
+
+interface Props {
+  testimonials: Testimonial[];
+}
+
+const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
+  const carouselApi = useRef<CarouselApi | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [slideCount, setSlideCount] = useState(testimonials.length);
+
+  const startAutoplay = () => {
+    stopAutoplay();
+    intervalRef.current = setInterval(() => {
+      carouselApi.current?.scrollNext();
+    }, 3000);
+  };
+
+  const stopAutoplay = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    const api = carouselApi.current;
+    if (!api) return;
+
+    setSlideCount(api.scrollSnapList().length);
+    setSelectedIndex(api.selectedScrollSnap());
+
+    startAutoplay();
+
+    const handleSelect = () => {
+      setSelectedIndex(api.selectedScrollSnap());
+      stopAutoplay();
+      startAutoplay();
+    };
+
+    api.on("select", handleSelect);
+    api.on("pointerDown", stopAutoplay);
+    api.on("pointerUp", startAutoplay);
+
+    return () => {
+      stopAutoplay();
+      api.off("select", handleSelect);
+      api.off("pointerDown", stopAutoplay);
+      api.off("pointerUp", startAutoplay);
+    };
+  }, [carouselApi.current]);
+
+  return (
+    <section className="w-full space-y-4">
+      <Heading>Testimonials</Heading>
+      <Carousel
+        setApi={(api) => {
+          carouselApi.current = api;
+        }}
+        className="w-full"
+      >
+        <CarouselContent>
+          {testimonials.map((t, index) => (
+            <CarouselItem key={index}>
+              <div className="flex flex-col justify-center select-none cursor-grab active:cursor-grabbing">
+                <p className="text-gray-800 text-lg max-w-xl mx-auto leading-relaxed italic mb-4 text-center">
+                  "{t.testimonial}"
+                </p>
+                <div className="flex items-center justify-center mt-auto gap-3">
+                  <Avatar className="w-14 h-14 rounded-full object-cover">
+                    <AvatarImage
+                      width={40}
+                      height={40}
+                      src={t.displayPhoto}
+                      alt={t.displayName}
+                      loading="lazy"
+                    />
+                    <AvatarFallback>{t.displayName[0]}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col gap-0.5">
+                    <span className="font-semibold text-gray-900 leading-none">
+                      {t.displayName}
+                    </span>
+                    <span className="text-gray-500 text-xs">
+                      {t.displayBio}
+                    </span>
+                    <div className="flex gap-1 items-center">
+                      {t.github && (
+                        <Link
+                          href={t.github}
+                          className="hover:opacity-80"
+                          target="_blank"
+                        >
+                          <FaGithub />
+                        </Link>
+                      )}
+                      {t.portfolio && (
+                        <Link
+                          href={t.portfolio}
+                          className="hover:opacity-80"
+                          target="_blank"
+                        >
+                          <FaGlobeAsia />
+                        </Link>
+                      )}
+                      {t.linkedin && (
+                        <Link
+                          href={t.linkedin}
+                          className="hover:opacity-80"
+                          target="_blank"
+                        >
+                          <FaLinkedin fill="#0e76a8" />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+
+      {testimonials?.length > 1 && (
+        <div className="flex justify-center gap-2 translate-y-5 sm:translate-y-0">
+          {Array.from({ length: slideCount }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                carouselApi.current?.scrollTo(index);
+                stopAutoplay();
+                startAutoplay();
+              }}
+              className={`w-3 h-3 rounded-full transition-all ${
+                selectedIndex === index
+                  ? "bg-primary scale-110"
+                  : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default TestimonialsSection;

@@ -9,6 +9,8 @@ import Skills from "./UI/content/skills";
 import WorkExperience from "./UI/content/work-experience";
 import Container from "./UI/global-components/container";
 import LeftSection from "./UI/left/LeftSection";
+import TestimonialsSection from "./UI/content/testimonials";
+import { getEnrichedTestimonials } from "@/lib/github";
 
 export const metadata = {
   title: "Renato Dulog | Web Portfolio",
@@ -20,6 +22,7 @@ export const metadata = {
 };
 
 export default async function Home() {
+  const testimonials = await getEnrichedTestimonials();
   return (
     <>
       <Head>
@@ -36,6 +39,9 @@ export default async function Home() {
               <Education />
               <Projects />
               <Blogs />
+              {process.env.NEXT_PUBLIC_DEVELOPMENT_MODE === "true" && (
+                <TestimonialsSection testimonials={testimonials} />
+              )}
               <Footer />
             </div>
           </div>
