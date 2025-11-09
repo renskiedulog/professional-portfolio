@@ -84,61 +84,7 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
         <CarouselContent>
           {testimonials.map((t, index) => (
             <CarouselItem key={index}>
-              <div className="flex flex-col justify-center select-none cursor-grab active:cursor-grabbing">
-                <p className="text-gray-800 text-lg max-w-xl mx-auto leading-relaxed italic mb-4 text-center">
-                  "{t.testimonial}"
-                </p>
-                <div className="flex items-center justify-center mt-auto gap-3">
-                  <Avatar className="w-14 h-14 rounded-full object-cover border">
-                    <AvatarImage
-                      width={40}
-                      height={40}
-                      src={t.displayPhoto}
-                      alt={t.displayName}
-                      className="object-scale-down"
-                      loading="lazy"
-                    />
-                    <AvatarFallback>{t.displayName[0]}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col gap-0.5">
-                    <span className="font-semibold text-gray-900 leading-none">
-                      {t.displayName}
-                    </span>
-                    <span className="text-gray-500 text-xs">
-                      {t.displayBio}
-                    </span>
-                    <div className="flex gap-1 items-center">
-                      {t.github && (
-                        <Link
-                          href={t.github}
-                          className="hover:opacity-80"
-                          target="_blank"
-                        >
-                          <FaGithub />
-                        </Link>
-                      )}
-                      {t.portfolio && (
-                        <Link
-                          href={t.portfolio}
-                          className="hover:opacity-80"
-                          target="_blank"
-                        >
-                          <FaGlobeAsia />
-                        </Link>
-                      )}
-                      {t.linkedin && (
-                        <Link
-                          href={t.linkedin}
-                          className="hover:opacity-80"
-                          target="_blank"
-                        >
-                          <FaLinkedin fill="#0e76a8" />
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <TestimonialCard testimonial={t} />
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -165,6 +111,74 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
         </div>
       )}
     </section>
+  );
+};
+
+export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
+  testimonial,
+}) => {
+  return (
+    <div className="flex flex-col justify-center select-none cursor-grab active:cursor-grabbing">
+      {testimonial?.testimonial && (
+        <p className="text-gray-800 text-lg max-w-xl mx-auto leading-relaxed italic mb-4 text-center">
+          "{testimonial.testimonial}"
+        </p>
+      )}
+      <div className="flex items-center justify-center mt-auto gap-3">
+        {(testimonial?.displayPhoto || testimonial?.displayName) && (
+          <Avatar className="w-14 h-14 rounded-full object-cover border">
+            <AvatarImage
+              width={40}
+              height={40}
+              src={testimonial.displayPhoto}
+              alt={testimonial.displayName}
+              className="object-scale-down"
+              loading="lazy"
+            />
+            <AvatarFallback>{testimonial.displayName[0]}</AvatarFallback>
+          </Avatar>
+        )}
+        <div className="flex flex-col gap-0.5">
+          {testimonial?.displayName && (
+            <span className="font-semibold text-gray-900 leading-none">
+              {testimonial.displayName}
+            </span>
+          )}
+          <span className="text-gray-500 text-xs">
+            {testimonial.displayBio}
+          </span>
+          <div className="flex gap-1 items-center">
+            {testimonial.github && (
+              <Link
+                href={testimonial.github}
+                className="hover:opacity-80"
+                target="_blank"
+              >
+                <FaGithub />
+              </Link>
+            )}
+            {testimonial.portfolio && (
+              <Link
+                href={testimonial.portfolio}
+                className="hover:opacity-80"
+                target="_blank"
+              >
+                <FaGlobeAsia />
+              </Link>
+            )}
+            {testimonial.linkedin && (
+              <Link
+                href={testimonial.linkedin}
+                className="hover:opacity-80"
+                target="_blank"
+              >
+                <FaLinkedin fill="#0e76a8" />
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
