@@ -89,12 +89,13 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
                   "{t.testimonial}"
                 </p>
                 <div className="flex items-center justify-center mt-auto gap-3">
-                  <Avatar className="w-14 h-14 rounded-full object-cover">
+                  <Avatar className="w-14 h-14 rounded-full object-cover border">
                     <AvatarImage
                       width={40}
                       height={40}
                       src={t.displayPhoto}
                       alt={t.displayName}
+                      className="object-scale-down"
                       loading="lazy"
                     />
                     <AvatarFallback>{t.displayName[0]}</AvatarFallback>

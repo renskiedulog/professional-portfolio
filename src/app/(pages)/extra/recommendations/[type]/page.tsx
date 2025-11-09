@@ -6,7 +6,7 @@ import RandomButton from "./random-button";
 import RecommendationCard from "./recommendation-card";
 import Crown from "@/app/UI/global-components/crown";
 import Heading from "@/app/UI/global-components/heading";
-import { getRecommendations } from "@/lib/server";
+import { getRecommendations } from "@/lib/recommendations";
 import { SearchResult } from "@/lib/types";
 
 export interface GetRecommendationsParams {

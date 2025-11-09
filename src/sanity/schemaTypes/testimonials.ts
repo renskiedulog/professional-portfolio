@@ -1,7 +1,10 @@
-export default {
+import { MdOutlineMessage } from "react-icons/md";
+
+export const testimonials = {
   name: "testimonial",
   type: "document",
   title: "Testimonial",
+  icon: MdOutlineMessage,
   fields: [
     {
       name: "github",
@@ -39,16 +42,27 @@ export default {
       type: "text",
       title: "Testimonial Text",
     },
+    {
+      name: "shown",
+      type: "boolean",
+      title: "Shown on Website",
+      description: "Toggle to make the testimonial visible.",
+      initialValue: false,
+    },
   ],
   preview: {
     select: {
       name: "name",
       github: "github",
+      photo: "photo",
+      shown: "shown",
     },
     prepare(selection: any) {
-      const { name, github } = selection;
+      const { name, github, photo, shown } = selection;
       return {
         title: name || github || "Untitled Testimonial",
+        media: photo,
+        subtitle: shown ? "Visible" : "Hidden",
       };
     },
   },

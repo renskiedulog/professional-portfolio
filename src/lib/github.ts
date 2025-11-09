@@ -65,14 +65,15 @@ export async function getGitHubProfile(username: string) {
 }
 
 export async function getEnrichedTestimonials() {
-  const testimonials = await sanityClient.fetch(`*[_type == "testimonial"]{
+  const testimonials =
+    await sanityClient.fetch(`*[_type == "testimonial" && shown == true]{
     name,
     position,
     "photoUrl": photo.asset->url,
     github,
     linkedin,
     portfolio,
-    testimonial
+    testimonial,
   }`);
 
   const enriched = await Promise.all(

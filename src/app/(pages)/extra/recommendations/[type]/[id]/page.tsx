@@ -3,7 +3,7 @@ import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import { Badge } from "@/components/ui/badge";
 import { GetRecommendationsParams } from "../page";
-import { GetRecommendationInfo } from "@/lib/server";
+import { GetRecommendationInfo } from "@/lib/recommendations";
 import { RecommendationInfo } from "@/lib/types";
 import RecommendationContent from "./recommendation-content";
 import { notFound } from "next/navigation";
