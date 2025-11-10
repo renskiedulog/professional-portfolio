@@ -26,15 +26,16 @@ interface Props {
 }
 
 const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
-  const carouselApi = useRef<CarouselApi | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [slideCount, setSlideCount] = useState(testimonials.length);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Autoplay functions
   const startAutoplay = () => {
     stopAutoplay();
     intervalRef.current = setInterval(() => {
-      carouselApi.current?.scrollNext();
+      carouselApi?.scrollNext();
     }, 5000);
   };
 
@@ -45,44 +46,38 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
     }
   };
 
+  // Initialize carousel API
   useEffect(() => {
-    const api = carouselApi.current;
-    if (!api) return;
+    if (!carouselApi) return;
 
-    setSlideCount(api.scrollSnapList().length);
-    setSelectedIndex(api.selectedScrollSnap());
+    // Set slide count and initial index
+    setSlideCount(carouselApi.scrollSnapList().length);
+    setSelectedIndex(carouselApi.selectedScrollSnap());
 
     startAutoplay();
 
-    const handleSelect = () => {
-      setSelectedIndex(api.selectedScrollSnap());
-      stopAutoplay();
-      startAutoplay();
-    };
+    const handleSelect = () =>
+      setSelectedIndex(carouselApi.selectedScrollSnap());
 
-    api.on("select", handleSelect);
-    api.on("pointerDown", stopAutoplay);
-    api.on("pointerUp", startAutoplay);
+    carouselApi.on("select", handleSelect);
+    carouselApi.on("pointerDown", stopAutoplay);
+    carouselApi.on("pointerUp", startAutoplay);
 
     return () => {
       stopAutoplay();
-      api.off("select", handleSelect);
-      api.off("pointerDown", stopAutoplay);
-      api.off("pointerUp", startAutoplay);
+      carouselApi.off("select", handleSelect);
+      carouselApi.off("pointerDown", stopAutoplay);
+      carouselApi.off("pointerUp", startAutoplay);
     };
-  }, [carouselApi.current]);
+  }, [carouselApi]);
 
   if (testimonials.length === 0) return null;
 
   return (
     <section className="w-full space-y-4">
       <Heading>Testimonials</Heading>
-      <Carousel
-        setApi={(api) => {
-          carouselApi.current = api;
-        }}
-        className="w-full"
-      >
+
+      <Carousel setApi={setCarouselApi} className="w-full">
         <CarouselContent>
           {testimonials.map((t, index) => (
             <CarouselItem key={index}>
@@ -92,15 +87,13 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
         </CarouselContent>
       </Carousel>
 
-      {testimonials?.length > 1 && (
+      {slideCount > 1 && (
         <div className="flex justify-center gap-2 translate-y-5 sm:translate-y-0">
           {Array.from({ length: slideCount }).map((_, index) => (
             <button
               key={index}
               onClick={() => {
-                carouselApi.current?.scrollTo(index);
-                stopAutoplay();
-                startAutoplay();
+                carouselApi?.scrollTo(index);
               }}
               className={`w-3 h-3 rounded-full transition-all ${
                 selectedIndex === index
@@ -124,8 +117,11 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
       {testimonial?.testimonial && (
         <p
           className={`text-gray-800 mx-auto leading-relaxed italic mb-4 text-center
-          ${testimonial.testimonial.length > 200 ? "text-base max-w-xl leading-normal" : "text-lg max-w-xl"}
-        `}
+          ${
+            testimonial.testimonial.length > 200
+              ? "text-base max-w-xl leading-normal"
+              : "text-lg max-w-xl"
+          }`}
         >
           "{testimonial.testimonial}"
         </p>
