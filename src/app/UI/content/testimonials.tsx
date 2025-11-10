@@ -35,7 +35,7 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
     stopAutoplay();
     intervalRef.current = setInterval(() => {
       carouselApi.current?.scrollNext();
-    }, 3000);
+    }, 5000);
   };
 
   const stopAutoplay = () => {
@@ -71,6 +71,8 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
       api.off("pointerUp", startAutoplay);
     };
   }, [carouselApi.current]);
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section className="w-full space-y-4">
@@ -120,10 +122,15 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
   return (
     <div className="flex flex-col justify-center select-none cursor-grab active:cursor-grabbing">
       {testimonial?.testimonial && (
-        <p className="text-gray-800 text-lg max-w-xl mx-auto leading-relaxed italic mb-4 text-center">
+        <p
+          className={`text-gray-800 mx-auto leading-relaxed italic mb-4 text-center
+          ${testimonial.testimonial.length > 200 ? "text-base max-w-xl leading-normal" : "text-lg max-w-xl"}
+        `}
+        >
           "{testimonial.testimonial}"
         </p>
       )}
+
       <div className="flex items-center justify-center mt-auto gap-3">
         {(testimonial?.displayPhoto || testimonial?.displayName) && (
           <Avatar className="w-14 h-14 rounded-full object-cover border">

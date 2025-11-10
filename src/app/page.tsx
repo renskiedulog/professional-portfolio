@@ -39,9 +39,7 @@ export default async function Home() {
               <Education />
               <Projects />
               <Blogs />
-              {process.env.NEXT_PUBLIC_DEVELOPMENT_MODE === "true" && (
-                <TestimonialsSection testimonials={testimonials} />
-              )}
+              <TestimonialsSection testimonials={testimonials} />
               <Footer />
             </div>
           </div>
