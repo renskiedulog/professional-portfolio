@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   },
   authors: [{ name: "Renato Dulog", url: "https://renato-dulog.is-a.dev/" }],
   alternates: {
-    canonical: "https://renato-dulog.is-a.dev/",
+    canonical: "https://renato-dulog.is-a.dev",
   },
 };
 

@@ -33,7 +33,7 @@ const Footer = () => {
       <ContactForm />
       {/* Copyright */}
       <p className="text-sm text-primary/70 text-center">
-        © 2025 RD Works. All rights reserved.
+        © 2025 Renato Dulog. All Rights Reserved.
       </p>
     </footer>
   );

@@ -12,7 +12,10 @@ import WorkFlow from "./workflow";
 export const metadata = {
   title: "Services",
   description:
-    "Explore the web development services I offer — from responsive design to full-stack solutions tailored to your needs.",
+    "Explore the services I offer — from responsive design to full-stack solutions tailored to your needs or the grunt works you are trying to avoid.",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/services`,
+  },
 };
 
 export const states = {

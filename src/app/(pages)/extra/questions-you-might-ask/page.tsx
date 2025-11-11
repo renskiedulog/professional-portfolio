@@ -9,7 +9,6 @@ import QuestionCards from "./question-cards";
 import Crown from "@/app/UI/global-components/crown";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { TfiWrite } from "react-icons/tfi";
 import QymaSchema from "./qyma-schema";
 
 export const metadata = {

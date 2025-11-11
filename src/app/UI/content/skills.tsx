@@ -54,14 +54,9 @@ const skills = [
     width: "half",
     items: [
       {
-        name: "Supabase",
-        icon: RiSupabaseFill,
-      },
-      {
         name: "Nest JS",
         icon: SiNestjs,
       },
-
       {
         name: "Zod",
         icon: SiZod,
@@ -122,6 +117,10 @@ const skills = [
       {
         name: "Figma",
         icon: SiFigma,
+      },
+      {
+        name: "Supabase",
+        icon: RiSupabaseFill,
       },
     ],
   },

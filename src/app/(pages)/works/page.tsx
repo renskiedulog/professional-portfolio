@@ -2,6 +2,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 
+export const metadata = {
+  title: "Works - Under Construction",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/works`,
+  },
+};
+
 const Page = () => {
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex items-center justify-center flex-col space-y-2 text-center px-5">

@@ -11,7 +11,7 @@ const BottomSection = ({
   return (
     <section className="flex justify-between mt-5 sm:mt-10 sm:gap-0 gap-5">
       {prevAndNext?.previousBlog ? (
-        <div className="flex flex-col gap-2 max-w-xs">
+        <div className="flex flex-col gap-2 max-w-[220px] max-w-xs">
           <Heading className="!text-xl sm:!text-3xl">Previous</Heading>
           <Link
             aria-label={`Read previous post: ${prevAndNext?.previousBlog?.title}`}
@@ -25,7 +25,7 @@ const BottomSection = ({
         <span></span>
       )}
       {prevAndNext?.nextBlog !== null ? (
-        <div className="flex flex-col gap-2 max-w-xs text-right">
+        <div className="flex flex-col gap-2 max-w-[220px] sm:max-w-xs text-right">
           <Heading className="!text-xl sm:!text-3xl">Next</Heading>
           <Link
             aria-label={`Read next post: ${prevAndNext?.nextBlog?.title}`}
