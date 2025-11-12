@@ -168,7 +168,7 @@ const RecommendationContent = ({
                     <Heading as="h3" className="text-base">
                       Openings:
                     </Heading>
-                    <ul className="list-disc list-inside text-sm sm:text-base">
+                    <ul className="text-sm sm:text-base">
                       {recommendationInfo.theme.openings.map((opening, idx) => (
                         <li key={idx}>{opening}</li>
                       ))}
@@ -180,7 +180,7 @@ const RecommendationContent = ({
                     <Heading as="h3" className="text-base">
                       Endings:
                     </Heading>
-                    <ul className="list-disc list-inside text-sm sm:text-base">
+                    <ul className="text-sm sm:text-base">
                       {recommendationInfo.theme.endings.map((ending, idx) => (
                         <li key={idx}>{ending}</li>
                       ))}
@@ -227,20 +227,38 @@ const RecommendationContent = ({
               <Heading as="h2" className="text-xl flex items-center gap-2">
                 <LinkIcon className="w-5 h-5" /> External Links
               </Heading>
-              <ul className="space-y-1">
-                {recommendationInfo.external.map((link, idx) => (
-                  <li key={idx}>
-                    <a
-                      href={link.url}
-                      className="text-primary hover:underline flex items-center gap-1 text-sm"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ExternalLinkIcon className="w-4 h-4" />
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
+              <ul className="flex gap-x-4 gap-y-2 flex-wrap items-center">
+                {recommendationInfo.external.map((link, idx) => {
+                  let domain = "";
+                  try {
+                    const url = new URL(link.url);
+                    domain = `${url.protocol}//${url.hostname}`;
+                  } catch {
+                    domain = link.url;
+                  }
+
+                  return (
+                    <li key={idx}>
+                      <a
+                        href={link.url}
+                        className="text-primary hover:underline flex items-center gap-1 text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Image
+                          unoptimized
+                          src={`${domain}/favicon.ico`}
+                          width={16}
+                          height={16}
+                          loading="lazy"
+                          className="w-4"
+                          alt=""
+                        />
+                        {link.name}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
@@ -252,7 +270,7 @@ const RecommendationContent = ({
               <Heading as="h2" className="text-xl flex items-center gap-2">
                 <Tv className="w-5 h-5" /> Streaming Platforms
               </Heading>
-              <ul className="space-y-1">
+              <ul className="flex gap-x-4 gap-y-2 flex-wrap items-center">
                 {recommendationInfo.streaming.map((platform, idx) => (
                   <li key={idx}>
                     <a

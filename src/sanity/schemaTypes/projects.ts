@@ -8,6 +8,28 @@ export const projects = defineType({
   icon: IoConstructOutline,
   fields: [
     {
+      type: "string",
+      name: "title",
+      title: "Project Title",
+    },
+    {
+      name: "slug",
+      type: "slug",
+      options: {
+        source: "title",
+      },
+    },
+    {
+      type: "text",
+      name: "description",
+      title: "Project Description",
+    },
+    {
+      type: "url",
+      name: "githubLink",
+      title: "Github Link",
+    },
+    {
       type: "array",
       name: "images",
       title: "Project Images",
@@ -23,24 +45,8 @@ export const projects = defineType({
       ],
     },
     {
-      type: "string",
-      name: "title",
-      title: "Project Title",
-    },
-    {
-      type: "text",
-      name: "description",
-      title: "Project Title",
-    },
-    {
-      type: "url",
-      name: "githubLink",
-      title: "Github Link",
-    },
-    {
-      type: "url",
-      name: "caseStudyLink",
-      title: "Case Study Link",
+      name: "body",
+      type: "customBlockContent",
     },
   ],
 });
