@@ -116,7 +116,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
     <div className="flex flex-col justify-center select-none cursor-grab active:cursor-grabbing">
       {testimonial?.testimonial && (
         <p
-          className={`text-gray-800 mx-auto leading-relaxed italic mb-4 text-center
+          className={`text-gray-800 dark:text-primary mx-auto leading-relaxed italic mb-4 text-center
           ${
             testimonial.testimonial.length > 200
               ? "text-base max-w-xl leading-normal"
@@ -135,7 +135,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
               height={40}
               src={testimonial.displayPhoto}
               alt={testimonial.displayName}
-              className="object-scale-down"
+              className="object-cover"
               loading="lazy"
             />
             <AvatarFallback>{testimonial.displayName[0]}</AvatarFallback>
@@ -143,11 +143,11 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
         )}
         <div className="flex flex-col gap-0.5">
           {testimonial?.displayName && (
-            <span className="font-semibold text-gray-900 leading-none">
+            <span className="font-semibold text-gray-900 dark:text-primary leading-none">
               {testimonial.displayName}
             </span>
           )}
-          <span className="text-gray-500 text-xs">
+          <span className="text-gray-500 dark:text-primary/80 text-xs">
             {testimonial.displayBio}
           </span>
           <div className="flex gap-1 items-center">
