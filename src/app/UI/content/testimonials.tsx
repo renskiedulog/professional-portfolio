@@ -74,7 +74,7 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="w-full space-y-4">
+    <section className="w-full space-y-4 max-w-2xl">
       <Heading>Testimonials</Heading>
 
       <Carousel setApi={setCarouselApi} className="w-full">
