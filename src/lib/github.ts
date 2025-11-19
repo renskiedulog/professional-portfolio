@@ -96,3 +96,32 @@ export async function getEnrichedTestimonials() {
 
   return enriched;
 }
+
+export async function getAllCommits(repoUrl: string) {
+  const match = repoUrl.match(
+    /^https?:\/\/github\.com\/([^/]+)\/([^/]+)(\/|$)/
+  );
+
+  if (!match) return [];
+
+  const [_, owner, repo] = match;
+
+  let allCommits: any[] = [];
+  let page = 1;
+
+  while (true) {
+    const url = `https://api.github.com/repos/${owner}/${repo}/commits?per_page=100&page=${page}`;
+
+    const res = await fetch(url, {
+      headers: { Accept: "application/vnd.github+json" },
+    });
+
+    const batch = await res.json();
+    if (!Array.isArray(batch) || batch.length === 0) break;
+
+    allCommits = [...allCommits, ...batch];
+    page++;
+  }
+
+  return allCommits;
+}

@@ -1,10 +1,21 @@
 import BlurFade from "@/app/UI/animation-wrappers/fade";
+import PhotoPaper from "@/app/UI/blog/photopaper";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
+import Crown from "@/app/UI/global-components/crown";
+import Heading from "@/app/UI/global-components/heading";
 import ScrollProgress from "@/app/UI/global-components/scroll-progress";
+import { Badge } from "@/components/ui/badge";
+import { getAllCommits } from "@/lib/github";
 import { sanityClient } from "@/lib/sanityClient";
+import { ProjectInfo as ProjectInfoType } from "@/lib/types";
+import { classifyCommit } from "@/lib/utils";
+import { getSanityImageUrl } from "@/sanity/lib/sanity";
 import { groq } from "next-sanity";
+import Link from "next/link";
 import React from "react";
+import { FaGithub, FaLink } from "react-icons/fa";
+import { Roadmap } from "./roadmap";
 
 const getProjectInfo = async (slug: string) => {
   const query = groq`*[_type == "projects" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
@@ -18,7 +29,11 @@ const getProjectInfo = async (slug: string) => {
 
 const ProjectInfo = async ({ params }: { params: { project: string } }) => {
   const { project } = await params;
-  const info = await getProjectInfo(project);
+  const info: ProjectInfoType = await getProjectInfo(project);
+  const commits = await getAllCommits(info?.githubLink);
+  const roadmap = groupCommitsByMonth(commits);
+
+  console.log(roadmap);
 
   return (
     <Container as="main">
@@ -28,9 +43,67 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
         <div className="w-full flex items-center justify-between gap-5">
           <BackButton href="/works" label="Works" />
         </div>
+        {/* Heading */}
+        <div className="max-w-2xl mx-auto mt-10">
+          <Crown>Project Info</Crown>
+          {info?.images && info?.images?.length > 0 && (
+            <PhotoPaper
+              src={
+                info?.images[0]
+                  ? getSanityImageUrl(info?.images[0])
+                  : "/placeholder.png"
+              }
+              wrapperClassName="!w-full sm:!w-[80%] mx-auto sm:shadow-xl shadow-md h-max my-5"
+              className="!w-full object-cover aspect-video"
+            />
+          )}
+          <div className="flex items-center justify-between">
+            <Heading>{info?.title}</Heading>
+            <div className="flex items-center gap-2">
+              <Link href={info?.githubLink} target="_blank">
+                <Badge className="hover:bg-black/5 py-1 bg-transparent border shadow-none border-black/80 text-black/80 flex items-center gap-1">
+                  <FaLink /> Live Preview
+                </Badge>
+              </Link>
+              {info?.githubLink && (
+                <Link href={info?.githubLink} target="_blank">
+                  <Badge className="flex gap-1 items-center py-1">
+                    <FaGithub /> Github Repo
+                  </Badge>
+                </Link>
+              )}
+            </div>
+          </div>
+          <p className="text-justify">{info?.description}</p>
+        </div>
+        <Roadmap sections={roadmap} />
       </BlurFade>
     </Container>
   );
 };
 
 export default ProjectInfo;
+
+export function groupCommitsByMonth(commits: any[]) {
+  const grouped: Record<string, any[]> = {};
+
+  for (const c of commits) {
+    const msg = c.commit.message;
+    const date = new Date(c.commit.author.date);
+    const month = date.toLocaleString("default", {
+      month: "long",
+      year: "numeric",
+    });
+
+    if (!grouped[month]) grouped[month] = [];
+
+    grouped[month].push({
+      sha: c.sha,
+      message: msg,
+      type: classifyCommit(msg),
+      date,
+    });
+  }
+
+  return grouped;
+}

@@ -1,3 +1,5 @@
+import { Image } from "sanity";
+
 export interface Blog {
   mainImage: string;
   title: string;
@@ -189,3 +191,20 @@ export interface CharacterData {
   favorites: number;
   voice_actors: VoiceActor[];
 }
+
+export interface ProjectInfo {
+  title?: string;
+  slug: string;
+  description?: string;
+  githubLink?: string;
+  images?: Image[];
+}
+
+export interface CommitItem {
+  sha: string;
+  message: string;
+  date: Date;
+  type: string;
+}
+
+export type RoadmapSections = Record<string, CommitItem[]>;
