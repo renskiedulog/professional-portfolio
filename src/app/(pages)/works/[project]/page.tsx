@@ -16,6 +16,7 @@ import Link from "next/link";
 import React from "react";
 import { FaGithub, FaLink } from "react-icons/fa";
 import { Roadmap } from "./roadmap";
+import WorkSchema from "./work-schema";
 
 const getProjectInfo = async (slug: string) => {
   const query = groq`*[_type == "projects" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
@@ -30,13 +31,21 @@ const getProjectInfo = async (slug: string) => {
 const ProjectInfo = async ({ params }: { params: { project: string } }) => {
   const { project } = await params;
   const info: ProjectInfoType = await getProjectInfo(project);
-  const commits = await getAllCommits(info?.githubLink);
+  const commits = await getAllCommits(info?.githubLink ?? "");
   const roadmap = groupCommitsByMonth(commits);
-
-  console.log(roadmap);
 
   return (
     <Container as="main">
+      <WorkSchema
+        slug={info?.slug}
+        description={info?.description ?? ""}
+        title={info?.title ?? ""}
+        image={
+          info?.images && info?.images[0]
+            ? getSanityImageUrl(info?.images[0])
+            : "/placeholder.png"
+        }
+      />
       <ScrollProgress />
       <BlurFade className="px-3 sm:px-5 pb-20">
         {/* Navigation Bar */}
@@ -61,7 +70,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
             <Heading>{info?.title}</Heading>
             <div className="flex items-center gap-2">
               <Link href={info?.githubLink} target="_blank">
-                <Badge className="hover:bg-black/5 py-1 bg-transparent border shadow-none border-black/80 text-black/80 flex items-center gap-1">
+                <Badge className="hover:bg-black/5 py-1 bg-transparent text-primary border shadow-none border-primary/80 text-primary/80 flex items-center gap-1">
                   <FaLink /> Live Preview
                 </Badge>
               </Link>
