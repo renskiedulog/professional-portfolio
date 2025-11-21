@@ -6,17 +6,15 @@ import Crown from "@/app/UI/global-components/crown";
 import Heading from "@/app/UI/global-components/heading";
 import ScrollProgress from "@/app/UI/global-components/scroll-progress";
 import { Badge } from "@/components/ui/badge";
-import { getAllCommits } from "@/lib/github";
 import { sanityClient } from "@/lib/sanityClient";
 import { ProjectInfo as ProjectInfoType } from "@/lib/types";
-import { classifyCommit } from "@/lib/utils";
 import { getSanityImageUrl } from "@/sanity/lib/sanity";
 import { groq } from "next-sanity";
 import Link from "next/link";
 import React from "react";
 import { FaGithub, FaLink } from "react-icons/fa";
-import { Roadmap } from "./roadmap";
 import WorkSchema from "./work-schema";
+import DynamicCommits from "./commits.dynamic";
 
 const getProjectInfo = async (slug: string) => {
   const query = groq`*[_type == "projects" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
@@ -31,8 +29,6 @@ const getProjectInfo = async (slug: string) => {
 const ProjectInfo = async ({ params }: { params: { project: string } }) => {
   const { project } = await params;
   const info: ProjectInfoType = await getProjectInfo(project);
-  const commits = await getAllCommits(info?.githubLink ?? "");
-  const roadmap = groupCommitsByMonth(commits);
 
   return (
     <Container as="main">
@@ -69,11 +65,13 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
           <div className="flex items-center justify-between">
             <Heading>{info?.title}</Heading>
             <div className="flex items-center gap-2">
-              <Link href={info?.githubLink} target="_blank">
-                <Badge className="hover:bg-black/5 py-1 bg-transparent text-primary border shadow-none border-primary/80 text-primary/80 flex items-center gap-1">
-                  <FaLink /> Live Preview
-                </Badge>
-              </Link>
+              {info?.liveUrl && (
+                <Link href={info?.liveUrl} target="_blank">
+                  <Badge className="hover:bg-black/5 py-1 bg-transparent border shadow-none border-primary/80 text-primary/80 flex items-center gap-1">
+                    <FaLink /> Live Preview
+                  </Badge>
+                </Link>
+              )}
               {info?.githubLink && (
                 <Link href={info?.githubLink} target="_blank">
                   <Badge className="flex gap-1 items-center py-1">
@@ -85,34 +83,10 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
           </div>
           <p className="text-justify">{info?.description}</p>
         </div>
-        <Roadmap sections={roadmap} />
+        {info?.githubLink && <DynamicCommits githubLink={info?.githubLink} />}
       </BlurFade>
     </Container>
   );
 };
 
 export default ProjectInfo;
-
-export function groupCommitsByMonth(commits: any[]) {
-  const grouped: Record<string, any[]> = {};
-
-  for (const c of commits) {
-    const msg = c.commit.message;
-    const date = new Date(c.commit.author.date);
-    const month = date.toLocaleString("default", {
-      month: "long",
-      year: "numeric",
-    });
-
-    if (!grouped[month]) grouped[month] = [];
-
-    grouped[month].push({
-      sha: c.sha,
-      message: msg,
-      type: classifyCommit(msg),
-      date,
-    });
-  }
-
-  return grouped;
-}

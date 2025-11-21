@@ -198,6 +198,7 @@ export interface ProjectInfo {
   description?: string;
   githubLink?: string;
   images?: Image[];
+  liveUrl?: string;
 }
 
 export interface CommitItem {
