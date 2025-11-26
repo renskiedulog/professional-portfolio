@@ -75,7 +75,19 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
 
   return (
     <section className="w-full space-y-4 max-w-2xl">
-      <Heading>Testimonials</Heading>
+      <div className="flex justify-between items-end">
+        <Heading>Testimonials</Heading>
+        <Link
+          href="/testimonials/add"
+          aria-label="Go to add testimonials page"
+          className="text-sm hover:underline sm:block hidden"
+        >
+          Want to share your experience?
+          <span className="sr-only">
+            Go to the page where you can submit your testimonial
+          </span>
+        </Link>
+      </div>
 
       <Carousel setApi={setCarouselApi} className="w-full">
         <CarouselContent>

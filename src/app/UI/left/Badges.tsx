@@ -10,13 +10,27 @@ import {
 } from "react-icons/fa";
 import { RiMoonClearLine } from "react-icons/ri";
 
+const birthDate = new Date("2003-11-27");
+
+function getAge(date: Date) {
+  const today = new Date();
+  let age = today.getFullYear() - date.getFullYear();
+  const monthDiff = today.getMonth() - date.getMonth();
+  const dayDiff = today.getDate() - date.getDate();
+
+  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+    age--;
+  }
+  return age;
+}
+
 const badges = [
   {
     label: "Male",
     icon: FaMale,
   },
   {
-    label: "21 Years Old",
+    label: `${getAge(birthDate)} Years Old`,
     icon: FaCalendarCheck,
   },
   {

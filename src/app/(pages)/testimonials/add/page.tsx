@@ -11,6 +11,7 @@ import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import { TestimonialCard } from "@/app/UI/content/testimonials";
 import Heading from "@/app/UI/global-components/heading";
+import Link from "next/link";
 
 export default function ClientTestimonialsAddPage() {
   const [form, setForm] = useState({
@@ -109,17 +110,47 @@ export default function ClientTestimonialsAddPage() {
 
   if (done) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-        <h2 className="text-2xl font-semibold mb-2">✅ Thank you!</h2>
-        <p>Your testimonial has been submitted for review.</p>
+      <div className="w-full min-h-[calc(100vh-40px)] flex items-center justify-center flex-col space-y-2 text-center px-5">
+        <p>
+          Thank you for taking the time to share your testimonial. Your thoughts
+          are the testament of my efforts.
+        </p>
+        <h1 className="text-5xl font-black text-primary/90 dark:text-primary">
+          Testimonial Submitted!
+        </h1>
+        <i className="max-w-2xl text-xs">
+          To maintain the integrity of the site, I will be checking your
+          submission and verify it's contents. Your testimonial will be shown
+          afterwards. Once again, I appreciate the support.
+        </i>
+        <Link
+          prefetch={false}
+          href="/"
+          className="!mt-5"
+          aria-label="Go Back To Homepage"
+        >
+          <Button>Go Back To Homepage</Button>
+        </Link>
       </div>
     );
   }
 
   if (blocked) {
     return (
-      <div className="text-center p-10 text-red-600">
-        🚫 You’ve reached the submission limit (3 per day). Try again tomorrow.
+      <div className="w-full min-h-[calc(100vh-40px)] flex items-center justify-center flex-col space-y-2 text-center px-5">
+        <p>
+          You’ve reached the daily submission limit. Please try again tomorrow
+          to share more of your thoughts.
+        </p>
+        <h1 className="text-5xl font-black">Submission Limit Reached</h1>
+        <Link
+          prefetch={false}
+          href="/"
+          className="!mt-5"
+          aria-label="Go Back To Homepage"
+        >
+          <Button>Go Back To Homepage</Button>
+        </Link>
       </div>
     );
   }
