@@ -131,7 +131,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
           className={`text-gray-800 dark:text-primary mx-auto leading-relaxed italic mb-4 text-center
           ${
             testimonial.testimonial.length > 200
-              ? "text-base max-w-xl leading-normal"
+              ? "text-base max-w-[620px] leading-normal"
               : "text-lg max-w-xl"
           }`}
         >

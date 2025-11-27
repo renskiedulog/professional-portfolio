@@ -12,6 +12,16 @@ export const revalidate = 3600;
 
 const Identity = async () => {
   const status: StatusType = (await getStatus()) ?? "busy";
+
+  const birthDate = new Date("2003-11-27");
+  const today = new Date();
+
+  const isBirthday =
+    today.getMonth() === birthDate.getMonth() &&
+    today.getDate() === birthDate.getDate();
+
+  console.log(isBirthday);
+
   return (
     <div className="flex flex-col items-center">
       <div className="relative">
@@ -40,7 +50,17 @@ const Identity = async () => {
           </TooltipContent>
         </Tooltip>
       </div>
-      <h1 className="text-3xl text-primary mt-2">Renato Dulog</h1>
+      <h1 className="text-3xl text-primary mt-2 flex items-center gap-1">
+        {isBirthday && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <span className="text-2xl -translate-y-0.5">🎂</span>
+            </TooltipTrigger>
+            <TooltipContent>It's my birthday today!</TooltipContent>
+          </Tooltip>
+        )}
+        Renato Dulog
+      </h1>
       <p className="text-sm opacity-50 font-medium text-center">
         Software Engineer | Web Developer
       </p>

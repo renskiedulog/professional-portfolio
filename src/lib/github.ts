@@ -1,5 +1,6 @@
 "use server";
 
+import { urlFor } from "@/sanity/lib/image";
 import { sanityClient } from "./sanityClient";
 
 export async function getRepoStarsFromLink(repoUrl: string) {
@@ -46,6 +47,7 @@ export async function getGitHubProfile(username: string) {
       headers: {
         Accept: "application/vnd.github+json",
       },
+      cache: "no-store",
     });
 
     if (!response.ok) return null;
@@ -69,7 +71,7 @@ export async function getEnrichedTestimonials() {
     await sanityClient.fetch(`*[_type == "testimonial" && shown == true]{
     name,
     position,
-    "photoUrl": photo.asset->url,
+    photo,
     github,
     linkedin,
     portfolio,
@@ -78,16 +80,23 @@ export async function getEnrichedTestimonials() {
 
   const enriched = await Promise.all(
     testimonials.map(async (t: any) => {
-      let githubProfile = null;
-      if (t.github) {
-        const username = t.github.split("/").filter(Boolean).pop()!;
-        githubProfile = await getGitHubProfile(username);
-      }
+      const username = t.github?.split("/").filter(Boolean).pop();
+      const githubPromise = username ? getGitHubProfile(username) : null;
+
+      const githubProfile = githubPromise ? await githubPromise : null;
 
       return {
         ...t,
         displayName: t.name || githubProfile?.name || "",
-        displayPhoto: t.photoUrl || githubProfile?.avatar_url || "",
+        displayPhoto: t.photo
+          ? urlFor(t.photo)
+              .width(80)
+              .height(80)
+              .fit("crop")
+              .quality(60)
+              .auto("format")
+              .url()
+          : `${githubProfile?.avatar_url}&s=80` || "",
         displayBio: t.position,
         portfolio: githubProfile?.blog || t.portfolio || "",
       };
