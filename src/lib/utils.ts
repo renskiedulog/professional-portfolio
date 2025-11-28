@@ -23,7 +23,6 @@ export const classifyCommit = (message: string) => {
   if (msg.startsWith("chore")) return "Chore";
   if (msg.startsWith("docs")) return "Docs";
   if (msg.startsWith("perf")) return "Performance";
-
   if (msg.startsWith("added")) return "Added";
 
   return "Other";

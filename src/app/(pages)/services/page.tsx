@@ -85,7 +85,7 @@ const ServicePage = async () => {
         </div>
         <Services />
         {/* How I Work */}
-        <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
+        {/* <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
           <Crown>How It Goes</Crown>
           <Heading className="w-full text-center text-3xl md:text-4xl">
             From Task To Deliver
@@ -95,7 +95,7 @@ const ServicePage = async () => {
             delivered, high-quality digital solutions.
           </p>
         </div>
-        <WorkFlow />
+        <WorkFlow /> */}
       </BlurFade>
     </Container>
   );

@@ -15,6 +15,7 @@ import React from "react";
 import { FaGithub, FaLink } from "react-icons/fa";
 import WorkSchema from "./work-schema";
 import DynamicCommits from "./commits.dynamic";
+import NotFound from "@/app/not-found";
 
 const getProjectInfo = async (slug: string) => {
   const query = groq`*[_type == "projects" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
@@ -29,6 +30,8 @@ const getProjectInfo = async (slug: string) => {
 const ProjectInfo = async ({ params }: { params: { project: string } }) => {
   const { project } = await params;
   const info: ProjectInfoType = await getProjectInfo(project);
+
+  if (!info) return NotFound();
 
   return (
     <Container as="main">
