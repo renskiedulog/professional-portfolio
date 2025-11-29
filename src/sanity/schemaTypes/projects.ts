@@ -30,6 +30,11 @@ export const projects = defineType({
       title: "Github Link",
     },
     {
+      type: "url",
+      name: "liveUrl",
+      title: "Live URL",
+    },
+    {
       type: "array",
       name: "images",
       title: "Project Images",
@@ -42,6 +47,33 @@ export const projects = defineType({
             hotspot: true,
           },
         }),
+      ],
+    },
+    {
+      name: "myDocument",
+      title: "My Document",
+      type: "document",
+      fields: [
+        {
+          name: "languages",
+          title: "Languages",
+          type: "array",
+          of: [
+            {
+              type: "string",
+            },
+          ],
+          options: {
+            list: [
+              { title: "English", value: "en" },
+              { title: "German", value: "de" },
+              { title: "French", value: "fr" },
+              { title: "Spanish", value: "es" },
+              { title: "Italian", value: "it" },
+            ],
+            layout: "grid",
+          },
+        },
       ],
     },
     {

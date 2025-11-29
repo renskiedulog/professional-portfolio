@@ -86,7 +86,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
           </div>
           <p className="text-justify">{info?.description}</p>
         </div>
-        {info?.githubLink && <DynamicCommits githubLink={info?.githubLink} />}
+        {/* {info?.githubLink && <DynamicCommits githubLink={info?.githubLink} />} */}
       </BlurFade>
     </Container>
   );
