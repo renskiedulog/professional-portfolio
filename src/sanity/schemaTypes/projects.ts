@@ -1,3 +1,4 @@
+import TechStacks from "@/lib/tech-stacks";
 import { IoConstructOutline } from "react-icons/io5";
 import { defineArrayMember, defineType } from "sanity";
 
@@ -50,13 +51,13 @@ export const projects = defineType({
       ],
     },
     {
-      name: "myDocument",
-      title: "My Document",
+      name: "techStack",
+      title: "Tech Stack",
       type: "document",
       fields: [
         {
-          name: "languages",
-          title: "Languages",
+          name: "techLanguage",
+          title: "Language",
           type: "array",
           of: [
             {
@@ -64,13 +65,7 @@ export const projects = defineType({
             },
           ],
           options: {
-            list: [
-              { title: "English", value: "en" },
-              { title: "German", value: "de" },
-              { title: "French", value: "fr" },
-              { title: "Spanish", value: "es" },
-              { title: "Italian", value: "it" },
-            ],
+            list: TechStacks,
             layout: "grid",
           },
         },
