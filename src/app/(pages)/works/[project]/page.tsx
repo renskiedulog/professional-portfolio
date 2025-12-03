@@ -16,6 +16,8 @@ import { FaGithub, FaLink } from "react-icons/fa";
 import WorkSchema from "./work-schema";
 import DynamicCommits from "./commits.dynamic";
 import NotFound from "@/app/not-found";
+import Marquee from "react-fast-marquee";
+import TechStacks from "@/lib/tech-stacks";
 
 const getProjectInfo = async (slug: string) => {
   const query = groq`*[_type == "projects" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
@@ -65,7 +67,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
               className="!w-full object-cover aspect-video"
             />
           )}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between sm:flex-row flex-col-reverse sm:gap-0 gap-4">
             <Heading>{info?.title}</Heading>
             <div className="flex items-center gap-2">
               {info?.liveUrl && (
@@ -84,9 +86,24 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
               )}
             </div>
           </div>
-          <p className="text-justify">{info?.description}</p>
+          <p className="text-center sm:text-justify">{info?.description}</p>
         </div>
         {/* {info?.githubLink && <DynamicCommits githubLink={info?.githubLink} />} */}
+        <div className="flex gap-4 max-w-2xl flex-wrap mx-auto justify-center sm:justify-around mt-4">
+          {info?.techStack?.techLanguage?.map((tech, idx) => {
+            const stack = TechStacks.find((item) => item.value == tech);
+            const Icon = stack?.icon;
+            return (
+              <div
+                key={tech}
+                className="text-center opacity-70 hover:opacity-100 grayscale hover:grayscale-0 flex flex-col items-center justify-center"
+              >
+                <Icon className="w-10 sm:w-16 h-10 sm:h-16" />
+                <span className="text-xs">{stack?.title}</span>
+              </div>
+            );
+          })}
+        </div>
       </BlurFade>
     </Container>
   );

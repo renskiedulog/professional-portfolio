@@ -199,6 +199,9 @@ export interface ProjectInfo {
   githubLink?: string;
   images?: Image[];
   liveUrl?: string;
+  techStack: {
+    techLanguage: string[];
+  };
 }
 
 export interface CommitItem {
