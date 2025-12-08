@@ -20,9 +20,9 @@ const Footer = () => {
           or{" "}
           <a
             className="text-blue-700 hover:text-primary underline"
-            href="https://discord.com/users/901746145095712768"
+            href="https://www.linkedin.com/in/renato-dulog/"
           >
-            Discord
+            LinkedIn
           </a>
           .
         </p>
@@ -33,7 +33,7 @@ const Footer = () => {
       <ContactForm />
       {/* Copyright */}
       <p className="text-sm text-primary/70 text-center">
-        © 2025 Renato Dulog. All Rights Reserved.
+        © {new Date().getFullYear()} Renato Dulog. All Rights Reserved.
       </p>
     </footer>
   );
