@@ -89,7 +89,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
           <p className="text-center sm:text-justify">{info?.description}</p>
         </div>
         {/* {info?.githubLink && <DynamicCommits githubLink={info?.githubLink} />} */}
-        <div className="flex gap-4 max-w-2xl flex-wrap mx-auto justify-center sm:justify-around mt-4">
+        {/* <div className="flex gap-4 max-w-2xl flex-wrap mx-auto justify-center sm:justify-around mt-4">
           {info?.techStack?.techLanguage?.map((tech, idx) => {
             const stack = TechStacks.find((item) => item.value == tech);
             const Icon = stack?.icon;
@@ -103,7 +103,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </BlurFade>
     </Container>
   );

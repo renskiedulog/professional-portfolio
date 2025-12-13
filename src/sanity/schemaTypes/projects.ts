@@ -51,27 +51,6 @@ export const projects = defineType({
       ],
     },
     {
-      name: "techStack",
-      title: "Tech Stack",
-      type: "document",
-      fields: [
-        {
-          name: "techLanguage",
-          title: "Language",
-          type: "array",
-          of: [
-            {
-              type: "string",
-            },
-          ],
-          options: {
-            list: TechStacks,
-            layout: "grid",
-          },
-        },
-      ],
-    },
-    {
       name: "body",
       type: "customBlockContent",
     },
