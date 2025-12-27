@@ -212,3 +212,14 @@ export interface CommitItem {
 }
 
 export type RoadmapSections = Record<string, CommitItem[]>;
+
+export type FallPreset = {
+  images: string[];
+  count: number;
+  size: [number, number];
+  duration: [number, number];
+  sway: number;
+  rotate: boolean;
+  opacity?: [number, number];
+  spawnInterval?: number;
+};
