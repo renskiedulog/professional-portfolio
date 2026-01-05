@@ -8,6 +8,7 @@ import { sanityClient } from "@/lib/sanityClient";
 import { groq } from "next-sanity";
 import Services from "./services";
 import WorkFlow from "./workflow";
+import Pricing from "./pricing";
 
 export const metadata = {
   title: "Services",
@@ -84,7 +85,9 @@ const ServicePage = async () => {
           </p>
         </div>
         <Services />
-        {/* How I Work */}
+        {/* Pricing */}
+        <Pricing status={status as "unavailable" | "busy"} />
+        {/* How It's Delivered */}
         {/* <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
           <Crown>How It Goes</Crown>
           <Heading className="w-full text-center text-3xl md:text-4xl">

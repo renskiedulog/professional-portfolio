@@ -14,7 +14,7 @@ export const FALL_PRESETS: Record<string, FallPreset> = {
     images: ["/assets/snowflake.png", "/assets/snowflake-2.png"],
     count: 150,
     size: [18, 30],
-    duration: [3, 4],
+    duration: [2, 3],
     sway: 120,
     rotate: true,
     opacity: [0.8, 1],

@@ -20,8 +20,6 @@ const Identity = async () => {
     today.getMonth() === birthDate.getMonth() &&
     today.getDate() === birthDate.getDate();
 
-  console.log(isBirthday);
-
   return (
     <div className="flex flex-col items-center">
       <div className="relative">

@@ -223,3 +223,28 @@ export type FallPreset = {
   opacity?: [number, number];
   spawnInterval?: number;
 };
+
+type BasePrice = {
+  title: string;
+  description: string;
+  samples: string[];
+  samplesLabel?: string;
+};
+
+type FixedPrice = BasePrice & {
+  asLowAs: true;
+  price: string;
+  priceSubtitle: string;
+  startsAt?: never;
+  buttonLabel?: never;
+};
+
+type CustomPrice = BasePrice & {
+  price: "Custom";
+  startsAt: string;
+  buttonLabel: string;
+  asLowAs?: never;
+  priceSubtitle?: never;
+};
+
+export type PriceItem = FixedPrice | CustomPrice;

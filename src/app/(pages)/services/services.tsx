@@ -46,39 +46,6 @@ const services = [
       "QA Testing",
     ],
   },
-  // {
-  //   logo: FaRegKeyboard,
-  //   title: "Data Entry Services",
-  //   description:
-  //     "Accurate and efficient data input across CMS platforms, documents, spreadsheets, and more.",
-  //   stacks: [
-  //     "CMS (Wordpress, Sanity, etc.)",
-  //     "Google Docs",
-  //     "Spreadsheets",
-  //     "Content Uploads",
-  //     "Database Entry",
-  //   ],
-  // },
-  // {
-  //   logo: GiRobotGrab,
-  //   title: "Workflow Automation",
-  //   description:
-  //     "Streamline repetitive tasks with no-code tools, custom scripts, and smart integrations.",
-  //   stacks: ["n8n", "Google Apps Script", "Zapier", "Sheet Integrations"],
-  // },
-  // {
-  //   logo: LuNotebookPen,
-  //   title: "Technical Consulting",
-  //   description:
-  //     "Expert guidance on choosing the right tech stack, improving infrastructure, and solving complex problems.",
-  //   stacks: [
-  //     "Architecture Planning",
-  //     "Tech Stack Advising",
-  //     "API Integrations",
-  //     "System Optimization",
-  //     "Scalability Planning",
-  //   ],
-  // },
 ];
 
 const Services = () => {
