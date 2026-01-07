@@ -5,12 +5,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request) {
   try {
-    // Optional but recommended security check
-    const signature = req.headers.get("x-sanity-signature");
-    if (signature !== process.env.SANITY_WEBHOOK_SECRET) {
-      return NextResponse.json({ ok: false }, { status: 401 });
-    }
-
     const body = await req.json();
 
     if (!body?._type) {
