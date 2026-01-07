@@ -12,6 +12,7 @@ import LeftSection from "./UI/left/LeftSection";
 import TestimonialsSection from "./UI/content/testimonials";
 import { getEnrichedTestimonials } from "@/lib/github";
 import SeasonalEntranceEffect from "./UI/season-animations/seasonal-entrance-effect";
+import SiteVisitScript from "./scripts/site-visit-script";
 
 export const metadata = {
   title: "Renato Dulog | Web Portfolio",
@@ -52,6 +53,7 @@ export default async function Home() {
           </div>
         </BlurFade>
       </Container>
+      <SiteVisitScript />
     </>
   );
 }

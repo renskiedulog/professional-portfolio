@@ -90,12 +90,12 @@ export async function getEnrichedTestimonials() {
         displayName: t.name || githubProfile?.name || "",
         displayPhoto: t.photo
           ? urlFor(t.photo)
-              .width(80)
-              .height(80)
-              .fit("crop")
-              .quality(60)
-              .auto("format")
-              .url()
+              ?.width(80)
+              ?.height(80)
+              ?.fit("crop")
+              ?.quality(60)
+              ?.auto("format")
+              ?.url()
           : `${githubProfile?.avatar_url}&s=80` || "",
         displayBio: t.position,
         portfolio: githubProfile?.blog || t.portfolio || "",

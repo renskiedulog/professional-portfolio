@@ -5,6 +5,7 @@ import { PriceItem } from "@/lib/types";
 import { StatusType } from "./page";
 import { IoMdCheckmark } from "react-icons/io";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 const prices: PriceItem[] = [
   {
@@ -87,23 +88,22 @@ const Pricing = async ({ status }: { status: "unavailable" | "busy" }) => {
           prices?.map((price, idx) => (
             <Card index={idx} card={price} key={idx} />
           ))}
-        {status === "busy" ||
-          (status === "unavailable" && (
-            <div className="absolute inset-0 dark:bg-background/90 bg-background/80 backdrop-blur-md sm:border border-white/10 shadow-lg rounded-xl flex items-center justify-center">
-              <div className="w-full min-h-[calc(100vh-40px)] flex flex-col items-center justify-center space-y-2 px-5 text-center">
-                <p>{current?.message}</p>
+        {(status === "busy" || status === "unavailable") && (
+          <div className="sm:flex hidden absolute inset-0 dark:bg-background/90 bg-background/80 backdrop-blur-md sm:border border-white/10 shadow-lg rounded-xl items-center justify-center">
+            <div className="w-full min-h-[calc(100vh-40px)] flex flex-col items-center justify-center space-y-2 px-5 text-center">
+              <p>{current?.message}</p>
 
-                <h1 className="text-5xl font-black text-primary/90 dark:text-primary">
-                  {current?.label}
-                </h1>
+              <h1 className="text-5xl font-black text-primary/90 dark:text-primary">
+                {current?.label}
+              </h1>
 
-                <p className="max-w-sm text-xs">
-                  You can also try to inquire more thoroughly by sending me a
-                  message on my social media accounts.
-                </p>
-              </div>
+              <p className="max-w-sm text-xs">
+                You can also try to inquire more thoroughly by sending me a
+                message on my social media accounts.
+              </p>
             </div>
-          ))}
+          </div>
+        )}
       </div>
       <blockquote className="max-w-2xl mt-4 text-xs mx-auto text-center">
         Note: Prices may vary depending on the scope of work, features required,
@@ -117,7 +117,7 @@ const Pricing = async ({ status }: { status: "unavailable" | "busy" }) => {
 const Card = ({ card, index }: { card: PriceItem; index: number }) => {
   return (
     <div className="col-span-1 w-full border-primary/60 border rounded-xl p-6 group">
-      <div className="transition-all space-y-4">
+      <div className="transition-all space-y-2 sm:space-y-4">
         {card?.title && (
           <h3 className="font-bold text-xl mt-2 transition-all opacity-80 font-geist">
             {card?.title}
@@ -139,14 +139,20 @@ const Card = ({ card, index }: { card: PriceItem; index: number }) => {
           </div>
         </div>
         {card?.description && <p className="mt-4">{card?.description}</p>}
-        <Button
-          className="w-full shadow-md"
-          variant={index % 2 === 0 ? "outline" : "default"}
+        <Link
+          href="/#contact-form"
+          aria-label="Go to home and contact form section"
+          className="block"
         >
-          {card?.buttonLabel || "Get Started"}
-        </Button>
+          <Button
+            className="w-full shadow-md"
+            variant={index % 2 === 0 ? "outline" : "default"}
+          >
+            {card?.buttonLabel || "Get Started"}
+          </Button>
+        </Link>
       </div>
-      <div className="w-full h-[1px] border-b border-primary/80 mt-6 mb-4 rounded-full" />
+      <div className="w-full h-[1px] border-b border-primary/80 mt-3 sm:mt-6 mv-2 sm:mb-4 rounded-full" />
       <div className="mt-4 space-y-2">
         {card?.samplesLabel && (
           <h4 className="text-lg font-geist">{card?.samplesLabel}</h4>

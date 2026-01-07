@@ -49,5 +49,11 @@ export const siteData = {
         },
       ],
     },
+    {
+      name: "siteVisits",
+      type: "number",
+      readOnly: true,
+      initialValue: 0,
+    },
   ],
 };
