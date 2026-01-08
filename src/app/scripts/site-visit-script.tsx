@@ -2,7 +2,7 @@ import { sanityClient } from "@/lib/sanityClient";
 
 const SiteVisitScript = async () => {
   const patch = sanityClient
-    .patch("siteData")
+    .patch("siteMetrics")
     .setIfMissing({ siteVisits: 0 })
     .inc({ siteVisits: 1 });
 

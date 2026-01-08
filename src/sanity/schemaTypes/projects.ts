@@ -1,4 +1,3 @@
-import TechStacks from "@/lib/tech-stacks";
 import { IoConstructOutline } from "react-icons/io5";
 import { defineArrayMember, defineType } from "sanity";
 

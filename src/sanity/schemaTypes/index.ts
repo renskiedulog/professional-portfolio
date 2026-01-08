@@ -10,6 +10,7 @@ import { siteData } from "./siteData";
 import { projects } from "./projects";
 import { recommendations } from "./recommendations";
 import { testimonials } from "./testimonials";
+import { siteMetrics } from "./siteMetrics";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -23,5 +24,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     projects,
     recommendations,
     testimonials,
+    siteMetrics,
   ],
 };
