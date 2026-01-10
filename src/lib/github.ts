@@ -2,6 +2,7 @@
 
 import { urlFor } from "@/sanity/lib/image";
 import { sanityClient } from "./sanityClient";
+import { unstable_cache } from "next/cache";
 
 export async function getRepoStarsFromLink(repoUrl: string) {
   if (!repoUrl) {
@@ -66,45 +67,51 @@ export async function getGitHubProfile(username: string) {
   }
 }
 
-export async function getEnrichedTestimonials() {
-  const testimonials =
-    await sanityClient.fetch(`*[_type == "testimonial" && shown == true]{
-    name,
-    position,
-    photo,
-    github,
-    linkedin,
-    portfolio,
-    testimonial,
-  }`);
+export const getEnrichedTestimonials = unstable_cache(
+  async () => {
+    const testimonials =
+      await sanityClient.fetch(`*[_type == "testimonial" && shown == true]{
+        name,
+        position,
+        photo,
+        github,
+        linkedin,
+        portfolio,
+        testimonial,
+      }`);
 
-  const enriched = await Promise.all(
-    testimonials.map(async (t: any) => {
-      const username = t.github?.split("/").filter(Boolean).pop();
-      const githubPromise = username ? getGitHubProfile(username) : null;
+    const enriched = await Promise.all(
+      testimonials.map(async (t: any) => {
+        const username = t.github?.split("/").filter(Boolean).pop();
+        const githubProfile = username
+          ? await getGitHubProfile(username)
+          : null;
 
-      const githubProfile = githubPromise ? await githubPromise : null;
+        return {
+          ...t,
+          displayName: t.name || githubProfile?.name || "",
+          displayPhoto: t.photo
+            ? urlFor(t.photo)
+                .width(80)
+                .height(80)
+                .fit("crop")
+                .quality(60)
+                .auto("format")
+                .url()
+            : githubProfile?.avatar_url
+              ? `${githubProfile.avatar_url}&s=80`
+              : null,
+          displayBio: t.position,
+          portfolio: githubProfile?.blog || t.portfolio || "",
+        };
+      })
+    );
 
-      return {
-        ...t,
-        displayName: t.name || githubProfile?.name || "",
-        displayPhoto: t.photo
-          ? urlFor(t.photo)
-              ?.width(80)
-              ?.height(80)
-              ?.fit("crop")
-              ?.quality(60)
-              ?.auto("format")
-              ?.url()
-          : `${githubProfile?.avatar_url}&s=80` || "",
-        displayBio: t.position,
-        portfolio: githubProfile?.blog || t.portfolio || "",
-      };
-    })
-  );
-
-  return enriched;
-}
+    return enriched;
+  },
+  ["testimonials"],
+  { revalidate: 86400 }
+);
 
 export async function getAllCommits(repoUrl: string) {
   const match = repoUrl.match(

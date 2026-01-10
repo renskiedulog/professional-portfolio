@@ -14,6 +14,8 @@ import { getEnrichedTestimonials } from "@/lib/github";
 import SeasonalEntranceEffect from "./UI/season-animations/seasonal-entrance-effect";
 import SiteVisitScript from "./scripts/site-visit-script";
 
+export const revalidate = 86400;
+
 export const metadata = {
   title: "Renato Dulog | Web Portfolio",
   description:
@@ -25,6 +27,7 @@ export const metadata = {
 
 export default async function Home() {
   const testimonials = await getEnrichedTestimonials();
+
   return (
     <>
       <Head>

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import { getStatus, states, StatusType } from "@/app/(pages)/services/page";
+import Image from "next/image";
 
 export const revalidate = 3600;
 
@@ -23,18 +24,15 @@ const Identity = async () => {
   return (
     <div className="flex flex-col items-center">
       <div className="relative">
-        <Avatar className="size-28 border">
-          <AvatarImage
-            src="/me.webp"
-            alt="renato-dulog"
-            className="object-cover object-bottom"
-            loading="eager"
-            fetchPriority="high"
-            width={100}
-            height={100}
-          />
-          <AvatarFallback>RD</AvatarFallback>
-        </Avatar>
+        <Image
+          src="/me.webp"
+          alt="renato-dulog"
+          className="object-cover object-bottom size-28 rounded-full border"
+          loading="eager"
+          fetchPriority="high"
+          width={100}
+          height={100}
+        />
         <Tooltip>
           <TooltipTrigger asChild>
             <div

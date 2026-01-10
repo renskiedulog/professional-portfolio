@@ -71,7 +71,7 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
     };
   }, [carouselApi]);
 
-  if (testimonials.length === 0) return null;
+  if (!testimonials || testimonials.length === 0) return null;
 
   return (
     <section className="w-full space-y-4 max-w-2xl">
@@ -168,6 +168,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
                 href={testimonial.github}
                 className="hover:opacity-80"
                 target="_blank"
+                aria-label={`Go to ${testimonial?.displayName}'s GitHub Profile`}
               >
                 <FaGithub />
               </Link>
@@ -177,6 +178,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
                 href={testimonial.portfolio}
                 className="hover:opacity-80"
                 target="_blank"
+                aria-label={`Go to ${testimonial?.displayName}'s Portfolio Website`}
               >
                 <FaGlobeAsia />
               </Link>
@@ -186,6 +188,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
                 href={testimonial.linkedin}
                 className="hover:opacity-80"
                 target="_blank"
+                aria-label={`Go to ${testimonial?.displayName}'s LinkedIn Profile`}
               >
                 <FaLinkedin fill="#0e76a8" />
               </Link>
