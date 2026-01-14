@@ -25,6 +25,7 @@ import {
   FaReact,
 } from "react-icons/fa";
 import Heading from "../global-components/heading";
+import { SiN8N } from "react-icons/si";
 
 const skills = [
   {
@@ -44,8 +45,8 @@ const skills = [
         icon: BiLogoTypescript,
       },
       {
-        name: "Shadcn UI",
-        icon: SiShadcnui,
+        name: "Supabase",
+        icon: RiSupabaseFill,
       },
     ],
   },
@@ -60,6 +61,10 @@ const skills = [
       {
         name: "Zod",
         icon: SiZod,
+      },
+      {
+        name: "n8n",
+        icon: SiN8N,
       },
     ],
   },
@@ -95,10 +100,6 @@ const skills = [
         icon: FaPhp,
       },
       {
-        name: "Java",
-        icon: FaJava,
-      },
-      {
         name: "Node",
         icon: FaNode,
       },
@@ -111,16 +112,16 @@ const skills = [
         icon: SiMysql,
       },
       {
-        name: "Photoshop",
-        icon: SiAdobephotoshop,
-      },
-      {
         name: "Figma",
         icon: SiFigma,
       },
       {
         name: "Supabase",
         icon: RiSupabaseFill,
+      },
+      {
+        name: "Shadcn UI",
+        icon: SiShadcnui,
       },
     ],
   },

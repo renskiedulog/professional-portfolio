@@ -74,13 +74,13 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
-    <section className="w-full space-y-4 max-w-2xl">
+    <section className="w-full space-y-4">
       <div className="flex justify-between items-end">
         <Heading>Testimonials</Heading>
         <Link
           href="/testimonials/add"
           aria-label="Go to add testimonials page"
-          className="text-sm hover:underline sm:block hidden"
+          className="text-sm hover:underline sm:block hidden text-right"
         >
           Want to share your experience?
           <span className="sr-only">
@@ -89,7 +89,10 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
         </Link>
       </div>
 
-      <Carousel setApi={setCarouselApi} className="w-full">
+      <Carousel
+        setApi={setCarouselApi}
+        className="w-full md:max-w-sm lg:max-w-2xl mx-auto"
+      >
         <CarouselContent>
           {testimonials.map((t, index) => (
             <CarouselItem key={index}>
@@ -100,19 +103,18 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
       </Carousel>
 
       {slideCount > 1 && (
-        <div className="flex justify-center gap-2 translate-y-5 sm:translate-y-0">
+        <div
+          className="flex justify-center gap-2 translate-y-5 sm:translate-y-0"
+          aria-hidden="true"
+        >
           {Array.from({ length: slideCount }).map((_, index) => (
-            <button
+            <span
               key={index}
-              onClick={() => {
-                carouselApi?.scrollTo(index);
-              }}
-              className={`w-3 h-3 rounded-full transition-all ${
+              className={`h-3 w-3 rounded-full transition-all ${
                 selectedIndex === index
                   ? "bg-primary scale-110"
-                  : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  : "bg-muted-foreground/30"
               }`}
-              aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>

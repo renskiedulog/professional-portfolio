@@ -27,7 +27,7 @@ export default async function Blogs() {
         <Link
           href="/blog"
           aria-label="Go to blogs page"
-          className="text-sm hover:underline sm:block hidden"
+          className="text-sm hover:underline sm:block hidden text-right whitespace-nowrap"
         >
           See More
           <span className="sr-only">
