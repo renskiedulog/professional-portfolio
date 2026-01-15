@@ -112,9 +112,10 @@ const ProjectCard = async ({ project }: { project: Project }) => {
       <Image
         className="aspect-video object-cover"
         src={project?.image as string}
-        width={800}
-        height={800}
+        width={400}
+        height={400}
         alt={project?.title as string}
+        loading="lazy"
       />
       <div className="px-3.5 py-2">
         <p className="font-bold text-lg">{project?.title}</p>

@@ -78,6 +78,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://renato-dulog.is-a.dev",
   },
+  other: {
+    preconnect: "https://avatars.githubusercontent.com",
+  },
 };
 
 export default function RootLayout({

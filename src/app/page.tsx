@@ -33,12 +33,12 @@ export default async function Home() {
       <Head>
         <link rel="preload" as="image" href="/me.webp" fetchPriority="high" />
       </Head>
-      <SeasonalEntranceEffect
+      {/* <SeasonalEntranceEffect
         presetName="winter"
         oncePerSession
         cooldownMs={1000 * 60 * 60 * 12}
         storageKey="entranceEffect"
-      />
+      /> */}
       <Container className="!py-0">
         <BlurFade>
           <div className="flex flex-col md:flex-row sm:pt-0 pt-5">

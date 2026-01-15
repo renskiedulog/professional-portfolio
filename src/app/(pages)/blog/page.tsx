@@ -12,12 +12,8 @@ export const metadata = {
 
 const getData = async () => {
   const [blogsReq, filtersReq] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-blogs`, {
-      cache: "no-store",
-    }),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-filters`, {
-      cache: "no-store",
-    }),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-blogs`),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/get-filters`),
   ]);
 
   if (!blogsReq.ok || !filtersReq.ok) {
