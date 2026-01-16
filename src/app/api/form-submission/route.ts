@@ -35,9 +35,9 @@ async function sendFormSubmissionEmail(data: any) {
   const { email, gameplan, message, _createdAt } = data;
 
   await sendEmailWithLogging("Form Submission", {
-    from: "Website Alerts <alerts@yourdomain.com>",
+    from: "Website Alerts <onboarding@resend.dev>",
     to: [process.env.ALERT_EMAIL!],
-    subject: "📬 New Contact Form Submission",
+    subject: "New Contact Form Submission",
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6;">
         <h2>New Contact Form Submission</h2>
@@ -62,9 +62,9 @@ async function sendTestimonialEmail(data: any) {
   const { name, github, testimonial, _createdAt } = data;
 
   await sendEmailWithLogging("Testimonial", {
-    from: "Website Alerts <alerts@yourdomain.com>",
+    from: "Website Alerts <onboarding@resend.dev>",
     to: [process.env.ALERT_EMAIL!],
-    subject: "⭐ New Testimonial Submitted",
+    subject: "New Testimonial Submitted",
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6;">
         <h2>New Testimonial Submitted</h2>
@@ -96,11 +96,6 @@ async function sendEmailWithLogging(
   try {
     const result = await resend.emails.send(payload);
 
-    console.info(`[Resend] ${label} sent`, {
-      id: result?.id,
-      to: payload.to,
-    });
-
     return result;
   } catch (error: any) {
     console.error(`[Resend] ${label} failed`, {
@@ -109,7 +104,5 @@ async function sendEmailWithLogging(
       statusCode: error?.statusCode,
       cause: error?.cause,
     });
-
-    throw error; // remove this if you don’t want webhook failure
   }
 }
