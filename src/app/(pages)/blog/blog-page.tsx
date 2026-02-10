@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import Heading from "@/app/UI/global-components/heading";
 import { Blog } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toKebabCase } from "@/lib/utils";
 
 const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
   const searchParams = useSearchParams();
@@ -101,13 +102,26 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
             <motion.section layout>
               <BlurFade id="category-posts">
                 <div className="space-y-3">
-                  <Heading>{category}</Heading>
+                  <Heading>
+                    {(() => {
+                      const matchedBlog = blogs?.find((blog) =>
+                        blog.categories.some(
+                          (cat) => toKebabCase(cat) === toKebabCase(category),
+                        ),
+                      );
+                      return (
+                        matchedBlog?.categories.find(
+                          (cat) => toKebabCase(cat) === toKebabCase(category),
+                        ) || category
+                      );
+                    })()}
+                  </Heading>
                   <div className="columns-1 sm:columns-2 lg:columns-3">
                     {blogs
                       ?.filter((blog) =>
                         blog.categories.some(
-                          (cat) => cat.toLowerCase() === category.toLowerCase()
-                        )
+                          (cat) => toKebabCase(cat) === toKebabCase(category),
+                        ),
                       )
                       ?.map((blog) => (
                         <BlurFade key={blog._id}>
@@ -131,15 +145,15 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                         (blog) =>
                           !selectedFilters?.length ||
                           selectedFilters?.every((filter) =>
-                            blog?.categories?.includes(filter as never)
-                          )
+                            blog?.categories?.includes(filter as never),
+                          ),
                       )
                       .map((blog, i, filtered) =>
                         filtered.length ? (
                           <BlurFade key={blog._id}>
                             <BlogCard blog={blog} className="sm:mb-0 mb-4" />
                           </BlurFade>
-                        ) : null
+                        ) : null,
                       )}
                   </div>
                   {blogs &&
@@ -147,8 +161,8 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                       (blog) =>
                         !selectedFilters?.length ||
                         selectedFilters.every((filter) =>
-                          blog?.categories?.includes(filter as never)
-                        )
+                          blog?.categories?.includes(filter as never),
+                        ),
                     ) && (
                       <BlurFade
                         id="empty"
@@ -171,13 +185,13 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                     {search !== null &&
                     blogs?.length > 0 &&
                     blogs.filter((blog) =>
-                      blog.title.toLowerCase().includes(search.toLowerCase())
+                      blog.title.toLowerCase().includes(search.toLowerCase()),
                     ).length > 0 ? (
                       blogs
                         ?.filter((blog) =>
                           blog.title
                             .toLowerCase()
-                            .includes(search.toLowerCase())
+                            .includes(search.toLowerCase()),
                         )
                         .map((blog) => (
                           <BlurFade

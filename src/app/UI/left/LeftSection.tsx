@@ -21,7 +21,7 @@ const LeftSection = () => {
               <Characteristics />
               <Statistics />
               {/* <Files /> */}
-              <Donate />
+              {/* <Donate /> */}
             </div>
           </div>
         </ScrollArea>

@@ -19,6 +19,7 @@ import { Blog } from "@/lib/types";
 import BottomSection from "./bottom-section";
 import LikeButton from "./like-button";
 import BlogSchema from "./blog-schema";
+import { toKebabCase } from "@/lib/utils";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
@@ -179,7 +180,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
                   <div className="flex flex-wrap gap-x-4 my-1">
                     {categories?.map((category: string) => (
                       <Link
-                        href={`/blog?category=${category}`}
+                        href={`/blog?category=${toKebabCase(category)}`}
                         key={category}
                         className="text-primary/80 text-sm hover:bg-foreground/10 px-1.5 py-1 rounded"
                         aria-label={`View posts in the ${category} category`}
@@ -195,6 +196,16 @@ const page = async ({ params }: { params: { slug: string } }) => {
                     <p>{format(new Date(publishedAt), "MMM dd, yyyy")}</p>
                   )}
                 </div>
+                {categories?.includes("AI Assisted") && (
+                  <p className="text-xs mt-5 text-primary/80 bg-orange-100 p-4 rounded-md">
+                    <span className="font-bold">Note: </span>
+                    This post was created with the assistance of AI tools, which
+                    helped in generating content, structuring ideas, or
+                    enhancing clarity. While AI contributed to the writing
+                    process, all opinions and conclusions are those of the
+                    author. The entirety of this post is not AI.
+                  </p>
+                )}
               </div>
             </div>
             {/* Description - Mobile */}
@@ -223,6 +234,16 @@ const page = async ({ params }: { params: { slug: string } }) => {
                 <p>{format(new Date(publishedAt), "MMM dd, yyyy")}</p>
               )}
             </div>
+            {categories?.includes("AI Assisted") && (
+              <p className="text-xs mt-5 text-primary/80 bg-orange-50 p-4 rounded-md md:hidden block">
+                <span className="font-bold">Note: </span>
+                This post was created with the assistance of AI tools, which
+                helped in generating content, structuring ideas, or enhancing
+                clarity. While AI contributed to the writing process, all
+                opinions and conclusions are those of the author. The entirety
+                of this post is not AI generated.
+              </p>
+            )}
           </div>
           <div className="mt-5 md:mt-20 prose prose-lg text-primary/80 dark:text-primary">
             <PortableText
