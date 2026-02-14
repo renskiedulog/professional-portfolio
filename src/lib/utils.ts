@@ -35,3 +35,16 @@ export const toKebabCase = (str: string) => {
     .replace(/[\s_]+/g, "-")
     .toLowerCase();
 };
+
+export function getDuration(start: Date, end: Date | null) {
+  const effectiveEnd = end ?? new Date();
+
+  let totalMonths =
+    (effectiveEnd.getFullYear() - start.getFullYear()) * 12 +
+    (effectiveEnd.getMonth() - start.getMonth());
+
+  const years = Math.floor(totalMonths / 12);
+  const months = totalMonths % 12;
+
+  return { years, months };
+}

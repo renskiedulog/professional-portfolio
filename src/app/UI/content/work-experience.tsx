@@ -18,6 +18,7 @@ import {
   SiVercel,
   SiNetlify,
 } from "react-icons/si";
+import { getDuration } from "@/lib/utils";
 
 interface WorkExperience {
   company: string;
@@ -27,7 +28,10 @@ interface WorkExperience {
   setup?: "Remote" | "On-site" | "Hybrid";
   history: {
     role: string;
-    period: string;
+    period: {
+      start: Date;
+      end: Date | null;
+    };
     status: "Full-time" | "Part-time" | "Contract" | "Internship";
     responsibilities: string[];
   }[];
@@ -35,6 +39,18 @@ interface WorkExperience {
     name: string;
     icon: React.ComponentType<{ size?: string | number; color?: string }>;
   }[];
+}
+
+export function formatWorkPeriod(start: Date, end: Date | null) {
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    year: "numeric",
+  };
+
+  const startText = start.toLocaleDateString("en-US", options);
+  const endText = end ? end.toLocaleDateString("en-US", options) : "Present";
+
+  return `${startText} - ${endText}`;
 }
 
 const experiences: WorkExperience[] = [
@@ -47,7 +63,10 @@ const experiences: WorkExperience[] = [
     history: [
       {
         role: "Full Stack Developer",
-        period: "Feb 2025 - Present",
+        period: {
+          start: new Date(2025, 1),
+          end: null,
+        },
         status: "Full-time",
         responsibilities: [
           "Developing and maintaining web applications using modern frameworks like NextJS, Supabase and Tailwind CSS.",
@@ -56,7 +75,10 @@ const experiences: WorkExperience[] = [
       },
       {
         role: "Frontend Web Developer",
-        period: "Nov 2024 - Feb 2025",
+        period: {
+          start: new Date(2024, 10),
+          end: new Date(2025, 1),
+        },
         status: "Part-time",
         responsibilities: [
           "Maintaining client websites and tending to update requests.",
@@ -65,7 +87,10 @@ const experiences: WorkExperience[] = [
       },
       {
         role: "Frontend Web Developer",
-        period: "Feb 2024 - Nov 2024",
+        period: {
+          start: new Date(2024, 1),
+          end: new Date(2024, 10),
+        },
         status: "Internship",
         responsibilities: [
           "Building CMS-driven websites using a custom Sanity setup with Next.js.",
@@ -159,7 +184,14 @@ export default function WorkExperience() {
                 </div>
               </div>
               <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">
-                {experience?.history[0].period}
+                {(() => {
+                  const start = experience.history.at(-1)?.period.start;
+                  if (!start) return null;
+
+                  const { years, months } = getDuration(start, null);
+
+                  return `${years} years ${months > 0 ? `and ${months} months` : ""}`;
+                })()}
               </p>
             </Link>
             {/* Experience */}
@@ -185,7 +217,8 @@ export default function WorkExperience() {
                       )}
 
                       <p className="text-sm text-muted-foreground font-medium">
-                        {item?.period} • {item?.status}
+                        {formatWorkPeriod(item.period.start, item.period.end)} •{" "}
+                        {item.status}
                       </p>
 
                       {item?.responsibilities && (

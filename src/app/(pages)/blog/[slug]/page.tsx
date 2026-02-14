@@ -127,7 +127,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
     author,
     publishedAt,
     categories,
-    likeCount,
     mainImage,
   } = blog;
 
@@ -142,12 +141,11 @@ const page = async ({ params }: { params: { slug: string } }) => {
         key={title}
       />
       <ScrollProgress />
-      <IncrementView slug={slug} />
       <BlurFade className="px-3 sm:px-5 pb-20">
         {/* Navigation Bar */}
         <div className="w-full flex items-center justify-between gap-5">
           <BackButton href="/blog" label="Blogs" />
-          <LikeButton slug={slug} likeCount={likeCount} />
+          {/* <LikeButton slug={slug} likeCount={likeCount} /> */}
         </div>
         {/* Content */}
         <div className="mt-5 sm:mt-20">
@@ -236,12 +234,11 @@ const page = async ({ params }: { params: { slug: string } }) => {
             </div>
             {categories?.includes("AI Assisted") && (
               <p className="text-xs mt-5 text-primary/80 bg-orange-50 p-4 rounded-md md:hidden block">
-                <span className="font-bold">Note: </span>
-                This post was created with the assistance of AI tools, which
-                helped in generating content, structuring ideas, or enhancing
-                clarity. While AI contributed to the writing process, all
-                opinions and conclusions are those of the author. The entirety
-                of this post is not AI generated.
+                <span className="font-bold">Note: </span>A small portion of this
+                post was created with the assistance of AI tools, which helped
+                in generating content, structuring ideas, or enhancing clarity.
+                While AI contributed to the writing process, all opinions and
+                conclusions are those of the author.
               </p>
             )}
           </div>
