@@ -30,6 +30,17 @@ export const projects = defineType({
       title: "Github Link",
     },
     {
+      type: "array",
+      name: "techStack",
+      title: "Tech Stack",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "technology" }],
+        },
+      ],
+    },
+    {
       type: "url",
       name: "liveUrl",
       title: "Live URL",

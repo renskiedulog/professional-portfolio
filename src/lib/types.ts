@@ -197,11 +197,13 @@ export interface ProjectInfo {
   slug: string;
   description?: string;
   githubLink?: string;
-  images?: Image[];
+  images?: string[];
   liveUrl?: string;
   techStack: {
-    techLanguage: string[];
-  };
+    name: string;
+    image: Image;
+    icon: string;
+  }[];
 }
 
 export interface CommitItem {

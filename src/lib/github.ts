@@ -10,7 +10,7 @@ export async function getRepoStarsFromLink(repoUrl: string) {
   }
 
   const match = repoUrl.match(
-    /^https?:\/\/github\.com\/([^/]+)\/([^/]+)(\/|$)/
+    /^https?:\/\/github\.com\/([^/]+)\/([^/]+)(\/|$)/,
   );
   if (!match) {
     throw new Error("Invalid GitHub repository URL.");
@@ -104,18 +104,18 @@ export const getEnrichedTestimonials = unstable_cache(
           displayBio: t.position,
           portfolio: githubProfile?.blog || t.portfolio || "",
         };
-      })
+      }),
     );
 
     return enriched;
   },
   ["testimonials"],
-  { revalidate: 86400 }
+  { revalidate: 86400 },
 );
 
 export async function getAllCommits(repoUrl: string) {
   const match = repoUrl.match(
-    /^https?:\/\/github\.com\/([^/]+)\/([^/]+)(\/|$)/
+    /^https?:\/\/github\.com\/([^/]+)\/([^/]+)(\/|$)/,
   );
 
   if (!match) return [];
@@ -125,7 +125,7 @@ export async function getAllCommits(repoUrl: string) {
   let allCommits: any[] = [];
   let page = 1;
 
-  while (true) {
+  while (page < 3) {
     const url = `https://api.github.com/repos/${owner}/${repo}/commits?per_page=100&page=${page}`;
 
     const res = await fetch(url, {

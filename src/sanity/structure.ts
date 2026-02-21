@@ -8,6 +8,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("blog").title("Blogs"),
       S.documentTypeListItem("category").title("Categories"),
       // S.documentTypeListItem("author").title("Authors"),
+      S.documentTypeListItem("technology").title("Technologies"),
       S.divider(),
       S.documentTypeListItem("formSubmissions").title("Form Submissions"),
       S.divider(),
@@ -18,7 +19,7 @@ export const structure: StructureResolver = (S) =>
             .id("siteData")
             .schemaType("siteData")
             .documentId("siteData")
-            .title("Site Data")
+            .title("Site Data"),
         ),
       S.documentTypeListItem("projects").title("Projects"),
       S.documentTypeListItem("recommendations").title("Recommendations"),
@@ -31,6 +32,6 @@ export const structure: StructureResolver = (S) =>
             .id("siteMetrics")
             .schemaType("siteMetrics")
             .documentId("siteMetrics")
-            .title("Site Metrics")
+            .title("Site Metrics"),
         ),
     ]);
