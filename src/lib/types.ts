@@ -1,3 +1,4 @@
+import { PortableTextBlock } from "next-sanity";
 import { Image } from "sanity";
 
 export interface Blog {
@@ -193,7 +194,7 @@ export interface CharacterData {
 }
 
 export interface ProjectInfo {
-  title?: string;
+  title: string;
   slug: string;
   description?: string;
   githubLink?: string;
@@ -204,6 +205,8 @@ export interface ProjectInfo {
     image: Image;
     icon: string;
   }[];
+  body: PortableTextBlock[];
+  createdAt: string;
 }
 
 export interface CommitItem {

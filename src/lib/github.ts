@@ -3,6 +3,7 @@
 import { urlFor } from "@/sanity/lib/image";
 import { sanityClient } from "./sanityClient";
 import { unstable_cache } from "next/cache";
+import { RepoDetails } from "./types";
 
 export async function getRepoStarsFromLink(repoUrl: string) {
   if (!repoUrl) {
@@ -120,7 +121,7 @@ export async function getAllCommits(repoUrl: string) {
 
   if (!match) return [];
 
-  const [_, owner, repo] = match;
+  const [, owner, repo] = match;
 
   let allCommits: any[] = [];
   let page = 1;
@@ -130,6 +131,7 @@ export async function getAllCommits(repoUrl: string) {
 
     const res = await fetch(url, {
       headers: { Accept: "application/vnd.github+json" },
+      next: { revalidate: 86400 },
     });
 
     const batch = await res.json();

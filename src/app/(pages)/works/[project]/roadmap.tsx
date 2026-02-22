@@ -1,30 +1,13 @@
 "use client";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { RoadmapSections } from "@/lib/types";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export function Roadmap({ sections }: { sections: RoadmapSections }) {
   const months = Object.entries(sections);
-  const [visibleCount, setVisibleCount] = useState(2);
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setVisibleCount((prev) => Math.min(prev + 2, months.length));
-        }
-      },
-      { rootMargin: "200px" },
-    );
-
-    if (loadMoreRef.current) observer.observe(loadMoreRef.current);
-    return () => observer.disconnect();
-  }, [months.length]);
-
-  const visibleMonths = months.slice(0, visibleCount);
-
-  // Commit Section On Hover Expansion
+  // Hover expansion
   const [expanded, setExpanded] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -39,40 +22,39 @@ export function Roadmap({ sections }: { sections: RoadmapSections }) {
     setExpanded(false);
   };
 
+  if (!sections && months.length === 0) return null;
+
   return (
-    <div
+    <ScrollArea
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`h-[100px] overflow-y-auto border rounded-xl bg-blue-50 transition-all duration-300 ${expanded ? "h-[500px]" : ""}`}
+      className={`h-[200px] overflow-y-auto border rounded-xl transition-all duration-300 ${
+        expanded ? "h-[450px]" : ""
+      }`}
     >
-      <div className="flex flex-col p-4 pb-0">
-        {visibleMonths.map(([month, items], monthIdx) => (
-          <div key={month} className="flex flex-col">
-            {/* Month Header */}
+      <div className="flex flex-col p-4 pb-0 w-full">
+        {months.map(([month, items], monthIdx) => (
+          <div key={month} className="flex flex-col w-full">
             <h3 className="font-semibold text-base mb-4">{month}</h3>
 
             {items.map((item, idx) => {
-              const isLastItem =
-                monthIdx === visibleMonths.length - 1 &&
-                idx === items.length - 1;
+              const isLastItemInMonth = idx === items.length - 1;
 
               return (
                 <div
                   key={item.sha}
-                  className="flex items-stretch gap-3 sm:gap-4"
+                  className="flex items-stretch gap-2 sm:gap-3"
                 >
                   {/* Timeline Column */}
                   <div className="flex flex-col items-center pt-1.5">
                     <div className="bg-primary/70 w-3 h-3 rounded-full" />
-                    {!isLastItem && (
+                    {!isLastItemInMonth && (
                       <div className="flex-1 w-px bg-primary/50 mt-1.5" />
                     )}
                   </div>
 
-                  {/* Content (always right side) */}
-                  <div
-                    className={`flex flex-col gap-1 ${isLastItem ? "pb-8" : "pb-5"}`}
-                  >
+                  {/* Content */}
+                  <div className={`flex flex-col gap-1 w-full pb-4`}>
                     <div className="flex items-center justify-between">
                       <span
                         className={`px-2 py-0.5 text-xs font-medium rounded ${commitTypeColor(
@@ -85,17 +67,15 @@ export function Roadmap({ sections }: { sections: RoadmapSections }) {
                         {item.date.toLocaleDateString()}
                       </p>
                     </div>
-                    <p className="text-sm">{item.message}</p>
+                    <p className="text-sm w-full break-all">{item.message}</p>
                   </div>
                 </div>
               );
             })}
           </div>
         ))}
-
-        <div ref={loadMoreRef} className="h-10" />
       </div>
-    </div>
+    </ScrollArea>
   );
 }
 

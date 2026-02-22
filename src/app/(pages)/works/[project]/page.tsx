@@ -9,14 +9,22 @@ import { Badge } from "@/components/ui/badge";
 import { sanityClient } from "@/lib/sanityClient";
 import { ProjectInfo as ProjectInfoType } from "@/lib/types";
 import { getSanityImageUrl } from "@/sanity/lib/sanity";
-import { groq } from "next-sanity";
+import { groq, PortableText } from "next-sanity";
 import Link from "next/link";
 import React from "react";
 import { FaGithub, FaLink } from "react-icons/fa";
-import WorkSchema from "./work-schema";
 import DynamicCommits from "./commits.dynamic";
 import NotFound from "@/app/not-found";
 import ProjectImages from "./images";
+import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
+import WorkSchema from "./project-schema";
+
+export async function generateStaticParams() {
+  const query = groq`*[_type == "project"] { "slug": slug.current }`;
+  const slugs = await sanityClient.fetch(query);
+
+  return slugs.map((project: { slug: string }) => ({ slug: project.slug }));
+}
 
 const getProjectInfo = async (slug: string) => {
   const query = groq`*[_type == "projects" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
@@ -42,14 +50,19 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
   return (
     <Container as="main">
       <WorkSchema
-        slug={info?.slug}
-        description={info?.description ?? ""}
-        title={info?.title ?? ""}
+        slug={info.slug}
+        title={info.title}
+        description={info.description ?? ""}
         image={
-          info?.images && info?.images[0]
-            ? getSanityImageUrl(info?.images[0])
+          info.images?.[0]
+            ? getSanityImageUrl(info.images[0])
             : "/placeholder.png"
         }
+        techStack={info.techStack}
+        screenshots={info.images}
+        githubUrl={info.githubLink}
+        liveUrl={info.liveUrl}
+        createdAt={info.createdAt}
       />
       <ScrollProgress />
       <BlurFade className="px-3 sm:px-5 pb-20">
@@ -111,15 +124,32 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
             );
           })}
         </div>
-        <div className="w-[calc(100%-2rem)] rounded-full h-px bg-primary/30"></div>
-        <div className="w-full flex p-2">
+        <div className="w-full rounded-full h-px bg-primary/30"></div>
+        <div className="w-full flex p-2 gap-5">
           {/* Content */}
-          <div className="w-full h-screen"></div>
-          <aside className="max-w-[300px] w-full min-w-[250px] h-max sticky top-5">
+          <div className="w-full">
+            <div className="prose prose-lg text-primary/80 dark:text-primary">
+              <PortableText
+                value={info?.body}
+                components={PortableTextComponents as any}
+              />
+            </div>
+          </div>
+          <aside className="max-w-[300px] w-full min-w-[300px] h-max sticky top-5 space-y-2">
             {info?.githubLink && (
-              <DynamicCommits githubLink={info?.githubLink} />
+              <div className="space-y-2 w-full">
+                <h2 className="font-bold text-primary/90">Recent Commits</h2>
+                <DynamicCommits githubLink={info?.githubLink} />
+              </div>
             )}
-            <ProjectImages />
+            {info?.images && info?.images?.length > 0 && (
+              <div className="space-y-2">
+                <h2 className="font-bold text-primary/90">
+                  Project Screenshots
+                </h2>
+                <ProjectImages images={info?.images} />
+              </div>
+            )}
           </aside>
         </div>
       </BlurFade>

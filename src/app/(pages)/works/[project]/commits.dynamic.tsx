@@ -4,11 +4,12 @@ import { Roadmap } from "./roadmap";
 import { classifyCommit } from "@/lib/utils";
 import { projectCommits } from "./commits";
 
-export const dynamic = "force-dynamic";
-
-const DynamicCommits = async ({ githubLink }: { githubLink: string }) => {
-  // const commits = await getAllCommits(githubLink)
-  const commits = [];
+export const DynamicCommits = async ({
+  githubLink,
+}: {
+  githubLink: string;
+}) => {
+  const commits = await getAllCommits(githubLink);
   const roadmap = groupCommitsByMonth(commits);
 
   return <Roadmap sections={roadmap} />;
