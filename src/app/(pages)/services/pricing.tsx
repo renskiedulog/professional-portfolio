@@ -12,7 +12,7 @@ const prices: PriceItem[] = [
     title: "Student",
     description: "For students looking to delegate their school projects.",
     asLowAs: true,
-    price: "$9",
+    price: "$20",
     priceSubtitle: "per instance",
     samplesLabel: "Common Requests",
     samples: [
@@ -28,7 +28,7 @@ const prices: PriceItem[] = [
     description:
       "For small to medium businesses needing professional web solutions.",
     asLowAs: true,
-    price: "$99",
+    price: "$299",
     priceSubtitle: "per instance",
     samplesLabel: "Typical Builds",
     samples: [
