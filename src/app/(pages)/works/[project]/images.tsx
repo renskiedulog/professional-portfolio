@@ -40,7 +40,7 @@ const ProjectImages = ({ images }: Props) => {
       >
         <AnimatePresence>
           {selectedImage && (
-            <DialogContent className="max-w-3xl p-0 overflow-hidden border-none bg-transparent shadow-none">
+            <DialogContent className="max-w-3xl p-0 overflow-hidden border-none bg-transparent shadow-none [&_button_svg]:stroke-white [&_button]:bg-black">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
