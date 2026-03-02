@@ -2,7 +2,6 @@ import { getAllCommits } from "@/lib/github";
 import React from "react";
 import { Roadmap } from "./roadmap";
 import { classifyCommit } from "@/lib/utils";
-import { projectCommits } from "./commits";
 
 export const DynamicCommits = async ({
   githubLink,

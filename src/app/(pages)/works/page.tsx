@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 import ProjectsGallery from "./projects-gallery";
@@ -11,7 +10,9 @@ import Crown from "@/app/UI/global-components/crown";
 import Heading from "@/app/UI/global-components/heading";
 
 export const metadata = {
-  title: "Works - Under Construction",
+  title: "Works - Renato Dulog",
+  description:
+    "I build modern, scalable web applications using React and Next.js. Explore my projects focused on performance, clean UI, and real-world impact.",
   alternates: {
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/works`,
   },

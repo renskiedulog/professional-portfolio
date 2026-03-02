@@ -190,7 +190,7 @@ export default function WorkExperience() {
 
                   const { years, months } = getDuration(start, null);
 
-                  return `${years} years ${months > 0 ? `and ${months} months` : ""}`;
+                  return `${years} years ${months > 0 ? `and ${months} month${months > 1 ? "s" : ""}` : ""}`;
                 })()}
               </p>
             </Link>

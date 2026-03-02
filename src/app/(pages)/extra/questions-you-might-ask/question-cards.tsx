@@ -41,7 +41,7 @@ const QuestionCards = ({ questions }: { questions: Item[] }) => {
             </strong>
             <motion.div
               animate={{ rotate: openIndex === index ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
             >
               <ChevronDown className="w-5 h-5 text-gray-600" />
             </motion.div>
@@ -55,7 +55,7 @@ const QuestionCards = ({ questions }: { questions: Item[] }) => {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
                 className="overflow-hidden mt-3 text-primary/80 dark:text-primary"
                 id={`answer-${index}`}
                 role="region"

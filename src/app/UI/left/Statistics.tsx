@@ -16,17 +16,17 @@ const Statistics = () => {
       duration: 1,
     },
     {
-      value: 20,
+      value: 25,
       unit: "+",
       label: "Websites Worked",
     },
     {
-      value: 90,
+      value: 100,
       unit: "wpm",
       label: "Avg. Typing Speed",
     },
     {
-      value: 10,
+      value: 5,
       unit: "+",
       label: "Projects Made and Done",
       duration: 1,
