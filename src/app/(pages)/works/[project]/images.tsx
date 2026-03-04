@@ -20,7 +20,7 @@ const ProjectImages = ({ images }: Props) => {
           <button
             key={index}
             onClick={() => setSelectedImage(src)}
-            className="w-20 h-20 relative overflow-hidden flex-grow rounded-md border hover:scale-105 transition-transform duration-300"
+            className="w-20 h-20 relative overflow-hidden flex-grow max-w-24 rounded-md border hover:scale-105 transition-transform duration-300"
           >
             <Image
               src={src}

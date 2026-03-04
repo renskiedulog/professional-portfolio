@@ -131,7 +131,6 @@ export async function getAllCommits(repoUrl: string) {
 
     const res = await fetch(url, {
       headers: { Accept: "application/vnd.github+json" },
-      next: { revalidate: 86400 },
     });
 
     const batch = await res.json();

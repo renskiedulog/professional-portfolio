@@ -11,7 +11,6 @@ import Container from "./UI/global-components/container";
 import LeftSection from "./UI/left/LeftSection";
 import TestimonialsSection from "./UI/content/testimonials";
 import { getEnrichedTestimonials } from "@/lib/github";
-import SeasonalEntranceEffect from "./UI/season-animations/seasonal-entrance-effect";
 import SiteVisitScript from "./scripts/site-visit-script";
 
 export const revalidate = 86400;
