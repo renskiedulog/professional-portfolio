@@ -45,7 +45,7 @@ export default function ProjectsGallery() {
             </div>
 
             {/* Right Subtle Image with Mask */}
-            <div className="absolute right-0 top-0 h-full w-[30%] pointer-events-none">
+            <div className="absolute right-0 top-0 h-full w-full md:w-[40%] pointer-events-none">
               <div
                 className="h-full w-full"
                 style={{
@@ -58,7 +58,7 @@ export default function ProjectsGallery() {
                 <img
                   src={project.images[0]}
                   alt={project.title}
-                  className="h-full w-full object-cover opacity-50"
+                  className="h-full w-full object-cover opacity-30 sm:opacity-50"
                 />
               </div>
             </div>
@@ -80,7 +80,7 @@ export default function ProjectsGallery() {
             }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 220, damping: 25 }}
-            className="pointer-events-none fixed top-0 left-0 z-50 w-56 h-56 overflow-hidden rounded-xl shadow-xl"
+            className="pointer-events-none fixed top-0 left-0 z-50 w-56 h-56 overflow-hidden rounded-xl shadow-xl sm:block hidden"
           >
             <motion.img
               src={projects[hoveredIndex].images[0]}

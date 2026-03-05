@@ -125,7 +125,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
           })}
         </div>
         <div className="w-full rounded-full h-px bg-primary/30"></div>
-        <div className="w-full flex p-2 gap-5">
+        <div className="w-full flex md:flex-row flex-col p-2 gap-5">
           {/* Content */}
           <div className="w-full">
             <div className="prose prose-lg text-primary/80 dark:text-primary">
@@ -135,7 +135,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
               />
             </div>
           </div>
-          <aside className="max-w-[300px] w-full min-w-[300px] h-max sticky top-5 space-y-2">
+          <aside className="max-w-full md:max-w-[300px] w-full min-w-[300px] h-max sticky top-5 space-y-2">
             {info?.githubLink && (
               <div className="space-y-2 w-full">
                 <h2 className="font-bold text-primary/90">Recent Commits</h2>

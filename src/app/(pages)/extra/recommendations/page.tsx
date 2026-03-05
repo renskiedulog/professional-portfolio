@@ -17,7 +17,7 @@ const page = () => {
           <div className="flex justify-center items-center gap-1 text-sm text-muted-foreground">
             Powered By
             <Link
-              className="hover:text-black"
+              className="hover:text-black font-black text-base"
               href="https://jikan.moe/"
               target="_blank"
             >

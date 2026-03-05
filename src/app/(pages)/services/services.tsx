@@ -2,9 +2,6 @@ import { Database } from "lucide-react";
 import React from "react";
 import { FaComputer } from "react-icons/fa6";
 import { HiLightningBolt } from "react-icons/hi";
-import { FaRegKeyboard } from "react-icons/fa";
-import { GiRobotGrab } from "react-icons/gi";
-import { LuNotebookPen } from "react-icons/lu";
 
 const services = [
   {
@@ -13,7 +10,7 @@ const services = [
     description:
       "Modern, responsive websites and apps using React, Next.js, and TypeScript with pixel-perfect design implementation.",
     stacks: [
-      "One-Page Websites",
+      "Business Websites",
       "Portfolios",
       "Landing Pages",
       "Full Websites",
