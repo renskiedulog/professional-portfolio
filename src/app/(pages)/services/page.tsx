@@ -88,17 +88,7 @@ const ServicePage = async () => {
         {/* Pricing */}
         <Pricing status={status as "unavailable" | "busy"} />
         {/* How It's Delivered */}
-        {/* <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
-          <Crown>How It Goes</Crown>
-          <Heading className="w-full text-center text-3xl md:text-4xl">
-            From Task To Deliver
-          </Heading>
-          <p>
-            A streamlined process that transforms your ideas into fully
-            delivered, high-quality digital solutions.
-          </p>
-        </div>
-        <WorkFlow /> */}
+        {/* <WorkFlow /> */}
       </BlurFade>
     </Container>
   );

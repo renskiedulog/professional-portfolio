@@ -1,3 +1,5 @@
+import Crown from "@/app/UI/global-components/crown";
+import Heading from "@/app/UI/global-components/heading";
 import { Brush, HammerIcon, Lightbulb, Pen, Rocket } from "lucide-react";
 import React from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
@@ -49,32 +51,22 @@ const flow = [
 
 const WorkFlow = () => {
   return (
-    <div className="flex flex-col w-full gap-10 max-w-3xl mx-auto mt-10">
-      {flow?.map((step, index) => (
-        <div
-          key={index}
-          className="flex even:flex-row-reverse items-center w-full gap-5 group"
-        >
-          {/* Icon */}
-          <div className="border border-primary/50 dark:bg-primary/10 aspect-square w-28 flex items-center justify-center">
-            <step.icon className="size-8" />
-          </div>
-          {/* Content */}
-          <div className="flex flex-col w-full group-even:text-right gap-2">
-            {/* Title */}
-            <p className="text-2xl font-normal md:font-thin">{step?.title}</p>
-            {/* Line */}
-            <div className="w-full flex group-even:flex-row-reverse items-center gap-2">
-              <div className="w-max whitespace-nowrap break-keep text-xs font-thin">
-                STEP {index + 1}
-              </div>
-              <div className="h-px w-full bg-gradient-to-r group-even:bg-gradient-to-l from-primary to-transparent" />
-            </div>
-            {/* Description */}
-            <p className="text-sm">{step?.description}</p>
-          </div>
-        </div>
-      ))}
+    <div>
+      <div className="text-center flex flex-col mx-auto mt-10 gap-2">
+        <Crown>How It Goes</Crown>
+        <Heading className="w-full text-center text-3xl md:text-4xl">
+          From Task To Deliver
+        </Heading>
+        <p>
+          A streamlined process that transforms your ideas into fully delivered,
+          high-quality digital solutions.
+        </p>
+      </div>
+      <div className="flex flex-col w-full gap-10 max-w-3xl mx-auto mt-10">
+        {flow?.map((step, index) => (
+          <div key={index}></div>
+        ))}
+      </div>
     </div>
   );
 };
