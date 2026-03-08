@@ -36,12 +36,12 @@ export default function ProjectsGallery() {
             href={project?.link || "#"}
           >
             {/* Content */}
-            <div className="relative z-10 max-w-3xl">
-              <h2 className="text-4xl md:text-6xl font-semibold tracking-tight">
+            <div className="relative z-10 max-w-3xl  sm:text-left text-center">
+              <h2 className="text-4xl md:text-6xl font-semibold tracking-tigh">
                 {project.title}
               </h2>
 
-              <p className="mt-3 text-neutral-600">{project.description}</p>
+              <p className="mt-3 text-primary">{project.description}</p>
             </div>
 
             {/* Right Subtle Image with Mask */}

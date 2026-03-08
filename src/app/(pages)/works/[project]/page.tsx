@@ -86,7 +86,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
           )}
           <div className="flex items-center justify-between sm:flex-row flex-col-reverse sm:gap-0 gap-4">
             <Heading>{info?.title}</Heading>
-            <div className="flex items-center gap-2">
+            <div className="items-center gap-2 sm:flex hidden">
               {info?.liveUrl && (
                 <Link href={info?.liveUrl} target="_blank">
                   <Badge className="hover:bg-black/5 py-1 bg-transparent border shadow-none border-primary/80 text-primary/80 flex items-center gap-1">
@@ -104,6 +104,23 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
             </div>
           </div>
           <p className="text-center sm:text-justify">{info?.description}</p>
+          {/* Small Devices Buttons Group */}
+          <div className="flex items-center gap-2 sm:hidden justify-center mt-5">
+            {info?.liveUrl && (
+              <Link href={info?.liveUrl} target="_blank">
+                <Badge className="hover:bg-black/5 py-1 bg-transparent border shadow-none border-primary/80 text-primary/80 flex items-center gap-1">
+                  <FaLink /> Live Preview
+                </Badge>
+              </Link>
+            )}
+            {info?.githubLink && (
+              <Link href={info?.githubLink} target="_blank">
+                <Badge className="flex gap-1 items-center py-1">
+                  <FaGithub /> Github Repo
+                </Badge>
+              </Link>
+            )}
+          </div>
         </div>
         <div className="flex gap-4 max-w-2xl flex-wrap mx-auto justify-center sm:justify-around mt-4">
           {info?.techStack?.map((tech, idx) => {

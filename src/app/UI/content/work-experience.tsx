@@ -150,13 +150,13 @@ export default function WorkExperience() {
       <Heading>Work Experience</Heading>
       <div className="space-y-3">
         {experiences.map((experience, index) => (
-          <div key={index}>
+          <div key={index} className="w-full">
             <Link
               href={experience?.link}
               target="_blank"
               className="flex items-center justify-between gap-4 group"
             >
-              <div className="flex items-center gap-2">
+              <div className="flex sm:flex-row items-center gap-2 w-full">
                 <Image
                   width={40}
                   height={40}
@@ -164,14 +164,26 @@ export default function WorkExperience() {
                   alt={experience.company}
                 />
                 {/* Details */}
-                <div>
-                  <h3 className="font-bold text-lg flex items-center group-hover:underline text-primary leading-tight">
-                    {experience.company}
-                    <ChevronRight
-                      size={18}
-                      className="group-hover:opacity-100 opacity-0 transition-all duration-300 translate-x-0 group-hover:translate-x-2"
-                    />
-                  </h3>
+                <div className="w-full">
+                  <div className="flex justify-between items-center w-full">
+                    <h3 className="font-bold text-lg flex items-center group-hover:underline text-primary leading-tight">
+                      {experience.company}
+                      <ChevronRight
+                        size={18}
+                        className="group-hover:opacity-100 opacity-0 transition-all duration-300 translate-x-0 group-hover:translate-x-2"
+                      />
+                    </h3>
+                    <p className="text-sm text-muted-foreground font-medium whitespace-nowrap sm:hidden block">
+                      {(() => {
+                        const start = experience.history.at(-1)?.period.start;
+                        if (!start) return null;
+
+                        const { years, months } = getDuration(start, null);
+
+                        return `${years} years ${months > 0 ? `and ${months} month${months > 1 ? "s" : ""}` : ""}`;
+                      })()}
+                    </p>
+                  </div>
                   <div className="flex items-center gap-2 text-sm opacity-80">
                     {experience?.address && <p>{experience?.address}</p>}
                     {experience?.setup && (
@@ -183,7 +195,7 @@ export default function WorkExperience() {
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">
+              <p className="text-sm text-muted-foreground font-medium whitespace-nowrap sm:block hidden">
                 {(() => {
                   const start = experience.history.at(-1)?.period.start;
                   if (!start) return null;

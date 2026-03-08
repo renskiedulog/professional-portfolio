@@ -28,7 +28,7 @@ export function Roadmap({ sections }: { sections: RoadmapSections }) {
     <ScrollArea
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`h-[200px] overflow-y-auto border rounded-xl transition-all duration-300 ${
+      className={`h-[350px] sm:h-[200px] overflow-y-auto border rounded-xl transition-all duration-300 ${
         expanded ? "h-[450px]" : ""
       }`}
     >
