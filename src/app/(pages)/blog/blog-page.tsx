@@ -116,7 +116,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                       );
                     })()}
                   </Heading>
-                  <div className="columns-1 sm:columns-2 lg:columns-3">
+                  <div className="gap-2 sm:gap-4 columns-2 lg:columns-3">
                     {blogs
                       ?.filter((blog) =>
                         blog.categories.some(
@@ -139,7 +139,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
               <BlurFade id="filter-posts">
                 <div className="space-y-3">
                   <Heading>Filter Results</Heading>
-                  <div className="columns-1 sm:columns-2 lg:columns-3">
+                  <div className="gap-2 sm:gap-4 columns-2 lg:columns-3">
                     {blogs
                       ?.filter(
                         (blog) =>
@@ -151,7 +151,10 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                       .map((blog, i, filtered) =>
                         filtered.length ? (
                           <BlurFade key={blog._id}>
-                            <BlogCard blog={blog} className="sm:mb-0 mb-4" />
+                            <BlogCard
+                              blog={blog}
+                              className="sm:mb-0 mb-2 sm:mb-4"
+                            />
                           </BlurFade>
                         ) : null,
                       )}
@@ -181,7 +184,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
               <BlurFade id="filter-posts">
                 <div className="space-y-3">
                   <Heading>Search Results</Heading>
-                  <div className="columns-1 sm:columns-2 lg:columns-3">
+                  <div className="gap-2 sm:gap-4 columns-2 lg:columns-3">
                     {search !== null &&
                     blogs?.length > 0 &&
                     blogs.filter((blog) =>
@@ -202,7 +205,7 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
                             <BlogCard
                               blog={blog}
                               key={blog._id}
-                              className="mb-4"
+                              className="mb-2 sm:mb-4"
                             />
                           </BlurFade>
                         ))
@@ -225,9 +228,13 @@ const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
               <BlurFade id="blog-posts">
                 <motion.div layout className="space-y-2">
                   <Heading>Browse</Heading>
-                  <div className="columns-1 sm:columns-2 lg:columns-3">
+                  <div className="gap-2 sm:gap-4 columns-2 lg:columns-3">
                     {blogs.map((blog, idx) => (
-                      <BlogCard blog={blog} key={idx} className="mb-4" />
+                      <BlogCard
+                        blog={blog}
+                        key={idx}
+                        className="mb-2 sm:mb-4"
+                      />
                     ))}
                   </div>
                 </motion.div>

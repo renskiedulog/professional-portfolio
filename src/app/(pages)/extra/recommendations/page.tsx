@@ -52,10 +52,10 @@ const page = () => {
               alt="anime-img"
               className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
             />
-            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 sm:translate-y-[500px] transition-all ease-in-out">
               Anime
             </p>
-            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 sm:translate-y-full transition-all ease-in-out" />
           </Link>
 
           <Link
@@ -70,10 +70,10 @@ const page = () => {
               alt="manga-img"
               className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
             />
-            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 sm:translate-y-[500px] transition-all ease-in-out">
               Manga
             </p>
-            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 sm:translate-y-full transition-all ease-in-out" />
           </Link>
 
           <Link
@@ -88,10 +88,10 @@ const page = () => {
               alt="manhwa-img"
               className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
             />
-            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 sm:translate-y-[500px] transition-all ease-in-out">
               Manhwa
             </p>
-            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 sm:translate-y-full transition-all ease-in-out" />
           </Link>
 
           <Link
@@ -106,10 +106,10 @@ const page = () => {
               alt="movie-img"
               className="absolute bottom-0 left-0 w-full h-full object-cover brightness-75 group-hover:brightness-100"
             />
-            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 translate-y-[500px] transition-all ease-in-out">
+            <p className="text-3xl font-black text-white z-20 group-hover:translate-y-0 sm:translate-y-[500px] transition-all ease-in-out">
               Movie
             </p>
-            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 translate-y-full transition-all ease-in-out" />
+            <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black/70 group-hover:translate-y-0 sm:translate-y-full transition-all ease-in-out" />
           </Link>
         </div>
       </BlurFade>

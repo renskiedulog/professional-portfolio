@@ -12,7 +12,7 @@ const BlogCard = ({ blog, className }: { blog: Blog; className?: string }) => {
     <article
       className={cn(
         "border rounded-md overflow-hidden shadow-sm bg-background h-max",
-        className
+        className,
       )}
     >
       <Image
@@ -24,11 +24,11 @@ const BlogCard = ({ blog, className }: { blog: Blog; className?: string }) => {
         alt={blog?.title}
       />
       <div className="px-3.5 py-3.5">
-        <h3 className="font-bold text-lg leading-tight">{blog?.title}</h3>
-        <p className="font-medium text-sm mt-2">
-          {blog?.description?.length > 150
-            ? `${blog?.description?.substring(0, 150)}...`
-            : blog?.description}
+        <h3 className="font-bold text-base sm:text-lg leading-tight line-clamp-3">
+          {blog?.title}
+        </h3>
+        <p className="font-medium text-xs sm:text-sm mt-2 line-clamp-3">
+          {blog?.description}
         </p>
         <div className="mt-2 flex gap-1 flex-wrap">
           {blog?.categories?.map((category, idx) => (
