@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "myanimelist.net",
+      },
+      {
+        protocol: "https",
         hostname: "github-readme-stats.vercel.app",
       },
     ],
