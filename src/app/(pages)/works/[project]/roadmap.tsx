@@ -29,7 +29,7 @@ export function Roadmap({ sections }: { sections: RoadmapSections }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`h-[350px] sm:h-[200px] overflow-y-auto border rounded-xl transition-all duration-300 ${
-        expanded ? "h-[450px]" : ""
+        expanded ? "sm:h-[450px]" : ""
       }`}
     >
       <div className="flex flex-col p-4 pb-0 w-full">
@@ -67,7 +67,7 @@ export function Roadmap({ sections }: { sections: RoadmapSections }) {
                         {item.date.toLocaleDateString()}
                       </p>
                     </div>
-                    <p className="text-sm w-full break-all">
+                    <p className="text-sm w-full break-keep">
                       {item.message?.split(":").slice(1).join(":").trim()}
                     </p>
                   </div>
