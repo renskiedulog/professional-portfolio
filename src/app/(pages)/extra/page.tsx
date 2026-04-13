@@ -11,7 +11,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { InfoIcon } from "lucide-react";
-import { FaToolbox, FaTools } from "react-icons/fa";
 
 export const metadata = {
   title: "Extra",

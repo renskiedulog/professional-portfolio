@@ -11,6 +11,13 @@ const projects = [
     images: ["/projects/portfolio.webp"],
     link: "/works/portfolio",
   },
+  {
+    title: "MangaSensei",
+    description:
+      "A manga site built for manga readers, featuring a clean UI and fast performance.",
+    images: ["/projects/mangasensei.webp"],
+    link: "/works/mangasensei",
+  },
 ];
 
 export default function ProjectsGallery() {

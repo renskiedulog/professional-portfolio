@@ -52,7 +52,11 @@ const NavigationBar = () => {
   const pathname = usePathname();
   const [scrollHeight, setScrollHeight] = useState(0);
 
-  if (pathname?.split("/")[1] === "studio") return null;
+  if (
+    pathname?.split("/")[1] === "studio" ||
+    pathname?.split("/")[2] === "playground"
+  )
+    return null;
 
   const popToUpVariants: Variants = {
     hidden: {
