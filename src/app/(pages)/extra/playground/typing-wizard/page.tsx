@@ -8,7 +8,7 @@ const Page = () => {
     <Container as="main" className="!pb-0">
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
-        <div className="w-full flex justify-between">
+        <div className="w-full flex justify-between mb-3">
           <BackButton href="/extra/playground" label="Playground" />
         </div>
         <div className="h-[92dvh] w-full">

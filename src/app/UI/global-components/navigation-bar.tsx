@@ -52,12 +52,6 @@ const NavigationBar = () => {
   const pathname = usePathname();
   const [scrollHeight, setScrollHeight] = useState(0);
 
-  if (
-    pathname?.split("/")[1] === "studio" ||
-    pathname?.split("/")[2] === "playground"
-  )
-    return null;
-
   const popToUpVariants: Variants = {
     hidden: {
       scale: 0.8,
@@ -120,6 +114,12 @@ const NavigationBar = () => {
     window.addEventListener("scroll", checkScroll);
     return () => window.removeEventListener("scroll", checkScroll);
   }, []);
+
+  if (
+    pathname?.split("/")[1] === "studio" ||
+    pathname?.split("/")[2] === "playground"
+  )
+    return null;
 
   return (
     <nav className="fixed z-50 bottom-5 left-1/2 -translate-x-1/2">
