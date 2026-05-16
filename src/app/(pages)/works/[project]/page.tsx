@@ -18,6 +18,46 @@ import NotFound from "@/app/not-found";
 import ProjectImages from "./images";
 import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
 import WorkSchema from "./project-schema";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { project: string };
+}): Promise<Metadata> {
+  const { project } = await params;
+  const info: ProjectInfoType = await getProjectInfo(project);
+
+  if (!info) {
+    return { title: "Project Not Found" };
+  }
+
+  const image = info.images?.[0]
+    ? getSanityImageUrl(info.images[0])
+    : "https://renato-dulog.is-a.dev/me.webp";
+
+  return {
+    title: info.title,
+    description: info.description,
+    openGraph: {
+      title: `${info.title} | Renato Dulog`,
+      description: info.description,
+      url: `https://renato-dulog.is-a.dev/works/${project}`,
+      siteName: "Renato Dulog | Developer Portfolio",
+      images: [{ url: image, alt: info.title }],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${info.title} | Renato Dulog`,
+      description: info.description,
+      images: [image],
+    },
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/works/${project}`,
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const query = groq`*[_type == "project"] { "slug": slug.current }`;

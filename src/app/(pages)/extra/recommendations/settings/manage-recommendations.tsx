@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { FaStar } from "react-icons/fa";
 
 function ManageRecommendations() {
   const [recs, setRecs] = useState<any[]>([]);
@@ -9,6 +10,7 @@ function ManageRecommendations() {
   const [category, setCategory] = useState<string>("all");
   const [deleteMode, setDeleteMode] = useState(false);
   const [selected, setSelected] = useState<string[]>([]);
+  const [togglingFavorite, setTogglingFavorite] = useState<string | null>(null);
 
   useEffect(() => {
     fetchRecs();
@@ -25,6 +27,27 @@ function ManageRecommendations() {
       setError("Failed to fetch recommendations");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleToggleFavorite = async (rec: any) => {
+    setTogglingFavorite(rec._id);
+    try {
+      const res = await fetch("/api/recommendations/toggle-favorite", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ _id: rec._id, favorite: !rec.favorite }),
+      });
+      if (!res.ok) throw new Error("Failed to toggle favorite");
+      setRecs((prev) =>
+        prev.map((r) =>
+          r._id === rec._id ? { ...r, favorite: !rec.favorite } : r
+        )
+      );
+    } catch (err) {
+      alert("Failed to toggle favorite");
+    } finally {
+      setTogglingFavorite(null);
     }
   };
 
@@ -146,7 +169,20 @@ function ManageRecommendations() {
                   {rec.title}
                 </p>
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/70" />
-                {/* Delete Mode: Hide checkbox, use card click for selection */}
+                {/* Favorite toggle — hidden in delete mode */}
+                {!deleteMode && (
+                  <button
+                    className={`absolute top-1.5 right-1.5 z-30 p-1.5 rounded-full transition-colors ${rec.favorite ? "bg-yellow-400 text-yellow-900" : "bg-black/50 text-white/60 hover:text-yellow-400"}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleToggleFavorite(rec);
+                    }}
+                    disabled={togglingFavorite === rec._id}
+                    title={rec.favorite ? "Remove from favorites" : "Mark as personal favorite"}
+                  >
+                    <FaStar size={12} />
+                  </button>
+                )}
               </div>
             );
           })}

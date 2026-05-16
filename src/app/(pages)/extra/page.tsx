@@ -14,6 +14,24 @@ import { InfoIcon } from "lucide-react";
 
 export const metadata = {
   title: "Extra",
+  description:
+    "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, dev tools, and more.",
+  openGraph: {
+    title: "Extra | Renato Dulog",
+    description:
+      "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, dev tools, and more.",
+    url: "https://renato-dulog.is-a.dev/extra",
+    siteName: "Renato Dulog | Developer Portfolio",
+    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Extra | Renato Dulog",
+    description:
+      "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, dev tools, and more.",
+    images: ["https://renato-dulog.is-a.dev/me.webp"],
+  },
   alternates: {
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra`,
   },
@@ -22,6 +40,24 @@ export const metadata = {
 const Extra = () => {
   return (
     <Container as="main">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            name: "Extra | Renato Dulog",
+            url: "https://renato-dulog.is-a.dev/extra",
+            description:
+              "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, dev tools, and more.",
+            author: {
+              "@type": "Person",
+              name: "Renato Dulog",
+              url: "https://renato-dulog.is-a.dev/",
+            },
+          }),
+        }}
+      />
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">

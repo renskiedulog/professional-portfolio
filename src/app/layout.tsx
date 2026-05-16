@@ -12,6 +12,7 @@ import { Toaster } from "sonner";
 import Head from "next/head";
 import Script from "next/script";
 import Overlays from "./overlays";
+import BreadcrumbJsonLd from "./UI/global-components/breadcrumb-jsonld";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -134,6 +135,8 @@ export default function RootLayout({
           }),
         }}
       />
+      {/* Breadcrumb Script */}
+      <BreadcrumbJsonLd />
       {/* Services Script */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}

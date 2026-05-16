@@ -4,6 +4,7 @@ import React from "react";
 import { GetRecommendationsParams } from "./page";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { FaStar } from "react-icons/fa";
 
 const RecommendationCard = ({
   recommendation,
@@ -37,6 +38,14 @@ const RecommendationCard = ({
         />
         {/* Gradient overlay */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/80" />
+
+        {/* Favorite badge */}
+        {recommendation.favorite && (
+          <div className="absolute top-2 right-2 z-20 flex items-center gap-1 bg-yellow-400/90 text-yellow-900 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+            <FaStar size={9} />
+            <span>Favorite</span>
+          </div>
+        )}
 
         {/* Title */}
         <p

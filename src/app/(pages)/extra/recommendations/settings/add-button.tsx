@@ -38,6 +38,7 @@ const AddRecommendationBtn = ({
             title: item.title,
             type: searchType,
             image: item?.image ?? "",
+            fromTmdb: item?.fromTmdb ?? false,
           }),
         });
 

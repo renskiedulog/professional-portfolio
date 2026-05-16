@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache";
 
 export async function POST(req: NextRequest) {
   try {
-    const { id, type, title, image } = await req.json();
+    const { id, type, title, image, fromTmdb } = await req.json();
 
     if (!id || !type || !title || !image) {
       return NextResponse.json({ error: "Missing details." }, { status: 400 });
@@ -32,13 +32,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const newRecommendation = {
+    const newRecommendation: Record<string, any> = {
       id: String(id),
       _type: "recommendations",
       title,
       type,
       image,
     };
+
+    if (fromTmdb) newRecommendation.fromTmdb = true;
 
     await sanityClient.create(newRecommendation);
 

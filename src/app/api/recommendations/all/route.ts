@@ -4,12 +4,14 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const recommendations = await sanityClient.fetch(
-      `*[_type == "recommendations"] | order(_createdAt desc){
+      `*[_type == "recommendations"] | order(favorite desc, _createdAt desc){
         _id,
         id,
         title,
         type,
-        image
+        image,
+        favorite,
+        fromTmdb
       }`
     );
     return NextResponse.json({ recommendations });

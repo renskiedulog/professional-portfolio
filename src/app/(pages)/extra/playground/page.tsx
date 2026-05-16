@@ -7,6 +7,24 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Playground",
+  description:
+    "Interactive mini-apps and games by Renato Dulog — typing speed tests, Japanese flashcards, and more.",
+  openGraph: {
+    title: "Playground | Renato Dulog",
+    description:
+      "Interactive mini-apps and games by Renato Dulog — typing speed tests, Japanese flashcards, and more.",
+    url: "https://renato-dulog.is-a.dev/extra/playground",
+    siteName: "Renato Dulog | Developer Portfolio",
+    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Playground | Renato Dulog",
+    description:
+      "Interactive mini-apps and games by Renato Dulog — typing speed tests, Japanese flashcards, and more.",
+    images: ["https://renato-dulog.is-a.dev/me.webp"],
+  },
   alternates: {
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra/playground`,
   },
@@ -15,6 +33,25 @@ export const metadata = {
 const Playground = () => {
   return (
     <Container as="main">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            name: "Playground | Renato Dulog",
+            url: "https://renato-dulog.is-a.dev/extra/playground",
+            description:
+              "Interactive mini-apps and games by Renato Dulog — typing speed tests, Japanese flashcards, and more.",
+            applicationCategory: "EntertainmentApplication",
+            author: {
+              "@type": "Person",
+              name: "Renato Dulog",
+              url: "https://renato-dulog.is-a.dev/",
+            },
+          }),
+        }}
+      />
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">

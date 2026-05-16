@@ -13,6 +13,24 @@ import QymaSchema from "./qyma-schema";
 
 export const metadata = {
   title: "Questions You Might Ask",
+  description:
+    "Answers to common questions about Renato Dulog — work process, tech stack, availability, and what it's like to work together.",
+  openGraph: {
+    title: "Questions You Might Ask | Renato Dulog",
+    description:
+      "Answers to common questions about Renato Dulog — work process, tech stack, availability, and what it's like to work together.",
+    url: "https://renato-dulog.is-a.dev/extra/questions-you-might-ask",
+    siteName: "Renato Dulog | Developer Portfolio",
+    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Questions You Might Ask | Renato Dulog",
+    description:
+      "Answers to common questions about Renato Dulog — work process, tech stack, availability, and what it's like to work together.",
+    images: ["https://renato-dulog.is-a.dev/me.webp"],
+  },
   alternates: {
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra/questions-you-might-ask`,
   },

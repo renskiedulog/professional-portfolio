@@ -25,6 +25,8 @@ export interface SearchResult {
   title: string;
   image: string;
   type: string;
+  favorite?: boolean;
+  fromTmdb?: boolean;
 }
 
 export interface ImageSet {

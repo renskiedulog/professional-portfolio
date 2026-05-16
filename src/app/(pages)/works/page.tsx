@@ -10,9 +10,25 @@ import Crown from "@/app/UI/global-components/crown";
 import Heading from "@/app/UI/global-components/heading";
 
 export const metadata = {
-  title: "Works - Renato Dulog",
+  title: "Works",
   description:
     "I build modern, scalable web applications using React and Next.js. Explore my projects focused on performance, clean UI, and real-world impact.",
+  openGraph: {
+    title: "Works | Renato Dulog",
+    description:
+      "I build modern, scalable web applications using React and Next.js. Explore my projects focused on performance, clean UI, and real-world impact.",
+    url: "https://renato-dulog.is-a.dev/works",
+    siteName: "Renato Dulog | Developer Portfolio",
+    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Works | Renato Dulog",
+    description:
+      "I build modern, scalable web applications using React and Next.js. Explore my projects focused on performance, clean UI, and real-world impact.",
+    images: ["https://renato-dulog.is-a.dev/me.webp"],
+  },
   alternates: {
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/works`,
   },
@@ -21,6 +37,24 @@ export const metadata = {
 const Page = () => {
   return (
     <Container as="main" className="pb-20 sm:pb-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Works | Renato Dulog",
+            url: "https://renato-dulog.is-a.dev/works",
+            description:
+              "A showcase of modern, scalable web applications built with React and Next.js by Renato Dulog.",
+            author: {
+              "@type": "Person",
+              name: "Renato Dulog",
+              url: "https://renato-dulog.is-a.dev/",
+            },
+          }),
+        }}
+      />
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">

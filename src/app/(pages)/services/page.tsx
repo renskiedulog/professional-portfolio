@@ -14,6 +14,22 @@ export const metadata = {
   title: "Services",
   description:
     "Explore the services I offer — from responsive design to full-stack solutions tailored to your needs or the grunt works you are trying to avoid.",
+  openGraph: {
+    title: "Services | Renato Dulog",
+    description:
+      "Explore the services I offer — from responsive design to full-stack solutions tailored to your needs or the grunt works you are trying to avoid.",
+    url: "https://renato-dulog.is-a.dev/services",
+    siteName: "Renato Dulog | Developer Portfolio",
+    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Services | Renato Dulog",
+    description:
+      "Explore the services I offer — from responsive design to full-stack solutions tailored to your needs or the grunt works you are trying to avoid.",
+    images: ["https://renato-dulog.is-a.dev/me.webp"],
+  },
   alternates: {
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/services`,
   },
@@ -60,6 +76,27 @@ const ServicePage = async () => {
 
   return (
     <Container as="main" className="pb-20 sm:pb-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: "Web Development Services by Renato Dulog",
+            url: "https://renato-dulog.is-a.dev/services",
+            description:
+              "Full-stack web development services — responsive design, React & Next.js apps, and custom solutions by Renato Dulog.",
+            provider: {
+              "@type": "Person",
+              name: "Renato Dulog",
+              url: "https://renato-dulog.is-a.dev/",
+              jobTitle: "Full Stack Engineer",
+            },
+            areaServed: "Worldwide",
+            serviceType: "Web Development",
+          }),
+        }}
+      />
       <BlurFade className="px-3 sm:px-5" key="services-page">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">
