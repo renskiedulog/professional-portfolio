@@ -1,8 +1,7 @@
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
-import { FaArrowRight, FaKeyboard } from "react-icons/fa6";
-import { GrGift } from "react-icons/gr";
+import { FaArrowRight, FaKeyboard, FaToriiGate } from "react-icons/fa6";
 import Link from "next/link";
 
 export const metadata = {
@@ -73,10 +72,20 @@ const Playground = () => {
                 <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
               </p>
             </Link>
-            <div className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm opacity-50 cursor-not-allowed">
-              <GrGift size={32} />
-              <p>Coming Soon...</p>
-            </div>
+            <Link
+              href="/extra/playground/jp-flashcards"
+              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+            >
+              <FaToriiGate size={32} />
+              <p>Japanese Flashcards</p>
+              <p className="text-xs italic opacity-60 px-2">
+                Practice hiragana, katakana & vocabulary
+              </p>
+              <p className="flex items-center gap-2 group-hover:opacity-100 opacity-60">
+                <span>STUDY</span>
+                <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
+              </p>
+            </Link>
           </div>
         </div>
       </BlurFade>

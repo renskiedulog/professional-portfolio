@@ -9,8 +9,6 @@ import NavigationBar from "./UI/global-components/navigation-bar";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
-import Head from "next/head";
-import Script from "next/script";
 import Overlays from "./overlays";
 import BreadcrumbJsonLd from "./UI/global-components/breadcrumb-jsonld";
 
@@ -91,53 +89,52 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* Personal Information Script */}
-      <Script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Person",
-            name: "Renato Dulog",
-            url: "https://renato-dulog.is-a.dev/",
-            image: "https://renato-dulog.is-a.dev/me.webp",
-            jobTitle: "Full Stack Engineer",
-            email: "mailto:renato.larayos.dulog@gmail.com",
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "Pandacan, Pinamungajan, Cebu",
-              addressCountry: "Philippines",
-            },
-            sameAs: [
-              "https://facebook.com/renato.dulog",
-              "https://www.linkedin.com/in/renato-dulog/",
-              "https://github.com/renskiedulog",
-            ],
-            worksFor: [
-              {
-                "@type": "Organization",
-                name: "WebriQ",
-                url: "https://www.webriq.com/",
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Renato Dulog",
+              url: "https://renato-dulog.is-a.dev/",
+              image: "https://renato-dulog.is-a.dev/me.webp",
+              jobTitle: "Full Stack Engineer",
+              email: "mailto:renato.larayos.dulog@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Pandacan, Pinamungajan, Cebu",
+                addressCountry: "Philippines",
               },
-              {
-                "@type": "Organization",
-                name: "Freelance / Self-Employed",
-              },
-            ],
-            knowsAbout: [
-              "Web Development",
-              "React",
-              "Next.js",
-              "Node.js",
-              "TypeScript",
-              "UI/UX Design",
-            ],
-          }),
-        }}
-      />
-      {/* Breadcrumb Script */}
-      <BreadcrumbJsonLd />
-      {/* Services Script */}
+              sameAs: [
+                "https://facebook.com/renato.dulog",
+                "https://www.linkedin.com/in/renato-dulog/",
+                "https://github.com/renskiedulog",
+              ],
+              worksFor: [
+                {
+                  "@type": "Organization",
+                  name: "WebriQ",
+                  url: "https://www.webriq.com/",
+                },
+                {
+                  "@type": "Organization",
+                  name: "Freelance / Self-Employed",
+                },
+              ],
+              knowsAbout: [
+                "Web Development",
+                "React",
+                "Next.js",
+                "Node.js",
+                "TypeScript",
+                "UI/UX Design",
+              ],
+            }),
+          }}
+        />
+        <BreadcrumbJsonLd />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >

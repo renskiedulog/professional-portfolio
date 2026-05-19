@@ -1,7 +1,3 @@
-"use client";
-
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
 const projects = [
@@ -21,24 +17,12 @@ const projects = [
 ];
 
 export default function ProjectsGallery() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [cursor, setCursor] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setCursor({
-      x: e.clientX + 24,
-      y: e.clientY + 24,
-    });
-  };
-
   return (
-    <section onMouseMove={handleMouseMove} className="relative w-full mt-5">
+    <section className="relative w-full mt-5">
       <div className="flex flex-col divide-y divide-neutral-200">
         {projects.map((project, index) => (
           <Link
             key={index}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
             className="relative py-5 px-6 md:px-20 cursor-pointer overflow-hidden font-mono"
             href={project?.link || "#"}
           >
@@ -72,33 +56,6 @@ export default function ProjectsGallery() {
           </Link>
         ))}
       </div>
-
-      {/* Floating Cursor Preview */}
-      <AnimatePresence>
-        {hoveredIndex !== null && (
-          <motion.div
-            key="preview"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              x: cursor.x,
-              y: cursor.y,
-            }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 220, damping: 25 }}
-            className="pointer-events-none fixed top-0 left-0 z-50 w-56 h-56 overflow-hidden rounded-xl shadow-xl sm:block hidden"
-          >
-            <motion.img
-              src={projects[hoveredIndex].images[0]}
-              alt="preview"
-              className="w-full h-full object-cover"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }
