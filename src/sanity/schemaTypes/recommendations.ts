@@ -27,5 +27,17 @@ export const recommendations = defineType({
       type: "string",
       title: "Image",
     }),
+    defineField({
+      name: "favorite",
+      type: "boolean",
+      title: "Personal Favorite",
+      initialValue: false,
+    }),
+    defineField({
+      name: "fromTmdb",
+      type: "boolean",
+      title: "From TMDB",
+      initialValue: false,
+    }),
   ],
 });

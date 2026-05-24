@@ -25,6 +25,23 @@ export const projects = defineType({
       title: "Project Description",
     },
     {
+      type: "string",
+      name: "category",
+      title: "Category",
+      options: {
+        list: [
+          { title: "Example Site", value: "example site" },
+          { title: "Application", value: "application" },
+          { title: "Website", value: "website" },
+          { title: "Game", value: "game" },
+          { title: "Tool", value: "tool" },
+          { title: "Template", value: "template" },
+          { title: "Playground", value: "playground" },
+        ],
+        layout: "dropdown",
+      },
+    },
+    {
       type: "url",
       name: "githubLink",
       title: "Github Link",

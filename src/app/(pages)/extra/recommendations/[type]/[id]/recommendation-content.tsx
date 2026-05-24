@@ -7,20 +7,23 @@ import {
   Music,
   Link as LinkIcon,
 } from "lucide-react";
+import { FaHeart } from "react-icons/fa";
 import Image from "next/image";
 import Heading from "@/app/UI/global-components/heading";
 import Characters from "./character-carousel";
 
 const RecommendationContent = ({
   recommendationInfo,
+  favorite,
 }: {
   recommendationInfo: RecommendationInfo;
+  favorite?: boolean;
 }) => {
   return (
     <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[250px_1fr] lg:gap-5">
       {/* Sticky Sidebar */}
       <aside className="lg:sticky lg:top-4 lg:self-start space-y-3">
-        <div className="rounded-xl overflow-hidden shadow-lg w-1/2 sm:w-full max-w-[400px] mx-auto lg:mx-0">
+        <div className="relative rounded-xl overflow-hidden shadow-lg w-1/2 sm:w-full max-w-[400px] mx-auto lg:mx-0">
           {recommendationInfo.images?.jpg?.large_image_url && (
             <Image
               src={recommendationInfo.images.jpg.large_image_url}
@@ -30,6 +33,12 @@ const RecommendationContent = ({
               className="w-full h-auto object-cover"
               priority
             />
+          )}
+          {favorite && (
+            <div className="absolute top-8 -left-8 z-20 w-40 -rotate-45 bg-red-500 text-white text-xs font-bold py-1.5 flex items-center justify-center gap-1.5 shadow-sm">
+              <FaHeart size={11} />
+              <span>Top Pick</span>
+            </div>
           )}
         </div>
 

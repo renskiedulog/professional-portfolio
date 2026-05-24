@@ -4,13 +4,31 @@ import * as React from "react";
 import Image from "next/image";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
   images: string[];
 };
 
 const ProjectImages = ({ images }: Props) => {
-  const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
+
+  const prev = () =>
+    setSelectedIndex((i) =>
+      i !== null ? (i - 1 + images.length) % images.length : null,
+    );
+  const next = () =>
+    setSelectedIndex((i) => (i !== null ? (i + 1) % images.length : null));
+
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedIndex]);
 
   return (
     <>
@@ -19,7 +37,7 @@ const ProjectImages = ({ images }: Props) => {
         {images.map((src, index) => (
           <button
             key={index}
-            onClick={() => setSelectedImage(src)}
+            onClick={() => setSelectedIndex(index)}
             className="w-20 h-20 relative overflow-hidden flex-grow max-w-24 rounded-md border hover:scale-105 transition-transform duration-300"
           >
             <Image
@@ -35,11 +53,11 @@ const ProjectImages = ({ images }: Props) => {
 
       {/* Dialog */}
       <Dialog
-        open={!!selectedImage}
-        onOpenChange={() => setSelectedImage(null)}
+        open={selectedIndex !== null}
+        onOpenChange={() => setSelectedIndex(null)}
       >
         <AnimatePresence>
-          {selectedImage && (
+          {selectedIndex !== null && (
             <DialogContent className="max-w-3xl p-0 overflow-hidden border-none bg-transparent shadow-none [&_button_svg]:stroke-white [&_button]:bg-black">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -49,13 +67,52 @@ const ProjectImages = ({ images }: Props) => {
                 className="relative w-full h-[70vh] rounded-xl overflow-hidden bg-black"
               >
                 <Image
-                  src={selectedImage}
+                  src={images[selectedIndex]}
                   alt="Expanded project image"
                   fill
                   className="object-contain"
                   sizes="(max-width: 768px) 100vw, 800px"
                   priority
                 />
+
+                {images.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        prev();
+                      }}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-black/60 hover:bg-white/20 transition-colors"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-6 h-6 stroke-white" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        next();
+                      }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-black/60 hover:bg-white/20 transition-colors"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-6 h-6 stroke-white" />
+                    </button>
+
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                      {images.map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedIndex(i);
+                          }}
+                          className={`w-1.5 h-1.5 rounded-full transition-colors ${i === selectedIndex ? "bg-white" : "bg-white/40"}`}
+                          aria-label={`Go to image ${i + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </motion.div>
             </DialogContent>
           )}

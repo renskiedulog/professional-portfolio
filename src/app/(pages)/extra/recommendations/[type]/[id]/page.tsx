@@ -7,6 +7,7 @@ import { GetRecommendationInfo } from "@/lib/recommendations";
 import { RecommendationInfo } from "@/lib/types";
 import RecommendationContent from "./recommendation-content";
 import { notFound } from "next/navigation";
+import { sanityClient } from "@/lib/sanityClient";
 
 const Page = async ({
   params,
@@ -18,10 +19,13 @@ const Page = async ({
 }) => {
   const { type, id } = await params;
 
-  const req = await GetRecommendationInfo({
-    searchType: type,
-    id,
-  });
+  const [req, sanityRec] = await Promise.all([
+    GetRecommendationInfo({ searchType: type, id }),
+    sanityClient.fetch<{ favorite?: boolean } | null>(
+      `*[_type == "recommendations" && string(id) == $id && type == $type][0]{ favorite }`,
+      { id, type }
+    ),
+  ]);
 
   const recommendationInfo: RecommendationInfo = req?.data;
 
@@ -41,7 +45,10 @@ const Page = async ({
         </div>
 
         {/* Client Component for Animated UI */}
-        <RecommendationContent recommendationInfo={recommendationInfo} />
+        <RecommendationContent
+          recommendationInfo={recommendationInfo}
+          favorite={sanityRec?.favorite}
+        />
       </BlurFade>
     </Container>
   );

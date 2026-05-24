@@ -10,7 +10,7 @@ export async function getRecommendations({
   type,
 }: GetRecommendationsParams): Promise<SearchResult[]> {
   try {
-    const query = `*[_type == "recommendations" && type == $type] | order(favorite desc, _createdAt desc){
+    const query = `*[_type == "recommendations" && type == $type] | order(coalesce(favorite, false) desc, _createdAt desc){
       id,
       title,
       type,

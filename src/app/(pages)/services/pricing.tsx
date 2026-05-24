@@ -35,7 +35,6 @@ const prices: PriceItem[] = [
       "Marketing & Landing Pages",
       "Company Websites",
       "Portfolios & Blogs",
-      "Process Automations",
       "SEO Optimizations",
     ],
   },
