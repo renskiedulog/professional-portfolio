@@ -45,21 +45,18 @@ export const PortableTextComponents = {
       <div className="w-full h-0.5 bg-primary/10 rounded-lg my-2" />
     ),
     button: ({ value }: { value: any }) => (
-      <div>
+      <div className="mt-4">
         {value?.href ? (
           <Link
             href={value.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition"
+            className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors"
           >
             {value.text || "Click Here"}
           </Link>
         ) : (
-          <button
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700 transition"
-          >
+          <button className="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-md hover:bg-primary/90 transition-colors">
             {value.text || "Click Here"}
           </button>
         )}

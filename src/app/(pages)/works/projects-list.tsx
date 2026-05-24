@@ -13,6 +13,8 @@ const CATEGORY_LABEL: Record<string, string> = {
   tool: "Tool",
   template: "Template",
   playground: "Playground",
+  integration: "Integration",
+  "web app": "Web App",
 };
 
 export default function ProjectsList({
@@ -49,12 +51,12 @@ export default function ProjectsList({
       </div>
 
       {/* Grid */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map((project) => (
           <Link
             key={project.slug}
             href={`/works/${project.slug}`}
-            className="block mb-4 group"
+            className="block group"
           >
             <div className="border rounded-md overflow-hidden shadow-sm bg-background hover:shadow-md transition-shadow duration-200">
               {project.coverImage ? (
@@ -88,6 +90,23 @@ export default function ProjectsList({
                   <p className="text-sm text-muted-foreground line-clamp-2">
                     {project.description}
                   </p>
+                )}
+                {project.stacks && project.stacks.length > 0 && (
+                  <div className="flex gap-1 flex-wrap pt-0.5">
+                    {project.stacks.slice(0, 3).map((stack, i) => (
+                      <span
+                        key={i}
+                        className="bg-primary-foreground dark:bg-white/20 text-primary text-[11px] py-0.5 px-1.5 border border-opacity-10 rounded text-nowrap font-semibold"
+                      >
+                        {stack}
+                      </span>
+                    ))}
+                    {project.stacks.length > 3 && (
+                      <span className="bg-primary-foreground dark:bg-white/20 text-primary text-[11px] py-0.5 px-1.5 border border-opacity-10 rounded text-nowrap font-semibold">
+                        +{project.stacks.length - 3} more
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

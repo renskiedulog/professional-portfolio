@@ -98,19 +98,6 @@ const ProjectImages = ({ images }: Props) => {
                       <ChevronRight className="w-6 h-6 stroke-white" />
                     </button>
 
-                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-                      {images.map((_, i) => (
-                        <button
-                          key={i}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedIndex(i);
-                          }}
-                          className={`w-1.5 h-1.5 rounded-full transition-colors ${i === selectedIndex ? "bg-white" : "bg-white/40"}`}
-                          aria-label={`Go to image ${i + 1}`}
-                        />
-                      ))}
-                    </div>
                   </>
                 )}
               </motion.div>

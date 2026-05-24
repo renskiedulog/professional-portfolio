@@ -8,6 +8,7 @@ export type ProjectPreview = {
   slug: string;
   coverImage: string | null;
   category: string | null;
+  stacks: string[] | null;
 };
 
 async function getProjects(): Promise<ProjectPreview[]> {
@@ -17,7 +18,8 @@ async function getProjects(): Promise<ProjectPreview[]> {
       description,
       "slug": slug.current,
       "coverImage": images[0].asset->url,
-      category
+      category,
+      "stacks": techStack[]->.name
     }`
   );
 }

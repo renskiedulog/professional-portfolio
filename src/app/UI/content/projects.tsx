@@ -9,12 +9,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Star } from "lucide-react";
+import { Star, ArrowUpRight } from "lucide-react";
 import { getRepoStarsFromLink } from "@/lib/github";
 import { Url } from "next/dist/shared/lib/router/router";
+import { sanityClient } from "@/lib/sanityClient";
 
 export interface Project {
   title: String;
+  slug?: String;
   description?: String;
   image?: String;
   videoUrl?: String;
@@ -24,61 +26,22 @@ export interface Project {
   stacks?: String[];
 }
 
-const projects: Project[] = [
-  {
-    title: "AnimeSensei",
-    description:
-      "AnimeSensei is a sleek platform for anime enthusiasts that are looking for the updated, and streamline animes to date. Crafted with great insight about speed and aesthetics, and served with an external server of the all time anime provider, gogoanime.",
-    image: "/projects/animesensei.webp",
-    videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    githubLink: "https://github.com/renskiedulog/AnimeSenseiPro",
-    stacks: ["Next.js", "Typescript", "Tailwind CSS", "Consumet API", "Axios"],
-  },
-  {
-    title: "MangaSensei",
-    description:
-      "Using mangadex's api service, mangasensei offers the best and updated manga in your page at an optimal speed enough to engross and immerse you in your favorite stories, while also looking clean and aesthetically pleasing, suited for reading.",
-    image: "/projects/mangasensei.webp",
-    githubLink: "https://github.com/renskiedulog/MangaSenseiPro",
-    videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    stacks: [
-      "NextJS",
-      "Typescript",
-      "Tailwind CSS",
-      "Shadcn UI",
-      "Axios",
-      "Mangadex API",
-    ],
-    // liveUrl: "https://manga-sensei-pro.vercel.app",
-  },
-  {
-    title: "Portfolio",
-    description:
-      "A customizable portfolio using Sanity and Next JS, aiming to create a site to centralize my efforts and dedication on the field, while also documenting my journey.",
-    image: "/projects/portfolio.webp",
-    videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    stacks: [
-      "NextJS",
-      "Typescript",
-      "Tailwind CSS",
-      "Sanity",
-      "Shadcn UI",
-      "Framer Motion",
-    ],
-    liveUrl: "https://renato-dulog.is-a.dev/",
-  },
-  {
-    title: "Quenique: Queueing Management System For Boats",
-    description:
-      "Our capstone project on the category of transportation, aiming to help unorganized ports on controlling the fairness and access to pumpboats. Easy and accessible and can be both deployed or used in a local machine, interactive and intuitive UI and Statistics chart for the business side.",
-    image: "/projects/capstone.webp",
-    videoUrl: "https://example.com/videos/animesensei-demo.mp4",
-    githubLink: "https://github.com/renskiedulog/capstone",
-    stacks: ["NextJS", "Typescript", "Tailwind CSS", "Mongo DB", "Shadcn UI"],
-  },
-];
+async function getProjects(): Promise<Project[]> {
+  return sanityClient.fetch<Project[]>(
+    `*[_type == "projects" && featured == true] | order(_createdAt desc) {
+      title,
+      "slug": slug.current,
+      description,
+      githubLink,
+      liveUrl,
+      "image": images[0].asset->url,
+      "stacks": techStack[]->.name
+    }`
+  );
+}
 
-const Projects = () => {
+const Projects = async () => {
+  const projects = await getProjects();
   return (
     <section id="projects" className="w-full max-w-2xl space-y-3">
       <div className="flex justify-between items-end">
@@ -98,32 +61,52 @@ const Projects = () => {
       <div className="columns-1 lg:columns-2">
         {projects?.length > 0 &&
           projects?.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+            <ProjectCard key={index} index={index} project={project} />
           ))}
       </div>
     </section>
   );
 };
 
-const ProjectCard = async ({ project }: { project: Project }) => {
+const ProjectCard = async ({ project, index }: { project: Project; index: number }) => {
   const starCount = await getRepoStarsFromLink(project?.githubLink as string);
   return (
     <div className="border rounded-md overflow-hidden shadow-sm bg-background h-max mb-4">
-      <Image
-        className="aspect-video object-cover"
-        src={project?.image as string}
-        width={400}
-        height={400}
-        alt={project?.title as string}
-        loading="lazy"
-      />
+      {project?.image && (
+        project?.slug ? (
+          <Link href={`/works/${project.slug}`} aria-label={`View ${project.title} details`} className="relative group block">
+            <Image
+              className="aspect-video object-cover"
+              src={project.image as string}
+              width={400}
+              height={400}
+              alt={project.title as string}
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+              <span className="text-white text-xl font-bold flex items-center gap-1 translate-y-3 group-hover:translate-y-0 transition-transform duration-300">
+                View Project <ArrowUpRight size={22} />
+              </span>
+            </div>
+          </Link>
+        ) : (
+          <Image
+            className="aspect-video object-cover"
+            src={project.image as string}
+            width={400}
+            height={400}
+            alt={project.title as string}
+            loading="lazy"
+          />
+        )
+      )}
       <div className="px-3.5 py-2">
         <p className="font-bold text-lg">{project?.title}</p>
         {project?.description && (
           <div>
             <input
               type="checkbox"
-              id={`project-${projects?.indexOf(project)}`}
+              id={`project-${index}`}
               className="peer hidden"
             />
             {project?.description?.split("")?.length > 150 ? (
@@ -132,7 +115,7 @@ const ProjectCard = async ({ project }: { project: Project }) => {
                   {project?.description?.substring(0, 150)}...
                   <label
                     className="text-xs opacity-60 font-medium hover:underline hover:opacity-70 cursor-pointer"
-                    htmlFor={`project-${projects?.indexOf(project)}`}
+                    htmlFor={`project-${index}`}
                   >
                     See More
                   </label>
@@ -141,7 +124,7 @@ const ProjectCard = async ({ project }: { project: Project }) => {
                   {project?.description}
                   <label
                     className="text-xs opacity-60 font-medium hover:underline hover:opacity-70 cursor-pointer w-max"
-                    htmlFor={`project-${projects?.indexOf(project)}`}
+                    htmlFor={`project-${index}`}
                   >
                     See Less
                   </label>
@@ -185,20 +168,7 @@ const ProjectCard = async ({ project }: { project: Project }) => {
               <p></p>
             )}
           </div>
-          <div className="space-x-2 flex items-center">
-            {/* {project?.blogUrl && ( */}
-            {/* <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="#"
-                  className="text-xs hover:underline flex items-center"
-                >
-                  <NotebookIcon size={15} />
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">Case Study</TooltipContent>
-            </Tooltip> */}
-            {/* )} */}
+          <div className="space-x-1 flex items-center">
             {project?.githubLink ? (
               <Link
                 href={project?.githubLink as string}
@@ -220,21 +190,13 @@ const ProjectCard = async ({ project }: { project: Project }) => {
                 target="_blank"
                 aria-label={`Visit ${project?.title}'s live site`}
               >
-                <Button className="text-xs" variant="default" size="sm">
-                  <FaLink />
-                  {project?.liveUrl ? "Live Preview" : "No Preview"}
+                <Button className="text-xs" size="sm" variant="default">
+                  <FaLink /> Live Preview
                 </Button>
               </Link>
             ) : (
-              <Button
-                disabled
-                className="text-xs"
-                variant="default"
-                size="sm"
-                aria-label={`Visit ${project?.title}'s live site`}
-              >
-                <FaLink />
-                {project?.liveUrl ? "Live Preview" : "No Preview"}
+              <Button disabled className="text-xs" size="sm" variant="default">
+                <FaLink /> Live Preview
               </Button>
             )}
           </div>

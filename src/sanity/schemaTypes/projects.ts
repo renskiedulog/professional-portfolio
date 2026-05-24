@@ -37,6 +37,8 @@ export const projects = defineType({
           { title: "Tool", value: "tool" },
           { title: "Template", value: "template" },
           { title: "Playground", value: "playground" },
+          { title: "Integration", value: "integration" },
+          { title: "Web App", value: "web app" },
         ],
         layout: "dropdown",
       },
@@ -76,6 +78,12 @@ export const projects = defineType({
           },
         }),
       ],
+    },
+    {
+      type: "boolean",
+      name: "featured",
+      title: "Featured",
+      description: "Show this project on the homepage.",
     },
     {
       name: "body",

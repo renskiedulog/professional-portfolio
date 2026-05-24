@@ -801,6 +801,11 @@ const TypingWizardUI = () => {
           abilitiesRef.current.some((a) => a.activationWord === typed)
         ) {
           activateAbility(typed);
+        } else if (typed.length > 0) {
+          hpRef.current = Math.max(0, hpRef.current - 1);
+          setHp(hpRef.current);
+          audioRef.current?.hpLoss();
+          setShake((s) => s + 1);
         }
 
         typedRef.current = "";

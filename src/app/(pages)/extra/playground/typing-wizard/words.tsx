@@ -164,4 +164,95 @@ export const wordlist = [
   "deduction", "induction", "analogy", "metaphor", "allegory", "parable",
   "archetype", "paradigm", "zeitgeist", "ethos", "pathos", "logos",
   "nihilism", "stoicism", "pragmatism", "empiricism", "rationalism",
+  "solitude", "longing", "yearning", "nostalgia", "reverie", "epiphany",
+  "catharsis", "sublime", "transcend", "enlighten", "awaken", "liberate",
+  "sovereignty", "autonomy", "agency", "consent", "dignity", "sanctity",
+  "discord", "chaos", "order", "entropy", "momentum", "inertia",
+
+  // — Music & Sound —
+  "melody", "harmony", "rhythm", "tempo", "cadence", "chord", "scale",
+  "octave", "timbre", "resonance", "vibrato", "staccato", "legato",
+  "forte", "piano", "crescendo", "diminuendo", "syncopation", "interval",
+  "arpeggio", "tremolo", "pizzicato", "overture", "symphony", "concerto",
+  "sonata", "fugue", "opus", "nocturne", "etude", "prelude", "requiem",
+  "ballad", "anthem", "refrain", "chorus", "bridge", "verse", "hook",
+  "bassline", "soprano", "tenor", "baritone", "contralto", "falsetto",
+  "lullaby", "serenade", "rhapsody", "lament", "dirge", "fanfare",
+  "drumroll", "cymbal", "trumpet", "trombone", "oboe", "clarinet",
+  "bassoon", "flute", "piccolo", "harp", "cello", "viola", "mandolin",
+  "banjo", "sitar", "koto", "shamisen", "tabla", "didgeridoo", "marimba",
+
+  // — Architecture & Structures —
+  "cathedral", "basilica", "monastery", "citadel", "fortress", "rampart",
+  "battlement", "turret", "parapet", "buttress", "archway", "colonnade",
+  "portico", "rotunda", "cupola", "spire", "pinnacle", "belfry", "vault",
+  "cloister", "atrium", "arcade", "loggia", "terrace", "balcony", "cornice",
+  "facade", "frieze", "pediment", "pilaster", "corbel", "keystone",
+  "lintel", "transom", "mullion", "tracery", "finial", "gargoyle",
+  "obelisk", "monolith", "ziggurat", "pagoda", "minaret", "stupa",
+  "pyramid", "colosseum", "aqueduct", "viaduct", "causeway", "crypt",
+  "mausoleum", "cenotaph", "amphitheater", "labyrinth", "dungeon",
+
+  // — Sports & Movement —
+  "sprint", "hurdle", "vault", "javelin", "discus", "marathon", "relay",
+  "slalom", "mogul", "halfpipe", "suplex", "parry", "riposte", "feint",
+  "dodge", "pivot", "dribble", "volley", "smash", "lunge", "tackle",
+  "sidestep", "jab", "uppercut", "haymaker", "grapple", "clinch",
+  "rebound", "alley", "baseline", "backhand", "forehand", "topspin",
+  "backspin", "curveball", "fastball", "slider", "knuckleball", "bunt",
+  "penalty", "offside", "freefall", "nosedive", "barrel", "tailspin",
+
+  // — Emotions & States —
+  "euphoria", "melancholy", "anxiety", "tranquil", "furious", "serene",
+  "elation", "despair", "wistful", "somber", "jubilant", "forlorn",
+  "agitated", "placid", "restless", "content", "bitter", "ecstatic",
+  "brooding", "pensive", "frenzied", "composed", "livid", "bashful",
+  "ardent", "languid", "fervent", "stoic", "frantic", "blissful",
+  "sullen", "gleeful", "mournful", "exultant", "trembling", "defiant",
+
+  // — Materials & Textures —
+  "velvet", "satin", "linen", "burlap", "canvas", "leather", "suede",
+  "cashmere", "muslin", "chiffon", "damask", "brocade", "tapestry",
+  "ceramic", "porcelain", "terracotta", "stoneware", "alabaster",
+  "onyx", "opal", "topaz", "garnet", "sapphire", "emerald", "ruby",
+  "amethyst", "tourmaline", "spinel", "peridot", "citrine", "beryl",
+  "titanium", "tungsten", "platinum", "chromium", "cobalt", "bismuth",
+  "phosphor", "sulfur", "silicon", "carbon", "graphene", "alloy",
+  "resin", "lacquer", "varnish", "enamel", "glaze", "patina", "tarnish",
+
+  // — Weather & Atmosphere —
+  "isobar", "isotherm", "barometric", "anemometer", "hygrometer",
+  "thermocline", "inversion", "convection", "advection", "dewpoint",
+  "humidity", "precipitation", "condensation", "evaporation", "sublimation",
+  "vorticity", "turbulence", "windshear", "microburst", "downburst",
+  "waterspout", "haboob", "sirocco", "mistral", "chinook", "foehn",
+  "tramontane", "levante", "harmattan", "khamsin", "meltemi", "bora",
+
+  // — History & Civilizations —
+  "empire", "dynasty", "republic", "monarchy", "oligarchy", "democracy",
+  "feudal", "colonial", "renaissance", "reformation", "revolution",
+  "conquest", "crusade", "pilgrimage", "exodus", "diaspora", "migration",
+  "artifact", "relic", "excavation", "inscription", "hieroglyph", "cuneiform",
+  "papyrus", "parchment", "codex", "manuscript", "chronicle", "annals",
+  "tribunal", "council", "senate", "parliament", "magistrate", "consul",
+  "pharaoh", "emperor", "sultan", "caliph", "shogun", "samurai", "knight",
+  "squire", "herald", "bard", "jester", "alchemist", "cartographer",
+
+  // — Ocean & Underwater —
+  "bioluminescence", "thermocline", "abyssal", "benthic", "pelagic",
+  "littoral", "intertidal", "subtidal", "bathyal", "hadal", "mesopelagic",
+  "upwelling", "gyration", "seamount", "hydrothermal", "vent", "brine",
+  "kelp", "plankton", "krill", "copepod", "amphipod", "cephalopod",
+  "nautilus", "ammonite", "trilobite", "cuttlefish", "squid", "octopus",
+  "jellyfish", "anemone", "coral", "sponge", "nudibranch", "starfish",
+  "urchin", "barnacle", "limpet", "clam", "oyster", "mussel", "scallop",
+
+  // — Language & Linguistics —
+  "syntax", "morpheme", "phoneme", "lexicon", "semantics", "pragmatics",
+  "dialect", "pidgin", "creole", "patois", "vernacular", "idiom",
+  "etymology", "cognate", "gloss", "loanword", "calque", "neologism",
+  "portmanteau", "palindrome", "anagram", "acronym", "eponym", "metonym",
+  "hyperbole", "litotes", "irony", "sarcasm", "parody", "satire",
+  "soliloquy", "monologue", "dialogue", "rhetoric", "polemics", "diatribe",
+  "manifesto", "treatise", "dissertation", "thesis", "hypothesis",
 ];
