@@ -1,18 +1,20 @@
 "use client";
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { ArrowLeft, ChevronRight, Lightbulb } from "lucide-react";
 import Link from "next/link";
 import BackButton from "@/app/UI/global-components/back-button";
-import { hiraganaRows, hiraganaCards } from "./_data/hiragana";
-import { katakanaRows, katakanaCards } from "./_data/katakana";
+import { hiraganaRows, hiraganaCards, hiraganaYoonRows } from "./_data/hiragana";
+import { katakanaRows, katakanaCards, katakanaYoonRows } from "./_data/katakana";
+import { numberList, numberCards, numberCategories } from "./_data/numbers";
 import { kanjiCards, kanjiCategories } from "./_data/kanji";
+import { particleList, particleCards } from "./_data/particles";
 import { triviaList } from "./_data/trivia";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
-type DeckKey = "hiragana" | "katakana" | "kanji" | "vocabulary";
-type TableKey = "hiragana" | "katakana" | "kanji";
+type DeckKey = "hiragana" | "katakana" | "kanji" | "vocabulary" | "particles" | "numbers";
+type TableKey = "hiragana" | "katakana" | "kanji" | "particles" | "numbers";
 type View = "home" | `table-${TableKey}`;
-type BadgeKey = "rose" | "sky" | "amber" | "emerald";
+type BadgeKey = "rose" | "sky" | "amber" | "emerald" | "violet" | "orange";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const DECK_CONFIG: Record<DeckKey, {
@@ -43,6 +45,18 @@ const DECK_CONFIG: Record<DeckKey, {
     count: 37, badge: "emerald",
     href: "/extra/playground/jp-flashcards/vocabulary",
   },
+  particles: {
+    label: "Particles", jp: "助詞", desc: "Japanese grammar particles",
+    preview: ["は", "が", "を", "に", "で"],
+    count: particleCards.length, badge: "violet",
+    href: "/extra/playground/jp-flashcards/particles",
+  },
+  numbers: {
+    label: "Numbers", jp: "数字", desc: "Kanji numbers 0–10,000",
+    preview: ["一", "二", "三", "十", "百"],
+    count: numberCards.length, badge: "orange",
+    href: "/extra/playground/jp-flashcards/numbers",
+  },
 };
 
 const BADGE: Record<BadgeKey, string> = {
@@ -50,20 +64,26 @@ const BADGE: Record<BadgeKey, string> = {
   sky:     "bg-sky-100 text-sky-700 border-sky-200 dark:bg-sky-950 dark:text-sky-300 dark:border-sky-800",
   amber:   "bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:border-amber-800",
   emerald: "bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-800",
+  violet:  "bg-violet-100 text-violet-700 border-violet-200 dark:bg-violet-950 dark:text-violet-300 dark:border-violet-800",
+  orange:  "bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-800",
 };
 
 const COLS = ["a", "i", "u", "e", "o"];
 
 const TABLE_META: Record<TableKey, { label: string; jp: string; desc: string; count: string }> = {
-  hiragana: { label: "Hiragana", jp: "平仮名", desc: "Basic Japanese syllabary",  count: "46 characters" },
-  katakana: { label: "Katakana", jp: "片仮名", desc: "Foreign words & onomatopoeia", count: "46 characters" },
-  kanji:    { label: "Kanji",    jp: "漢字",   desc: "N5 level kanji reference",   count: "68 characters" },
+  hiragana:  { label: "Hiragana",  jp: "平仮名", desc: "Basic Japanese syllabary",     count: "104 characters" },
+  katakana:  { label: "Katakana",  jp: "片仮名", desc: "Foreign words & onomatopoeia", count: "104 characters" },
+  kanji:     { label: "Kanji",     jp: "漢字",   desc: "N5 level kanji reference",     count: "68 characters" },
+  particles: { label: "Particles", jp: "助詞",   desc: "Grammar particles with examples",    count: "14 particles" },
+  numbers:   { label: "Numbers",   jp: "数字",   desc: "Kanji numbers with readings",         count: "31 entries" },
 };
 
 const TABLE_PREVIEWS: Record<TableKey, string[]> = {
-  hiragana: ["あ", "い", "う", "え", "お", "か", "き", "く", "さ", "し"],
-  katakana: ["ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "サ", "シ"],
-  kanji:    ["一", "二", "山", "川", "日", "月", "人", "大", "小", "国"],
+  hiragana:  ["あ", "い", "う", "え", "お", "か", "き", "く", "さ", "し"],
+  katakana:  ["ア", "イ", "ウ", "エ", "オ", "カ", "キ", "ク", "サ", "シ"],
+  kanji:     ["一", "二", "山", "川", "日", "月", "人", "大", "小", "国"],
+  particles: ["は", "が", "を", "に", "で", "へ", "と", "も", "か", "の"],
+  numbers:   ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"],
 };
 
 // ── Kana Table ────────────────────────────────────────────────────────────────
@@ -82,21 +102,30 @@ function KanaTable({ type }: { type: "hiragana" | "katakana" }) {
         </thead>
         <tbody>
           {rows.map((row, ri) => (
-            <tr key={ri}>
-              <td className="px-2 py-1 text-xs text-muted-foreground border border-border font-sans">{row.consonant}</td>
-              {row.chars.map((cell, ci) => (
-                <td key={ci} className="border border-border p-0">
-                  {cell ? (
-                    <div className="flex flex-col items-center py-2 px-2">
-                      <span className="text-2xl leading-none jp-char">{cell.char}</span>
-                      <span className="text-[10px] text-muted-foreground mt-1 jp-mono">{cell.romaji}</span>
-                    </div>
-                  ) : (
-                    <div className="py-2 px-2 text-muted-foreground/20 text-sm">—</div>
-                  )}
-                </td>
-              ))}
-            </tr>
+            <React.Fragment key={ri}>
+              {row.divider && (
+                <tr>
+                  <td colSpan={6} className="py-1 px-2 border border-border bg-muted/40">
+                    <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">Dakuten ゛/ Handakuten ゜</span>
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td className="px-2 py-1 text-xs text-muted-foreground border border-border font-sans">{row.consonant}</td>
+                {row.chars.map((cell, ci) => (
+                  <td key={ci} className="border border-border p-0">
+                    {cell ? (
+                      <div className="flex flex-col items-center py-2 px-2">
+                        <span className="text-2xl leading-none jp-char">{cell.char}</span>
+                        <span className="text-[10px] text-muted-foreground mt-1 jp-mono">{cell.romaji}</span>
+                      </div>
+                    ) : (
+                      <div className="py-2 px-2 text-muted-foreground/20 text-sm">—</div>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            </React.Fragment>
           ))}
         </tbody>
       </table>
@@ -136,6 +165,136 @@ function KanjiTableView() {
   );
 }
 
+// ── Yōon Section ─────────────────────────────────────────────────────────────
+const YOON_COLS = ["ya", "yu", "yo"];
+
+function YoonSection({ type }: { type: "hiragana" | "katakana" }) {
+  const rows = type === "hiragana" ? hiraganaYoonRows : katakanaYoonRows;
+  return (
+    <div className="mt-6 pt-6 border-t border-border">
+      <div className="flex items-baseline gap-2 mb-3">
+        <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">Combination Kana</span>
+        <span className="jp-char text-sm text-muted-foreground opacity-60">拗音</span>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="border-collapse text-center text-sm font-mono">
+          <thead>
+            <tr>
+              <th className="px-2 py-2 text-xs text-muted-foreground border border-border w-10 font-normal">—</th>
+              {YOON_COLS.map((c) => (
+                <th key={c} className="px-6 py-2 text-xs text-muted-foreground border border-border font-normal">{c}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row, ri) => (
+              <tr key={ri}>
+                <td className="px-2 py-1 text-xs text-muted-foreground border border-border font-sans">{row.consonant}</td>
+                {row.chars.map((cell, ci) => (
+                  <td key={ci} className="border border-border p-0">
+                    {cell ? (
+                      <div className="flex flex-col items-center py-2 px-3">
+                        <span className="text-2xl leading-none jp-char">{cell.char}</span>
+                        <span className="text-[10px] text-muted-foreground mt-1 jp-mono">{cell.romaji}</span>
+                      </div>
+                    ) : (
+                      <div className="py-2 px-3 text-muted-foreground/20 text-sm">—</div>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// ── Numbers Table ─────────────────────────────────────────────────────────────
+function NumbersTableView() {
+  return (
+    <div className="space-y-8">
+      {numberCategories.map(({ key, label }) => {
+        const entries = numberList.filter((n) => n.category === key);
+        return (
+          <div key={key}>
+            <h4 className="text-[10px] font-semibold text-muted-foreground mb-3 uppercase tracking-widest">{label}</h4>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse text-sm min-w-[340px]">
+                <thead>
+                  <tr>
+                    <th className="px-3 py-2 text-xs text-muted-foreground border border-border font-normal text-right w-16">#</th>
+                    <th className="px-3 py-2 text-xs text-muted-foreground border border-border font-normal text-center w-20">漢字</th>
+                    <th className="px-3 py-2 text-xs text-muted-foreground border border-border font-normal text-left">Reading</th>
+                    <th className="px-3 py-2 text-xs text-muted-foreground border border-border font-normal text-left">Romaji</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {entries.map((n) => (
+                    <tr key={n.value} className="hover:bg-muted/30 transition-colors">
+                      <td className="px-3 py-2 border border-border text-right tabular-nums text-muted-foreground font-mono text-xs">
+                        {n.value.toLocaleString()}
+                      </td>
+                      <td className="px-3 py-2 border border-border text-center">
+                        <span className="jp-char text-xl font-medium">{n.kanji}</span>
+                      </td>
+                      <td className="px-3 py-2 border border-border">
+                        <span className="jp-char text-sm">{n.kana}</span>
+                        {n.alt && <span className="jp-char text-sm text-muted-foreground"> / {n.alt}</span>}
+                      </td>
+                      <td className="px-3 py-2 border border-border">
+                        <span className="jp-mono text-xs">{n.romaji}</span>
+                        {n.altRomaji && <span className="jp-mono text-xs text-muted-foreground"> / {n.altRomaji}</span>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Particles Table ───────────────────────────────────────────────────────────
+function ParticlesTableView() {
+  return (
+    <div className="grid sm:grid-cols-2 gap-4">
+      {particleList.map((p) => (
+        <div key={p.particle} className="border border-border rounded-xl p-5 bg-background space-y-3">
+          {/* Header */}
+          <div className="flex items-center gap-3">
+            <span className="jp-char text-5xl font-medium leading-none text-violet-700 dark:text-violet-300">{p.particle}</span>
+            <div>
+              <div className="jp-mono text-xs text-muted-foreground">{p.romaji}</div>
+              <div className="font-semibold text-sm">{p.role}</div>
+            </div>
+          </div>
+          {/* Meaning */}
+          <p className="text-xs text-muted-foreground leading-relaxed">{p.meaning}</p>
+          {/* Examples */}
+          <div className="space-y-2 pt-1 border-t border-border">
+            {p.examples.map((ex, i) => (
+              <div key={i} className="space-y-0.5">
+                <div className="jp-char text-sm leading-relaxed">
+                  {ex.before}
+                  <span className="font-bold text-violet-700 dark:text-violet-300">{p.particle}</span>
+                  {ex.after}
+                </div>
+                <div className="jp-mono text-[10px] text-muted-foreground">{ex.romaji.replace("___", p.particle)}</div>
+                <div className="text-[10px] text-muted-foreground italic">{ex.en}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ── Table Page View ───────────────────────────────────────────────────────────
 function TablePageView({ tableKey, onBack }: { tableKey: TableKey; onBack: () => void }) {
   const meta = TABLE_META[tableKey];
@@ -162,9 +321,11 @@ function TablePageView({ tableKey, onBack }: { tableKey: TableKey; onBack: () =>
           <p className="text-xs text-muted-foreground/60">{meta.count}</p>
         </div>
         <div className="border border-border rounded-xl p-4 overflow-hidden">
-          {tableKey === "hiragana" && <KanaTable type="hiragana" />}
-          {tableKey === "katakana" && <KanaTable type="katakana" />}
-          {tableKey === "kanji" && <KanjiTableView />}
+          {tableKey === "hiragana"  && <><KanaTable type="hiragana" /><YoonSection type="hiragana" /></>}
+          {tableKey === "katakana"  && <><KanaTable type="katakana" /><YoonSection type="katakana" /></>}
+          {tableKey === "kanji"     && <KanjiTableView />}
+          {tableKey === "particles" && <ParticlesTableView />}
+          {tableKey === "numbers"   && <NumbersTableView />}
         </div>
       </div>
     </>
@@ -190,12 +351,12 @@ function HomeView({ onOpenTable }: { onOpenTable: (t: TableKey) => void }) {
           <div className="jp-char text-6xl font-light tracking-widest opacity-90">日本語</div>
           <h1 className="text-3xl font-bold tracking-tight">Japanese Flashcards</h1>
           <p className="text-muted-foreground max-w-xs mx-auto text-sm leading-relaxed">
-            Practice hiragana, katakana, kanji, and vocabulary. Pick a deck to start.
+            Practice hiragana, katakana, kanji, vocabulary, and particles. Pick a deck to start.
           </p>
         </div>
 
         {/* Deck cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {(Object.entries(DECK_CONFIG) as [DeckKey, (typeof DECK_CONFIG)[DeckKey]][]).map(([key, cfg]) => (
             <Link
               key={key}
@@ -226,7 +387,7 @@ function HomeView({ onOpenTable }: { onOpenTable: (t: TableKey) => void }) {
         {/* Reference Tables */}
         <div className="space-y-4">
           <h2 className="text-lg font-bold tracking-tight">Reference Tables</h2>
-          <div className="grid sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {(Object.entries(TABLE_META) as [TableKey, (typeof TABLE_META)[TableKey]][]).map(([key, meta]) => (
               <button
                 key={key}
@@ -279,9 +440,11 @@ export default function JpFlashcardsClient() {
   const handleOpenTable = useCallback((table: TableKey) => setView(`table-${table}`), []);
   const handleBack = useCallback(() => setView("home"), []);
 
-  if (view === "table-hiragana") return <TablePageView tableKey="hiragana" onBack={handleBack} />;
-  if (view === "table-katakana") return <TablePageView tableKey="katakana" onBack={handleBack} />;
-  if (view === "table-kanji")    return <TablePageView tableKey="kanji"    onBack={handleBack} />;
+  if (view === "table-hiragana")  return <TablePageView tableKey="hiragana"  onBack={handleBack} />;
+  if (view === "table-katakana")  return <TablePageView tableKey="katakana"  onBack={handleBack} />;
+  if (view === "table-kanji")     return <TablePageView tableKey="kanji"     onBack={handleBack} />;
+  if (view === "table-particles") return <TablePageView tableKey="particles" onBack={handleBack} />;
+  if (view === "table-numbers")   return <TablePageView tableKey="numbers"   onBack={handleBack} />;
 
   return <HomeView onOpenTable={handleOpenTable} />;
 }

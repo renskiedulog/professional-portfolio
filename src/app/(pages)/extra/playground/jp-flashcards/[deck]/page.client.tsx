@@ -1,16 +1,20 @@
 "use client";
-import { useState, useEffect, useCallback } from "react";
-import { ArrowLeft, ChevronRight, RotateCcw, BookOpen, FlaskConical } from "lucide-react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { ArrowLeft, ChevronRight, RotateCcw, BookOpen, FlaskConical, Puzzle, PencilLine } from "lucide-react";
 import BackButton from "@/app/UI/global-components/back-button";
 import { hiraganaCards } from "../_data/hiragana";
 import { katakanaCards } from "../_data/katakana";
 import { kanjiCards } from "../_data/kanji";
 import { vocabCards } from "../_data/vocabulary";
+import { particleList, particleCards } from "../_data/particles";
+import { numberCards } from "../_data/numbers";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
-type DeckKey = "hiragana" | "katakana" | "kanji" | "vocabulary";
-type Mode = "select" | "learning" | "test";
+type DeckKey = "hiragana" | "katakana" | "kanji" | "vocabulary" | "particles" | "numbers";
+type Mode = "select" | "learning" | "test" | "match" | "fillinblank";
 type FlashCard = { front: string; back: string; reading?: string };
+type MatchTile = { id: number; pairId: number; content: string; isKana: boolean };
+type FillQuestion = { before: string; after: string; romaji: string; en: string; answer: string; choices: string[] };
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const CARD_POOLS: Record<DeckKey, FlashCard[]> = {
@@ -18,13 +22,17 @@ const CARD_POOLS: Record<DeckKey, FlashCard[]> = {
   katakana:   katakanaCards.map((c) => ({ front: c.char, back: c.romaji })),
   kanji:      kanjiCards.map((c) => ({ front: c.front, back: c.meaning, reading: c.reading })),
   vocabulary: vocabCards.map((c) => ({ front: c.front, back: c.meaning, reading: c.reading })),
+  particles:  particleCards.map((c) => ({ front: c.front, back: c.back, reading: c.reading })),
+  numbers:    numberCards.map((c) => ({ front: c.front, back: c.back, reading: c.reading })),
 };
 
 const DECK_INFO: Record<DeckKey, { label: string; jp: string; desc: string }> = {
-  hiragana:   { label: "Hiragana",   jp: "平仮名", desc: "Basic Japanese syllabary · 46 characters" },
-  katakana:   { label: "Katakana",   jp: "片仮名", desc: "Foreign words & loanwords · 46 characters" },
+  hiragana:   { label: "Hiragana",   jp: "平仮名", desc: "Basic Japanese syllabary · 104 characters" },
+  katakana:   { label: "Katakana",   jp: "片仮名", desc: "Foreign words & loanwords · 104 characters" },
   kanji:      { label: "Kanji",      jp: "漢字",   desc: "Chinese characters · N5 level · 68 entries" },
   vocabulary: { label: "Vocabulary", jp: "語彙",   desc: "Common N5 words · 37 entries" },
+  particles:  { label: "Particles",  jp: "助詞",   desc: "Japanese particles · N5 level · 14 entries" },
+  numbers:    { label: "Numbers",    jp: "数字",   desc: "Japanese numbers · 0 to 10,000 · 31 entries" },
 };
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
@@ -360,11 +368,315 @@ function TestMode({ cards: allCards, label, onBack }: {
   );
 }
 
-// ── Mode Select ───────────────────────────────────────────────────────────────
-function ModeSelect({ info, onSelect }: {
-  info: (typeof DECK_INFO)[DeckKey];
-  onSelect: (mode: "learning" | "test") => void;
+// ── Fill-in-the-Blank Game ────────────────────────────────────────────────────
+function buildFillQuestions(): FillQuestion[] {
+  const allParticles = particleList.map((p) => p.particle);
+  const raw = particleList.flatMap((p) =>
+    p.examples.map((ex) => ({
+      before:  ex.before,
+      after:   ex.after,
+      romaji:  ex.romaji,
+      en:      ex.en,
+      answer:  p.particle,
+      choices: shuffle([
+        p.particle,
+        ...allParticles.filter((x) => x !== p.particle).sort(() => Math.random() - 0.5).slice(0, 3),
+      ]),
+    }))
+  );
+  return shuffle(raw);
+}
+
+function FillInBlankGame({ label, onBack }: { label: string; onBack: () => void }) {
+  const [questions]  = useState<FillQuestion[]>(buildFillQuestions);
+  const [index, setIndex]     = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [score, setScore]     = useState(0);
+  const [animKey, setAnimKey] = useState(0);
+
+  const isDone = index >= questions.length;
+  const q = questions[index];
+
+  const handleChoice = useCallback((choice: string) => {
+    if (selected !== null) return;
+    setSelected(choice);
+    if (choice === q.answer) setScore((s) => s + 1);
+    setTimeout(() => {
+      setIndex((i) => i + 1);
+      setSelected(null);
+      setAnimKey((k) => k + 1);
+    }, 1100);
+  }, [selected, q]);
+
+  const handleRestart = useCallback(() => {
+    setIndex(0); setSelected(null); setScore(0); setAnimKey((k) => k + 1);
+  }, []);
+
+  const getVariant = (choice: string) => {
+    if (selected === null) return "idle";
+    if (choice === q.answer) return "correct";
+    if (choice === selected) return "wrong";
+    return "idle";
+  };
+
+  const CHOICE_STYLES: Record<string, string> = {
+    idle:    "border-border hover:border-foreground/40 hover:bg-foreground/[0.03] active:scale-[0.99]",
+    correct: "border-emerald-400 bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-600 scale-[1.02]",
+    wrong:   "border-rose-400 bg-rose-50 text-rose-800 dark:bg-rose-950 dark:text-rose-300 dark:border-rose-600",
+  };
+
+  const answerInfo = particleList.find((p) => p.particle === q?.answer);
+
+  if (isDone) return (
+    <EndScreen label={label} total={questions.length} score={score}
+      mode="test" onRestart={handleRestart} onBack={onBack} />
+  );
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex items-center justify-between">
+        <ProgressBar current={index} total={questions.length} />
+        <span className="ml-4 text-xs font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums shrink-0">
+          {score} correct
+        </span>
+      </div>
+
+      {/* Sentence card */}
+      <div key={animKey} className="w-full max-w-sm mx-auto rounded-2xl border border-border bg-card shadow-sm flex flex-col items-center gap-3 p-8 min-h-[180px] justify-center">
+        <div className="text-center">
+          <span className="jp-char text-3xl font-medium leading-relaxed">
+            {q.before}
+            <span className="inline-block mx-1 w-10 border-b-2 border-foreground/60 align-bottom" />
+            {q.after}
+          </span>
+        </div>
+        <div className="jp-mono text-xs text-muted-foreground text-center">{q.romaji}</div>
+        <div className="text-sm text-muted-foreground text-center italic">{q.en}</div>
+      </div>
+
+      {/* Feedback strip (appears after selection) */}
+      <div className={`text-center text-xs transition-opacity duration-200 h-4 ${selected !== null ? "opacity-100" : "opacity-0"}`}>
+        {selected !== null && selected !== q.answer && answerInfo && (
+          <span className="text-muted-foreground">
+            Answer: <span className="jp-char font-semibold">{q.answer}</span> ({answerInfo.romaji}) — {answerInfo.role}
+          </span>
+        )}
+        {selected !== null && selected === q.answer && answerInfo && (
+          <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+            {answerInfo.role} ✓
+          </span>
+        )}
+      </div>
+
+      {/* Particle choices 2×2 */}
+      <div className="grid grid-cols-2 gap-3 w-full max-w-sm mx-auto">
+        {q.choices.map((choice) => {
+          const info = particleList.find((p) => p.particle === choice);
+          const variant = getVariant(choice);
+          return (
+            <button
+              key={choice}
+              onClick={() => handleChoice(choice)}
+              disabled={selected !== null}
+              className={`py-5 px-3 rounded-xl border-2 text-center transition-all duration-150 flex flex-col items-center gap-1 ${CHOICE_STYLES[variant]}`}
+            >
+              <span className="jp-char text-4xl font-medium leading-none">{choice}</span>
+              <span className="jp-mono text-[10px] text-muted-foreground">{info?.romaji}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── Match Minigame ────────────────────────────────────────────────────────────
+const MATCH_PAIRS = 8;
+
+function buildMatchTiles(allCards: FlashCard[]): MatchTile[] {
+  const picked = shuffle(allCards).slice(0, MATCH_PAIRS);
+  const tiles: MatchTile[] = [];
+  picked.forEach((card, i) => {
+    tiles.push({ id: i * 2,     pairId: i, content: card.front, isKana: true  });
+    tiles.push({ id: i * 2 + 1, pairId: i, content: card.back,  isKana: false });
+  });
+  return shuffle(tiles);
+}
+
+function MatchGame({ cards: allCards, label, onBack }: {
+  cards: FlashCard[]; label: string; onBack: () => void;
 }) {
+  const [tiles, setTiles]           = useState<MatchTile[]>(() => buildMatchTiles(allCards));
+  const [flippedIds, setFlippedIds] = useState<number[]>([]);
+  const [matchedPairs, setMatchedPairs] = useState<Set<number>>(new Set());
+  const [wrongIds, setWrongIds]     = useState<Set<number>>(new Set());
+  const [attempts, setAttempts]     = useState(0);
+  const [elapsed, setElapsed]       = useState(0);
+  const [done, setDone]             = useState(false);
+  const startTimeRef = useRef(Date.now());
+  const lockRef      = useRef(false);
+
+  useEffect(() => {
+    if (done) return;
+    const t = setInterval(() => {
+      setElapsed(Math.floor((Date.now() - startTimeRef.current) / 1000));
+    }, 500);
+    return () => clearInterval(t);
+  }, [done]);
+
+  useEffect(() => {
+    if (matchedPairs.size === MATCH_PAIRS) setDone(true);
+  }, [matchedPairs]);
+
+  const handleClick = useCallback((tile: MatchTile) => {
+    if (lockRef.current) return;
+    if (flippedIds.includes(tile.id)) return;
+    if (matchedPairs.has(tile.pairId)) return;
+
+    const next = [...flippedIds, tile.id];
+    setFlippedIds(next);
+
+    if (next.length === 2) {
+      const [id1, id2] = next;
+      const t1 = tiles.find((t) => t.id === id1)!;
+      const t2 = tiles.find((t) => t.id === id2)!;
+      setAttempts((a) => a + 1);
+
+      if (t1.pairId === t2.pairId) {
+        setMatchedPairs((m) => { const s = new Set(m); s.add(t1.pairId); return s; });
+        setFlippedIds([]);
+      } else {
+        lockRef.current = true;
+        setWrongIds(new Set([id1, id2]));
+        setTimeout(() => {
+          setFlippedIds([]);
+          setWrongIds(new Set());
+          lockRef.current = false;
+        }, 900);
+      }
+    }
+  }, [flippedIds, matchedPairs, tiles]);
+
+  const restart = useCallback(() => {
+    setTiles(buildMatchTiles(allCards));
+    setFlippedIds([]);
+    setMatchedPairs(new Set());
+    setWrongIds(new Set());
+    setAttempts(0);
+    setElapsed(0);
+    setDone(false);
+    startTimeRef.current = Date.now();
+    lockRef.current = false;
+  }, [allCards]);
+
+  const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  const accuracy = attempts > 0 ? Math.round((MATCH_PAIRS / attempts) * 100) : 100;
+
+  if (done) {
+    const emoji = attempts <= MATCH_PAIRS + 1 ? "🏆" : attempts <= MATCH_PAIRS * 2 ? "🎉" : "👍";
+    return (
+      <div className="min-h-[70dvh] flex flex-col items-center justify-center gap-10">
+        <div className="text-center space-y-2">
+          <div className="text-5xl mb-3">{emoji}</div>
+          <h2 className="text-2xl font-bold">All Matched!</h2>
+          <p className="text-sm text-muted-foreground">{label} · {MATCH_PAIRS} pairs</p>
+        </div>
+        <div className="flex gap-8 text-center">
+          <Stat value={attempts} label="Attempts" />
+          <Divider />
+          <Stat value={fmt(elapsed)} label="Time" />
+          <Divider />
+          <Stat value={`${accuracy}%`} label="Accuracy" color="emerald" />
+        </div>
+        <div className="flex gap-3">
+          <button
+            onClick={restart}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 border-border hover:border-foreground/40 font-semibold text-sm transition-all hover:-translate-y-px active:scale-[0.98]"
+          >
+            <RotateCcw size={13} /> Play Again
+          </button>
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background font-semibold text-sm transition-all hover:opacity-85 active:scale-[0.98]"
+          >
+            Change Mode <ChevronRight size={13} />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between text-xs text-muted-foreground">
+        <span>
+          <span className="font-semibold text-emerald-600 dark:text-emerald-400">{matchedPairs.size}</span>
+          <span className="opacity-60"> / {MATCH_PAIRS} matched</span>
+        </span>
+        <span className="flex gap-3">
+          <span>{attempts} attempts</span>
+          <span className="font-mono tabular-nums">{fmt(elapsed)}</span>
+        </span>
+      </div>
+
+      <div className="h-1 bg-border rounded-full overflow-hidden">
+        <div
+          className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+          style={{ width: `${(matchedPairs.size / MATCH_PAIRS) * 100}%` }}
+        />
+      </div>
+
+      <div className="grid grid-cols-4 gap-2 w-full max-w-sm mx-auto">
+        {tiles.map((tile) => {
+          const isFlipped  = flippedIds.includes(tile.id) || matchedPairs.has(tile.pairId);
+          const isMatched  = matchedPairs.has(tile.pairId);
+          const isWrong    = wrongIds.has(tile.id);
+
+          return (
+            <div
+              key={tile.id}
+              className="[perspective:600px] aspect-square cursor-pointer"
+              onClick={() => { if (!isFlipped) handleClick(tile); }}
+            >
+              <div className={`relative w-full h-full [transform-style:preserve-3d] transition-transform duration-300 ${isFlipped ? "[transform:rotateY(180deg)]" : ""}`}>
+                {/* Face down */}
+                <div className="absolute inset-0 [backface-visibility:hidden] rounded-xl border-2 border-border bg-muted flex items-center justify-center select-none">
+                  <span className="text-xl opacity-15 jp-char">語</span>
+                </div>
+                {/* Face up */}
+                <div className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-xl border-2 flex items-center justify-center p-1 transition-colors duration-200 ${
+                  isMatched
+                    ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 dark:border-emerald-700"
+                    : isWrong
+                    ? "border-rose-400 bg-rose-50 dark:bg-rose-950/50 dark:border-rose-700"
+                    : "border-foreground/20 bg-card"
+                }`}>
+                  {tile.isKana ? (
+                    <span className="jp-char text-2xl font-medium leading-none select-none">{tile.content}</span>
+                  ) : (
+                    <span className="jp-mono text-[10px] font-semibold text-center leading-tight select-none px-0.5 line-clamp-3">{tile.content}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <p className="text-center text-[11px] text-muted-foreground/50 tracking-wider mt-1">
+        MATCH EACH CHARACTER WITH ITS READING
+      </p>
+    </div>
+  );
+}
+
+// ── Mode Select ───────────────────────────────────────────────────────────────
+function ModeSelect({ info, deck, onSelect }: {
+  info: (typeof DECK_INFO)[DeckKey];
+  deck: DeckKey;
+  onSelect: (mode: "learning" | "test" | "match" | "fillinblank") => void;
+}) {
+  const isParticles = deck === "particles";
   return (
     <div className="flex flex-col gap-10 py-4">
       <div>
@@ -379,7 +691,7 @@ function ModeSelect({ info, onSelect }: {
         <p className="text-[11px] font-semibold text-muted-foreground mb-4 uppercase tracking-widest">
           Choose a study mode
         </p>
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className={`grid gap-4 ${isParticles ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
           <button
             onClick={() => onSelect("learning")}
             className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
@@ -407,6 +719,52 @@ function ModeSelect({ info, onSelect }: {
               Start Test <ChevronRight size={14} />
             </div>
           </button>
+
+          {isParticles ? (
+            <button
+              onClick={() => onSelect("fillinblank")}
+              className="border-2 border-violet-300 dark:border-violet-800 rounded-2xl p-7 text-left group hover:border-violet-500 dark:hover:border-violet-600 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <PencilLine size={28} className="mb-4 opacity-70 text-violet-600 dark:text-violet-400" />
+              <div className="font-bold text-lg mb-2">Fill in the Blank</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                See a real sentence with the particle removed. Pick the correct particle from 4 options.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold text-violet-600 dark:text-violet-400 group-hover:gap-2.5 transition-all">
+                Start Practice <ChevronRight size={14} />
+              </div>
+            </button>
+          ) : (
+            <button
+              onClick={() => onSelect("match")}
+              className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <Puzzle size={28} className="mb-4 opacity-70" />
+              <div className="font-bold text-lg mb-2">Flip Cards</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Memory matching minigame. Flip tiles to pair each character with its reading. Beat it in the fewest attempts.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+                Play Minigame <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
+
+          {isParticles && (
+            <button
+              onClick={() => onSelect("match")}
+              className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <Puzzle size={28} className="mb-4 opacity-70" />
+              <div className="font-bold text-lg mb-2">Flip Cards</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Memory matching minigame. Pair each particle with its role. Beat it in the fewest attempts.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+                Play Minigame <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -423,12 +781,18 @@ export default function DeckClient({ deck }: { deck: DeckKey }) {
 
   return (
     <PageShell onBack={mode !== "select" ? handleBack : undefined}>
-      {mode === "select" && <ModeSelect info={info} onSelect={setMode} />}
+      {mode === "select" && <ModeSelect info={info} deck={deck} onSelect={setMode} />}
       {mode === "learning" && (
         <LearningMode cards={cards} label={info.label} onBack={handleBack} />
       )}
       {mode === "test" && (
         <TestMode cards={cards} label={info.label} onBack={handleBack} />
+      )}
+      {mode === "match" && (
+        <MatchGame cards={cards} label={info.label} onBack={handleBack} />
+      )}
+      {mode === "fillinblank" && (
+        <FillInBlankGame label={info.label} onBack={handleBack} />
       )}
     </PageShell>
   );

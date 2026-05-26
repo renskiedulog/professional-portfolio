@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { Github, Link as LinkIcon } from "lucide-react";
 import type { ProjectPreview } from "./projects-gallery";
 
 const CATEGORY_LABEL: Record<string, string> = {
@@ -59,33 +60,59 @@ export default function ProjectsList({
             className="block group"
           >
             <div className="border rounded-md overflow-hidden shadow-sm bg-background hover:shadow-md transition-shadow duration-200">
-              {project.coverImage ? (
-                <img
-                  src={project.coverImage}
-                  alt={project.title}
-                  className="w-full aspect-video object-cover"
-                />
-              ) : (
-                <div className="w-full aspect-video bg-muted flex items-center justify-center">
-                  <span className="text-xs text-muted-foreground">
-                    No preview
-                  </span>
-                </div>
-              )}
-              <div className="px-3.5 py-3 space-y-1.5">
-                <div className="flex items-start justify-between gap-2">
-                  <p className="font-bold text-lg leading-snug">
-                    {project.title}
-                  </p>
+              <div className="relative">
+                {project.coverImage ? (
+                  <img
+                    src={project.coverImage}
+                    alt={project.title}
+                    className="w-full aspect-video object-cover"
+                  />
+                ) : (
+                  <div className="w-full aspect-video bg-muted flex items-center justify-center">
+                    <span className="text-xs text-muted-foreground">
+                      No preview
+                    </span>
+                  </div>
+                )}
+                <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between gap-2">
                   {project.category && (
-                    <Badge
-                      variant="outline"
-                      className="text-[10px] shrink-0 mt-0.5"
-                    >
+                    <Badge className="text-[10px] bg-background/80 hover:bg-background/80 text-foreground border backdrop-blur-sm">
                       {CATEGORY_LABEL[project.category] ?? project.category}
                     </Badge>
                   )}
+                  <div className="flex items-center gap-1.5 ml-auto">
+                    {project.githubLink && (
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-background/80 backdrop-blur-sm rounded p-1 text-foreground hover:bg-background transition-colors"
+                        aria-label="GitHub"
+                      >
+                        <Github size={12} />
+                      </a>
+                    )}
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="bg-background/80 backdrop-blur-sm rounded p-1 text-foreground hover:bg-background transition-colors"
+                        aria-label="Live site"
+                      >
+                        <LinkIcon size={12} />
+                      </a>
+                    )}
+                  </div>
                 </div>
+              </div>
+              <div className="px-3.5 py-3 space-y-1.5">
+                <p className="font-bold text-lg leading-snug">
+                  {project.title}
+                </p>
                 {project.description && (
                   <p className="text-sm text-muted-foreground line-clamp-2">
                     {project.description}

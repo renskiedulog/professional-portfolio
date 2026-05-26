@@ -4,7 +4,7 @@ import DeckClient from "./page.client";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
-const VALID = ["hiragana", "katakana", "kanji", "vocabulary"] as const;
+const VALID = ["hiragana", "katakana", "kanji", "vocabulary", "particles", "numbers"] as const;
 type DeckParam = (typeof VALID)[number];
 
 const META: Record<DeckParam, { title: string; description: string }> = {
@@ -23,6 +23,14 @@ const META: Record<DeckParam, { title: string; description: string }> = {
   vocabulary: {
     title: "Japanese Vocabulary Flashcards | Renato Dulog",
     description: "Study common N5 Japanese vocabulary with flip cards or multiple-choice tests.",
+  },
+  particles: {
+    title: "Japanese Particles Flashcards | Renato Dulog",
+    description: "Study common Japanese particles with flashcards and fill-in-the-blank practice.",
+  },
+  numbers: {
+    title: "Japanese Numbers Flashcards | Renato Dulog",
+    description: "Study Japanese numbers 0–10,000 with kanji, kana readings, and flashcards.",
   },
 };
 

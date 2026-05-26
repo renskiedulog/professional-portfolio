@@ -9,6 +9,8 @@ export type ProjectPreview = {
   coverImage: string | null;
   category: string | null;
   stacks: string[] | null;
+  githubLink: string | null;
+  liveUrl: string | null;
 };
 
 async function getProjects(): Promise<ProjectPreview[]> {
@@ -19,7 +21,9 @@ async function getProjects(): Promise<ProjectPreview[]> {
       "slug": slug.current,
       "coverImage": images[0].asset->url,
       category,
-      "stacks": techStack[]->.name
+      "stacks": techStack[]->.name,
+      githubLink,
+      liveUrl
     }`
   );
 }
