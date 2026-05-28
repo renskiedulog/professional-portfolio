@@ -68,6 +68,15 @@ const BADGE: Record<BadgeKey, string> = {
   orange:  "bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-950 dark:text-orange-300 dark:border-orange-800",
 };
 
+const BADGE_WATERMARK_HOVER: Record<BadgeKey, string> = {
+  rose:    "group-hover:text-rose-500",
+  sky:     "group-hover:text-sky-500",
+  amber:   "group-hover:text-amber-500",
+  emerald: "group-hover:text-emerald-500",
+  violet:  "group-hover:text-violet-500",
+  orange:  "group-hover:text-orange-500",
+};
+
 const COLS = ["a", "i", "u", "e", "o"];
 
 const TABLE_META: Record<TableKey, { label: string; jp: string; desc: string; count: string }> = {
@@ -364,7 +373,7 @@ function HomeView({ onOpenTable }: { onOpenTable: (t: TableKey) => void }) {
               className="border border-border rounded-2xl p-4 text-left transition-all duration-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 bg-card group relative overflow-hidden"
             >
               {/* Character watermark */}
-              <div className="absolute -right-3 -top-2 jp-char text-8xl font-bold opacity-[0.04] select-none pointer-events-none leading-none">
+              <div className={`absolute -right-3 -top-2 jp-char text-8xl font-bold text-foreground opacity-[0.07] group-hover:opacity-[0.18] transition-all duration-300 select-none pointer-events-none leading-none ${BADGE_WATERMARK_HOVER[cfg.badge]}`}>
                 {cfg.preview[0]}
               </div>
               <div className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-medium border mb-3 ${BADGE[cfg.badge]}`}>
@@ -392,21 +401,21 @@ function HomeView({ onOpenTable }: { onOpenTable: (t: TableKey) => void }) {
               <button
                 key={key}
                 onClick={() => onOpenTable(key)}
-                className="border border-border rounded-2xl p-5 text-left bg-card hover:shadow-[0_4px_20px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 group"
+                className="border border-border rounded-2xl p-4 text-left bg-card hover:shadow-[0_4px_20px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 group"
               >
-                <div className="flex flex-wrap gap-1 mb-4 h-8 overflow-hidden">
+                <div className="flex flex-wrap gap-1 h-7 overflow-hidden">
                   {TABLE_PREVIEWS[key].map((char, i) => (
-                    <span key={i} className="jp-char text-lg leading-none opacity-40 group-hover:opacity-80 transition-opacity duration-200" style={{ transitionDelay: `${i * 25}ms` }}>
+                    <span key={i} className="jp-char text-base leading-none opacity-40 group-hover:opacity-80 transition-opacity duration-200" style={{ transitionDelay: `${i * 25}ms` }}>
                       {char}
                     </span>
                   ))}
                 </div>
-                <div className="flex items-baseline gap-2 mb-0.5">
-                  <span className="font-semibold text-sm jp-char">{meta.label}</span>
+                <div className="flex items-baseline gap-1.5 mb-0.5">
+                  <span className="font-semibold text-sm">{meta.label}</span>
                   <span className="text-xs text-muted-foreground jp-char">{meta.jp}</span>
                 </div>
                 <div className="text-[11px] text-muted-foreground">{meta.count}</div>
-                <div className="mt-3 text-[11px] font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-muted-foreground group-hover:text-foreground">
+                <div className="mt-2 text-[11px] font-semibold flex items-center gap-1 group-hover:gap-2 transition-all text-muted-foreground group-hover:text-foreground">
                   View Table <ChevronRight size={10} />
                 </div>
               </button>

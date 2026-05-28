@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { ArrowLeft, ChevronRight, RotateCcw, BookOpen, FlaskConical, Puzzle, PencilLine } from "lucide-react";
+import { ArrowLeft, ChevronRight, RotateCcw, BookOpen, FlaskConical, Puzzle, PencilLine, Keyboard, Type } from "lucide-react";
 import BackButton from "@/app/UI/global-components/back-button";
 import { hiraganaCards } from "../_data/hiragana";
 import { katakanaCards } from "../_data/katakana";
@@ -11,7 +11,7 @@ import { numberCards } from "../_data/numbers";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type DeckKey = "hiragana" | "katakana" | "kanji" | "vocabulary" | "particles" | "numbers";
-type Mode = "select" | "learning" | "test" | "match" | "fillinblank";
+type Mode = "select" | "learning" | "test" | "type" | "match" | "fillinblank" | "write";
 type FlashCard = { front: string; back: string; reading?: string };
 type MatchTile = { id: number; pairId: number; content: string; isKana: boolean };
 type FillQuestion = { before: string; after: string; romaji: string; en: string; answer: string; choices: string[] };
@@ -63,7 +63,7 @@ function PageShell({ children, onBack }: { children: React.ReactNode; onBack?: (
         .jp-char { font-family: 'Noto Serif JP', serif; }
         .jp-mono  { font-family: 'DM Mono', monospace; font-size: 0.85em; }
       `}</style>
-      <div className="flex flex-col gap-6 py-4 pb-20">
+      <div className="flex flex-col gap-6 pb-20">
         <div>
           {onBack ? (
             <button
@@ -85,17 +85,15 @@ function PageShell({ children, onBack }: { children: React.ReactNode; onBack?: (
 
 // ── Shared: End screen ────────────────────────────────────────────────────────
 function EndScreen({
-  label, total, know, dontKnow, score,
+  label, total, score,
   mode, onRestart, onBack,
 }: {
-  label: string; total: number; know?: number; dontKnow?: number;
+  label: string; total: number;
   score?: number; mode: "learning" | "test";
   onRestart: () => void; onBack: () => void;
 }) {
-  const pct = mode === "learning"
-    ? Math.round(((know ?? 0) / total) * 100)
-    : Math.round(((score ?? 0) / total) * 100);
-  const emoji = pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "📚";
+  const pct = Math.round(((score ?? 0) / total) * 100);
+  const emoji = mode === "learning" ? "🎉" : pct >= 80 ? "🎉" : pct >= 50 ? "👍" : "📚";
 
   return (
     <div className="min-h-[70dvh] flex flex-col items-center justify-center gap-10">
@@ -107,13 +105,7 @@ function EndScreen({
 
       <div className="flex gap-8 text-center">
         {mode === "learning" ? (
-          <>
-            <Stat value={know ?? 0} label="Got it" color="emerald" />
-            <Divider />
-            <Stat value={dontKnow ?? 0} label="Still learning" color="rose" />
-            <Divider />
-            <Stat value={`${pct}%`} label="Accuracy" />
-          </>
+          <Stat value={total} label="Cards Reviewed" color="emerald" />
         ) : (
           <>
             <Stat value={score ?? 0} label="Correct" color="emerald" />
@@ -186,8 +178,6 @@ function LearningMode({ cards: allCards, label, onBack }: {
   const [index, setIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [animate, setAnimate] = useState(false);
-  const [know, setKnow] = useState(0);
-  const [dontKnow, setDontKnow] = useState(0);
 
   const isDone = index >= cards.length;
   const card = cards[index];
@@ -196,15 +186,13 @@ function LearningMode({ cards: allCards, label, onBack }: {
     if (!isFlipped) { setAnimate(true); setIsFlipped(true); }
   }, [isFlipped]);
 
-  const handleAnswer = useCallback((knew: boolean) => {
-    if (knew) setKnow((k) => k + 1); else setDontKnow((d) => d + 1);
+  const handleNext = useCallback(() => {
     setAnimate(false); setIsFlipped(false);
     setIndex((i) => i + 1);
   }, []);
 
   const handleRestart = useCallback(() => {
     setIndex(0); setAnimate(false); setIsFlipped(false);
-    setKnow(0); setDontKnow(0);
   }, []);
 
   useEffect(() => {
@@ -214,16 +202,15 @@ function LearningMode({ cards: allCards, label, onBack }: {
         e.preventDefault(); setAnimate(true); setIsFlipped(true); return;
       }
       if (isFlipped) {
-        if (e.key === "ArrowRight" || e.key === "1") handleAnswer(true);
-        if (e.key === "ArrowLeft"  || e.key === "2") handleAnswer(false);
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "Enter") { e.preventDefault(); handleNext(); }
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isFlipped, isDone, handleAnswer]);
+  }, [isFlipped, isDone, handleNext]);
 
   if (isDone) return (
-    <EndScreen label={label} total={cards.length} know={know} dontKnow={dontKnow}
+    <EndScreen label={label} total={cards.length}
       mode="learning" onRestart={handleRestart} onBack={onBack} />
   );
 
@@ -256,24 +243,18 @@ function LearningMode({ cards: allCards, label, onBack }: {
         </div>
       </div>
 
-      {/* Answer buttons */}
-      <div className={`flex gap-3 justify-center transition-opacity duration-200 ${isFlipped ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+      {/* Next button */}
+      <div className={`flex justify-center transition-opacity duration-200 ${isFlipped ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
         <button
-          onClick={() => handleAnswer(false)}
-          className="flex-1 max-w-[160px] py-3 rounded-xl border-2 border-rose-200 text-rose-700 dark:border-rose-800 dark:text-rose-300 font-semibold text-sm hover:bg-rose-50 dark:hover:bg-rose-950 transition-all active:scale-[0.97]"
+          onClick={handleNext}
+          className="px-8 py-3 rounded-xl border-2 border-border hover:border-foreground/40 font-semibold text-sm transition-all active:scale-[0.97]"
         >
-          Still Learning
-        </button>
-        <button
-          onClick={() => handleAnswer(true)}
-          className="flex-1 max-w-[160px] py-3 rounded-xl border-2 border-emerald-200 text-emerald-700 dark:border-emerald-800 dark:text-emerald-300 font-semibold text-sm hover:bg-emerald-50 dark:hover:bg-emerald-950 transition-all active:scale-[0.97]"
-        >
-          Got it!
+          Next Card
         </button>
       </div>
 
       <p className="text-center text-[11px] text-muted-foreground/50 tracking-wider">
-        {isFlipped ? "→ GOT IT  ·  ← STILL LEARNING" : "SPACE OR CLICK TO FLIP"}
+        {isFlipped ? "SPACE OR → TO CONTINUE" : "SPACE OR CLICK TO FLIP"}
       </p>
     </div>
   );
@@ -286,7 +267,7 @@ function TestMode({ cards: allCards, label, onBack }: {
   const [cards] = useState(() => shuffle(allCards));
   const [index, setIndex] = useState(0);
   const [choices, setChoices] = useState<string[]>(() =>
-    generateChoices(allCards[0], allCards)
+    generateChoices(cards[0], allCards)
   );
   const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
@@ -490,8 +471,434 @@ function FillInBlankGame({ label, onBack }: { label: string; onBack: () => void 
   );
 }
 
+// ── Type Mode ─────────────────────────────────────────────────────────────────
+function TypeMode({ cards: allCards, label, onBack }: {
+  cards: FlashCard[]; label: string; onBack: () => void;
+}) {
+  const [cards] = useState(() => shuffle(allCards));
+  const [index, setIndex] = useState(0);
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState<"correct" | "wrong" | null>(null);
+  const [score, setScore] = useState(0);
+  const [animKey, setAnimKey] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const isDone = index >= cards.length;
+  const card = cards[index];
+
+  const handleCheck = useCallback(() => {
+    if (result !== null || !input.trim()) return;
+    const correct = input.trim().toLowerCase() === card.back.toLowerCase();
+    setResult(correct ? "correct" : "wrong");
+    if (correct) setScore((s) => s + 1);
+    setTimeout(() => {
+      setIndex((i) => i + 1);
+      setInput("");
+      setResult(null);
+      setAnimKey((k) => k + 1);
+    }, 900);
+  }, [result, input, card]);
+
+  useEffect(() => {
+    if (result === null) inputRef.current?.focus();
+  }, [result, animKey]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Enter") handleCheck();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [handleCheck]);
+
+  const handleRestart = useCallback(() => {
+    setIndex(0); setInput(""); setResult(null); setScore(0); setAnimKey((k) => k + 1);
+  }, []);
+
+  if (isDone) return (
+    <EndScreen label={label} total={cards.length} score={score}
+      mode="test" onRestart={handleRestart} onBack={onBack} />
+  );
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex items-center justify-between">
+        <ProgressBar current={index} total={cards.length} />
+        <span className="ml-4 text-xs font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums shrink-0">
+          {score} correct
+        </span>
+      </div>
+
+      {/* Question card */}
+      <div key={animKey} className={`w-full max-w-sm mx-auto rounded-2xl border-2 bg-card flex flex-col items-center justify-center gap-2.5 p-10 min-h-[200px] transition-all duration-300 ${
+        result === null
+          ? "border-border shadow-sm"
+          : result === "correct"
+          ? "border-emerald-400 shadow-[0_0_24px_rgba(52,211,153,0.2)]"
+          : "border-rose-400 shadow-[0_0_24px_rgba(251,113,133,0.2)]"
+      }`}>
+        <span className="jp-char text-7xl font-medium leading-none">{card.front}</span>
+        {card.reading && (
+          <span className="jp-char text-sm text-muted-foreground">{card.reading}</span>
+        )}
+        <div className={`text-sm transition-all duration-200 mt-1 text-center ${result !== null ? "opacity-100" : "opacity-0 h-0 mt-0 overflow-hidden"}`}>
+          {result === "correct" && (
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">✓ {input}</span>
+          )}
+          {result === "wrong" && (
+            <span className="text-rose-600 dark:text-rose-400">
+              <span className="line-through opacity-60">{input}</span>
+              {" → "}
+              <span className="font-semibold">{card.back}</span>
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Input + check */}
+      <div className="flex gap-2 w-full max-w-sm mx-auto">
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          disabled={result !== null}
+          placeholder="Type the answer..."
+          autoComplete="off"
+          className="flex-1 h-14 px-4 rounded-xl border-2 border-border focus:border-foreground/40 text-sm font-medium outline-none transition-all duration-200 bg-card"
+        />
+        <button
+          onClick={handleCheck}
+          disabled={!input.trim() || result !== null}
+          className="px-5 h-14 rounded-xl border-2 border-foreground bg-foreground text-background font-semibold text-sm disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-[0.97]"
+        >
+          Check
+        </button>
+      </div>
+
+      <p className="text-center text-[11px] text-muted-foreground/50 tracking-wider">
+        PRESS ENTER TO CHECK
+      </p>
+    </div>
+  );
+}
+
+// ── Japanese Flick Keyboard ────────────────────────────────────────────────────
+type KanaGroup = { base: string; chars: (string | null)[]; special?: "modifier" };
+// chars[]: [center, up, right, down, left]
+
+const HIRAGANA_KB: KanaGroup[] = [
+  { base: "あ", chars: ["あ", "い", "う", "え", "お"] },
+  { base: "か", chars: ["か", "き", "く", "け", "こ"] },
+  { base: "さ", chars: ["さ", "し", "す", "せ", "そ"] },
+  { base: "た", chars: ["た", "ち", "つ", "て", "と"] },
+  { base: "な", chars: ["な", "に", "ぬ", "ね", "の"] },
+  { base: "は", chars: ["は", "ひ", "ふ", "へ", "ほ"] },
+  { base: "ま", chars: ["ま", "み", "む", "め", "も"] },
+  { base: "や", chars: ["や", null, "ゆ", null, "よ"] },
+  { base: "ら", chars: ["ら", "り", "る", "れ", "ろ"] },
+  { base: "゛゜小", chars: [], special: "modifier" },
+  { base: "わ", chars: ["わ", null, null, null, "を"] },
+  { base: "ん", chars: ["ん", null, null, null, null] },
+];
+
+const KATAKANA_KB: KanaGroup[] = [
+  { base: "ア", chars: ["ア", "イ", "ウ", "エ", "オ"] },
+  { base: "カ", chars: ["カ", "キ", "ク", "ケ", "コ"] },
+  { base: "サ", chars: ["サ", "シ", "ス", "セ", "ソ"] },
+  { base: "タ", chars: ["タ", "チ", "ツ", "テ", "ト"] },
+  { base: "ナ", chars: ["ナ", "ニ", "ヌ", "ネ", "ノ"] },
+  { base: "ハ", chars: ["ハ", "ヒ", "フ", "ヘ", "ホ"] },
+  { base: "マ", chars: ["マ", "ミ", "ム", "メ", "モ"] },
+  { base: "ヤ", chars: ["ヤ", null, "ユ", null, "ヨ"] },
+  { base: "ラ", chars: ["ラ", "リ", "ル", "レ", "ロ"] },
+  { base: "゛゜小", chars: [], special: "modifier" },
+  { base: "ワ", chars: ["ワ", null, null, null, "ヲ"] },
+  { base: "ン", chars: ["ン", null, null, null, null] },
+];
+
+const DAKUTEN_CYCLE: Record<string, string> = {
+  "か": "が", "き": "ぎ", "く": "ぐ", "け": "げ", "こ": "ご",
+  "が": "か", "ぎ": "き", "ぐ": "く", "げ": "け", "ご": "こ",
+  "さ": "ざ", "し": "じ", "す": "ず", "せ": "ぜ", "そ": "ぞ",
+  "ざ": "さ", "じ": "し", "ず": "す", "ぜ": "せ", "ぞ": "そ",
+  "た": "だ", "ち": "ぢ", "つ": "づ", "て": "で", "と": "ど",
+  "だ": "た", "ぢ": "ち", "づ": "つ", "で": "て", "ど": "と",
+  "は": "ば", "ひ": "び", "ふ": "ぶ", "へ": "べ", "ほ": "ぼ",
+  "ば": "ぱ", "び": "ぴ", "ぶ": "ぷ", "べ": "ぺ", "ぼ": "ぽ",
+  "ぱ": "は", "ぴ": "ひ", "ぷ": "ふ", "ぺ": "へ", "ぽ": "ほ",
+  "カ": "ガ", "キ": "ギ", "ク": "グ", "ケ": "ゲ", "コ": "ゴ",
+  "ガ": "カ", "ギ": "キ", "グ": "ク", "ゲ": "ケ", "ゴ": "コ",
+  "サ": "ザ", "シ": "ジ", "ス": "ズ", "セ": "ゼ", "ソ": "ゾ",
+  "ザ": "サ", "ジ": "シ", "ズ": "ス", "ゼ": "セ", "ゾ": "ソ",
+  "タ": "ダ", "チ": "ヂ", "ツ": "ヅ", "テ": "デ", "ト": "ド",
+  "ダ": "タ", "ヂ": "チ", "ヅ": "ツ", "デ": "テ", "ド": "ト",
+  "ハ": "バ", "ヒ": "ビ", "フ": "ブ", "ヘ": "ベ", "ホ": "ボ",
+  "バ": "パ", "ビ": "ピ", "ブ": "プ", "ベ": "ペ", "ボ": "ポ",
+  "パ": "ハ", "ピ": "ヒ", "プ": "フ", "ペ": "ヘ", "ポ": "ホ",
+};
+
+const SMALL_CYCLE: Record<string, string> = {
+  "あ": "ぁ", "い": "ぃ", "う": "ぅ", "え": "ぇ", "お": "ぉ",
+  "ぁ": "あ", "ぃ": "い", "ぅ": "う", "ぇ": "え", "ぉ": "お",
+  "や": "ゃ", "ゆ": "ゅ", "よ": "ょ",
+  "ゃ": "や", "ゅ": "ゆ", "ょ": "よ",
+  "つ": "っ", "っ": "つ",
+  "わ": "ゎ", "ゎ": "わ",
+  "ア": "ァ", "イ": "ィ", "ウ": "ゥ", "エ": "ェ", "オ": "ォ",
+  "ァ": "ア", "ィ": "イ", "ゥ": "ウ", "ェ": "エ", "ォ": "オ",
+  "ヤ": "ャ", "ユ": "ュ", "ヨ": "ョ",
+  "ャ": "ヤ", "ュ": "ユ", "ョ": "ヨ",
+  "ツ": "ッ", "ッ": "ツ",
+  "ワ": "ヮ", "ヮ": "ワ",
+};
+
+const FLICK_THRESHOLD = 26;
+
+function getFlickDir(dx: number, dy: number): number {
+  if (Math.abs(dx) < FLICK_THRESHOLD && Math.abs(dy) < FLICK_THRESHOLD) return 0;
+  if (Math.abs(dy) >= Math.abs(dx)) return dy < 0 ? 1 : 3;
+  return dx > 0 ? 2 : 4;
+}
+
+// Floating char positions around the key: [_, up, right, down, left]
+const FLICK_POSITIONS = [
+  "",
+  "absolute bottom-full left-1/2 -translate-x-1/2 mb-1",
+  "absolute left-full top-1/2 -translate-y-1/2 ml-1",
+  "absolute top-full left-1/2 -translate-x-1/2 mt-1",
+  "absolute right-full top-1/2 -translate-y-1/2 mr-1",
+];
+
+function JapaneseFlickKeyboard({
+  kbData, onChar, onModifier, pendingChar, disabled,
+}: {
+  kbData: KanaGroup[];
+  onChar: (char: string) => void;
+  onModifier: () => void;
+  pendingChar: string | null;
+  disabled?: boolean;
+}) {
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const [flickDir, setFlickDir] = useState(0);
+  const startPos = useRef<{ x: number; y: number } | null>(null);
+  const activeGroup = useRef<KanaGroup | null>(null);
+
+  const canModify = pendingChar !== null &&
+    (pendingChar in DAKUTEN_CYCLE || pendingChar in SMALL_CYCLE);
+
+  const commit = useCallback((group: KanaGroup, dir: number) => {
+    const char = group.chars[dir] ?? group.chars[0];
+    if (char) onChar(char);
+    setActiveIdx(null);
+    setFlickDir(0);
+    startPos.current = null;
+    activeGroup.current = null;
+  }, [onChar]);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent, idx: number, group: KanaGroup) => {
+    if (disabled) return;
+    if (group.special === "modifier") { onModifier(); return; }
+    const valid = group.chars.filter(Boolean);
+    if (valid.length === 1) { onChar(valid[0]!); return; }
+    e.currentTarget.setPointerCapture(e.pointerId);
+    startPos.current = { x: e.clientX, y: e.clientY };
+    activeGroup.current = group;
+    setActiveIdx(idx);
+    setFlickDir(0);
+  }, [disabled, onModifier, onChar]);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!startPos.current) return;
+    const dir = getFlickDir(e.clientX - startPos.current.x, e.clientY - startPos.current.y);
+    setFlickDir(dir);
+  }, []);
+
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    if (!startPos.current || !activeGroup.current) return;
+    const dir = getFlickDir(e.clientX - startPos.current.x, e.clientY - startPos.current.y);
+    commit(activeGroup.current, dir);
+  }, [commit]);
+
+  const handlePointerCancel = useCallback(() => {
+    setActiveIdx(null);
+    setFlickDir(0);
+    startPos.current = null;
+    activeGroup.current = null;
+  }, []);
+
+  return (
+    <div className="select-none touch-none">
+      <div className="grid grid-cols-3 gap-1.5">
+        {kbData.map((group, idx) => {
+          const isActive = activeIdx === idx;
+          const isModifier = group.special === "modifier";
+          const chars = group.chars;
+
+          return (
+            <div key={idx} className="relative">
+              {/* Flick chars floating around the key */}
+              {isActive && chars.map((char, dir) =>
+                dir > 0 && char ? (
+                  <div
+                    key={dir}
+                    className={`${FLICK_POSITIONS[dir]} z-20 pointer-events-none w-[5.5rem] h-[5.5rem] rounded-xl jp-char text-2xl font-medium flex items-center justify-center transition-all duration-75 shadow-sm ${
+                      flickDir === dir
+                        ? "bg-foreground text-background scale-110"
+                        : "bg-background border-2 border-border text-foreground shadow-[0_4px_16px_rgba(0,0,0,0.18)]"
+                    }`}
+                  >
+                    {char}
+                  </div>
+                ) : null
+              )}
+
+              <button
+                onPointerDown={(e) => handlePointerDown(e, idx, group)}
+                onPointerMove={handlePointerMove}
+                onPointerUp={handlePointerUp}
+                onPointerCancel={handlePointerCancel}
+                disabled={disabled || (isModifier && !canModify)}
+                className={`w-full aspect-square rounded-xl border-2 font-medium flex items-center justify-center transition-all duration-100 disabled:opacity-30 disabled:cursor-not-allowed
+                  ${isModifier
+                    ? canModify
+                      ? "border-amber-400 bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 text-xs"
+                      : "border-border bg-muted text-muted-foreground text-xs"
+                    : isActive
+                    ? "border-foreground bg-foreground/10 scale-[0.94] jp-char text-xl"
+                    : "border-border bg-card hover:border-foreground/40 hover:bg-foreground/[0.03] jp-char text-xl"
+                  }`}
+              >
+                {group.base}
+              </button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── Write Mode ─────────────────────────────────────────────────────────────────
+function WriteMode({ cards: allCards, label, deck, onBack }: {
+  cards: FlashCard[]; label: string; deck: DeckKey; onBack: () => void;
+}) {
+  const [cards] = useState(() => shuffle(allCards));
+  const [index, setIndex] = useState(0);
+  const [pending, setPending] = useState<string | null>(null);
+  const [result, setResult] = useState<"correct" | "wrong" | null>(null);
+  const [score, setScore] = useState(0);
+  const [animKey, setAnimKey] = useState(0);
+
+  const isDone = index >= cards.length;
+  const card = cards[index];
+  const kbData = deck === "katakana" ? KATAKANA_KB : HIRAGANA_KB;
+
+  const handleChar = useCallback((char: string) => {
+    if (result !== null) return;
+    setPending(char);
+  }, [result]);
+
+  const handleModifier = useCallback(() => {
+    if (!pending || result !== null) return;
+    if (pending in DAKUTEN_CYCLE) { setPending(DAKUTEN_CYCLE[pending]); return; }
+    if (pending in SMALL_CYCLE)   { setPending(SMALL_CYCLE[pending]); }
+  }, [pending, result]);
+
+  const handleCheck = useCallback(() => {
+    if (!pending || result !== null) return;
+    const correct = pending === card.front;
+    setResult(correct ? "correct" : "wrong");
+    if (correct) setScore((s) => s + 1);
+    setTimeout(() => {
+      setIndex((i) => i + 1);
+      setPending(null);
+      setResult(null);
+      setAnimKey((k) => k + 1);
+    }, 900);
+  }, [pending, result, card]);
+
+  const handleRestart = useCallback(() => {
+    setIndex(0); setPending(null); setResult(null); setScore(0); setAnimKey((k) => k + 1);
+  }, []);
+
+  if (isDone) return (
+    <EndScreen label={label} total={cards.length} score={score}
+      mode="test" onRestart={handleRestart} onBack={onBack} />
+  );
+
+  const isCorrect = result === "correct";
+
+  return (
+    <div className="flex flex-col gap-5 max-w-lg mx-auto">
+      <div className="flex items-center justify-between">
+        <ProgressBar current={index} total={cards.length} />
+        <span className="ml-4 text-xs font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums shrink-0">
+          {score} correct
+        </span>
+      </div>
+
+      {/* Prompt + answer display combined */}
+      <div key={animKey} className="w-full rounded-2xl border border-border bg-card shadow-sm flex flex-col items-center justify-center gap-3 py-8 px-6 min-h-[160px]">
+        <div className="jp-mono text-5xl font-bold">{card.back}</div>
+        {card.reading && <div className="jp-char text-sm text-muted-foreground">{card.reading}</div>}
+
+        {/* Inline answer feedback */}
+        <div className={`flex items-center justify-center gap-2 transition-all duration-200 ${result !== null ? "opacity-100 mt-1" : "opacity-0 h-0 overflow-hidden"}`}>
+          {result === "correct" && (
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold jp-char text-lg">✓ {pending}</span>
+          )}
+          {result === "wrong" && (
+            <span className="text-rose-500 jp-char text-lg">
+              <span className="line-through opacity-50">{pending}</span>
+              <span className="mx-1.5 text-muted-foreground text-sm">→</span>
+              <span className="font-semibold">{card.front}</span>
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Input + Check */}
+      <div className="flex gap-2">
+        <div className={`flex-1 rounded-xl border-2 flex items-center justify-center h-14 transition-all duration-200 ${
+          result === null
+            ? "border-border bg-card"
+            : isCorrect
+            ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 shadow-[0_0_16px_rgba(52,211,153,0.15)]"
+            : "border-rose-400 bg-rose-50 dark:bg-rose-950/50 shadow-[0_0_16px_rgba(251,113,133,0.15)]"
+        }`}>
+          {pending ? (
+            <span className="jp-char text-3xl font-medium">{pending}</span>
+          ) : (
+            <span className="text-muted-foreground/40 text-sm tracking-wide">tap a key below</span>
+          )}
+        </div>
+        <button
+          onClick={handleCheck}
+          disabled={!pending || result !== null}
+          className="px-5 h-14 rounded-xl border-2 border-foreground bg-foreground text-background font-semibold text-sm disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-[0.97]"
+        >
+          Check
+        </button>
+      </div>
+
+      {/* Keyboard */}
+      <JapaneseFlickKeyboard
+        kbData={kbData}
+        onChar={handleChar}
+        onModifier={handleModifier}
+        pendingChar={pending}
+        disabled={result !== null}
+      />
+
+      <p className="text-center text-[10px] text-muted-foreground/40 tracking-wider -mt-2">
+        ゛゜小 CYCLES DAKUTEN · HANDAKUTEN · SMALL
+      </p>
+    </div>
+  );
+}
+
 // ── Match Minigame ────────────────────────────────────────────────────────────
-const MATCH_PAIRS = 8;
+const MATCH_PAIRS = 18;
 
 function buildMatchTiles(allCards: FlashCard[]): MatchTile[] {
   const picked = shuffle(allCards).slice(0, MATCH_PAIRS);
@@ -626,7 +1033,7 @@ function MatchGame({ cards: allCards, label, onBack }: {
         />
       </div>
 
-      <div className="grid grid-cols-4 gap-2 w-full max-w-sm mx-auto">
+      <div className="grid grid-cols-6 gap-2 w-full max-w-lg mx-auto">
         {tiles.map((tile) => {
           const isFlipped  = flippedIds.includes(tile.id) || matchedPairs.has(tile.pairId);
           const isMatched  = matchedPairs.has(tile.pairId);
@@ -674,9 +1081,10 @@ function MatchGame({ cards: allCards, label, onBack }: {
 function ModeSelect({ info, deck, onSelect }: {
   info: (typeof DECK_INFO)[DeckKey];
   deck: DeckKey;
-  onSelect: (mode: "learning" | "test" | "match" | "fillinblank") => void;
+  onSelect: (mode: "learning" | "test" | "type" | "match" | "fillinblank" | "write") => void;
 }) {
   const isParticles = deck === "particles";
+  const isKana = deck === "hiragana" || deck === "katakana";
   return (
     <div className="flex flex-col gap-10 py-4">
       <div>
@@ -691,7 +1099,7 @@ function ModeSelect({ info, deck, onSelect }: {
         <p className="text-[11px] font-semibold text-muted-foreground mb-4 uppercase tracking-widest">
           Choose a study mode
         </p>
-        <div className={`grid gap-4 ${isParticles ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+        <div className="grid gap-4 sm:grid-cols-2">
           <button
             onClick={() => onSelect("learning")}
             className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
@@ -717,6 +1125,20 @@ function ModeSelect({ info, deck, onSelect }: {
             </p>
             <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
               Start Test <ChevronRight size={14} />
+            </div>
+          </button>
+
+          <button
+            onClick={() => onSelect("type")}
+            className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+          >
+            <Type size={28} className="mb-4 opacity-70" />
+            <div className="font-bold text-lg mb-2">Type</div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              See the character, type the answer yourself. No hints, no choices — pure recall.
+            </p>
+            <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+              Start Typing <ChevronRight size={14} />
             </div>
           </button>
 
@@ -765,6 +1187,22 @@ function ModeSelect({ info, deck, onSelect }: {
               </div>
             </button>
           )}
+
+          {isKana && (
+            <button
+              onClick={() => onSelect("write")}
+              className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <Keyboard size={28} className="mb-4 opacity-70" />
+              <div className="font-bold text-lg mb-2">Write</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Reverse test — see the romaji, type the kana using a Japanese phone keyboard with flick input.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+                Start Writing <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -788,11 +1226,17 @@ export default function DeckClient({ deck }: { deck: DeckKey }) {
       {mode === "test" && (
         <TestMode cards={cards} label={info.label} onBack={handleBack} />
       )}
+      {mode === "type" && (
+        <TypeMode cards={cards} label={info.label} onBack={handleBack} />
+      )}
       {mode === "match" && (
         <MatchGame cards={cards} label={info.label} onBack={handleBack} />
       )}
       {mode === "fillinblank" && (
         <FillInBlankGame label={info.label} onBack={handleBack} />
+      )}
+      {mode === "write" && (
+        <WriteMode cards={cards} label={info.label} deck={deck} onBack={handleBack} />
       )}
     </PageShell>
   );

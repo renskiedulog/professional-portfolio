@@ -2,6 +2,7 @@ import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import TypingWizardUI from "./components/ui";
+import Image from "next/image";
 
 export const metadata = {
   title: "Typing Wizard",
@@ -55,8 +56,17 @@ const Page = () => {
         <div className="w-full flex justify-between mb-3">
           <BackButton href="/extra/playground" label="Playground" />
         </div>
-        <div className="h-[92dvh] w-full">
+        {/* Desktop only */}
+        <div className="hidden md:block h-[92dvh] w-full">
           <TypingWizardUI />
+        </div>
+        {/* Mobile fallback */}
+        <div className="flex md:hidden h-[80dvh] w-full flex-col items-center justify-center gap-y-2 text-center px-4">
+          <Image src="/keyboard-key.png" alt="Keyboard" width={80} height={80} className="opacity-80" />
+          <h2 className="text-3xl font-semibold">Desktop Only</h2>
+          <p className="text-muted-foreground text-sm max-w-xs">
+            Typing Wizard requires a physical keyboard. Open this page on a desktop or laptop to play.
+          </p>
         </div>
       </BlurFade>
     </Container>
