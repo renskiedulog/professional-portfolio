@@ -683,8 +683,9 @@ function JapaneseFlickKeyboard({
   const startPos = useRef<{ x: number; y: number } | null>(null);
   const activeGroup = useRef<KanaGroup | null>(null);
 
-  const canModify = pendingChar !== null &&
-    (pendingChar in DAKUTEN_CYCLE || pendingChar in SMALL_CYCLE);
+  const lastChar = pendingChar ? pendingChar[pendingChar.length - 1] : null;
+  const canModify = lastChar !== null &&
+    (lastChar in DAKUTEN_CYCLE || lastChar in SMALL_CYCLE);
 
   const commit = useCallback((group: KanaGroup, dir: number) => {
     const char = group.chars[dir] ?? group.chars[0];
@@ -784,7 +785,7 @@ function WriteMode({ cards: allCards, label, deck, onBack }: {
 }) {
   const [cards] = useState(() => shuffle(allCards));
   const [index, setIndex] = useState(0);
-  const [pending, setPending] = useState<string | null>(null);
+  const [pending, setPending] = useState("");
   const [result, setResult] = useState<"correct" | "wrong" | null>(null);
   const [score, setScore] = useState(0);
   const [animKey, setAnimKey] = useState(0);
@@ -795,13 +796,19 @@ function WriteMode({ cards: allCards, label, deck, onBack }: {
 
   const handleChar = useCallback((char: string) => {
     if (result !== null) return;
-    setPending(char);
+    setPending((p) => p + char);
+  }, [result]);
+
+  const handleBackspace = useCallback(() => {
+    if (result !== null) return;
+    setPending((p) => p.slice(0, -1));
   }, [result]);
 
   const handleModifier = useCallback(() => {
     if (!pending || result !== null) return;
-    if (pending in DAKUTEN_CYCLE) { setPending(DAKUTEN_CYCLE[pending]); return; }
-    if (pending in SMALL_CYCLE)   { setPending(SMALL_CYCLE[pending]); }
+    const last = pending[pending.length - 1];
+    if (last in DAKUTEN_CYCLE) { setPending(pending.slice(0, -1) + DAKUTEN_CYCLE[last]); return; }
+    if (last in SMALL_CYCLE)   { setPending(pending.slice(0, -1) + SMALL_CYCLE[last]); }
   }, [pending, result]);
 
   const handleCheck = useCallback(() => {
@@ -811,14 +818,14 @@ function WriteMode({ cards: allCards, label, deck, onBack }: {
     if (correct) setScore((s) => s + 1);
     setTimeout(() => {
       setIndex((i) => i + 1);
-      setPending(null);
+      setPending("");
       setResult(null);
       setAnimKey((k) => k + 1);
     }, 900);
   }, [pending, result, card]);
 
   const handleRestart = useCallback(() => {
-    setIndex(0); setPending(null); setResult(null); setScore(0); setAnimKey((k) => k + 1);
+    setIndex(0); setPending(""); setResult(null); setScore(0); setAnimKey((k) => k + 1);
   }, []);
 
   if (isDone) return (
@@ -837,12 +844,10 @@ function WriteMode({ cards: allCards, label, deck, onBack }: {
         </span>
       </div>
 
-      {/* Prompt + answer display combined */}
+      {/* Prompt + answer feedback */}
       <div key={animKey} className="w-full rounded-2xl border border-border bg-card shadow-sm flex flex-col items-center justify-center gap-3 py-8 px-6 min-h-[160px]">
         <div className="jp-mono text-5xl font-bold">{card.back}</div>
         {card.reading && <div className="jp-char text-sm text-muted-foreground">{card.reading}</div>}
-
-        {/* Inline answer feedback */}
         <div className={`flex items-center justify-center gap-2 transition-all duration-200 ${result !== null ? "opacity-100 mt-1" : "opacity-0 h-0 overflow-hidden"}`}>
           {result === "correct" && (
             <span className="text-emerald-600 dark:text-emerald-400 font-semibold jp-char text-lg">✓ {pending}</span>
@@ -857,7 +862,7 @@ function WriteMode({ cards: allCards, label, deck, onBack }: {
         </div>
       </div>
 
-      {/* Input + Check */}
+      {/* Input + ⌫ + Check */}
       <div className="flex gap-2">
         <div className={`flex-1 rounded-xl border-2 flex items-center justify-center h-14 transition-all duration-200 ${
           result === null
@@ -867,11 +872,18 @@ function WriteMode({ cards: allCards, label, deck, onBack }: {
             : "border-rose-400 bg-rose-50 dark:bg-rose-950/50 shadow-[0_0_16px_rgba(251,113,133,0.15)]"
         }`}>
           {pending ? (
-            <span className="jp-char text-3xl font-medium">{pending}</span>
+            <span className="jp-char text-3xl font-medium tracking-widest">{pending}</span>
           ) : (
             <span className="text-muted-foreground/40 text-sm tracking-wide">tap a key below</span>
           )}
         </div>
+        <button
+          onClick={handleBackspace}
+          disabled={!pending || result !== null}
+          className="w-14 h-14 rounded-xl border-2 border-border bg-card text-foreground font-semibold text-lg disabled:opacity-30 disabled:cursor-not-allowed transition-all active:scale-[0.97] hover:border-foreground/40"
+        >
+          ⌫
+        </button>
         <button
           onClick={handleCheck}
           disabled={!pending || result !== null}
@@ -886,7 +898,7 @@ function WriteMode({ cards: allCards, label, deck, onBack }: {
         kbData={kbData}
         onChar={handleChar}
         onModifier={handleModifier}
-        pendingChar={pending}
+        pendingChar={pending || null}
         disabled={result !== null}
       />
 
