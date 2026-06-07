@@ -16,7 +16,7 @@ const Statistics = () => {
       duration: 1,
     },
     {
-      value: 35,
+      value: 40,
       unit: "+",
       label: "Websites Worked",
     },
@@ -26,7 +26,7 @@ const Statistics = () => {
       label: "Avg. Typing Speed",
     },
     {
-      value: 8,
+      value: 14,
       unit: "+",
       label: "Projects Made and Done",
       duration: 1,

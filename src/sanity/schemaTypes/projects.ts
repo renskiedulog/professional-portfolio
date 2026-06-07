@@ -35,6 +35,7 @@ export const projects = defineType({
           { title: "Website", value: "website" },
           { title: "Game", value: "game" },
           { title: "Tool", value: "tool" },
+          { title: "Extension", value: "extension" },
           { title: "Template", value: "template" },
           { title: "Playground", value: "playground" },
           { title: "Integration", value: "integration" },

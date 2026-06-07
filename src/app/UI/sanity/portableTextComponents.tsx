@@ -116,6 +116,9 @@ export const PortableTextComponents = {
     bullet: ({ children }: { children: React.ReactNode }) => (
       <li className="mb-0.5">{children}</li>
     ),
+    number: ({ children }: { children: React.ReactNode }) => (
+      <li className="mb-0.5">{children}</li>
+    ),
   },
 };
 

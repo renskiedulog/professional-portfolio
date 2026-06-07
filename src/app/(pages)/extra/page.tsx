@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { InfoIcon } from "lucide-react";
+import { GiStarsStack } from "react-icons/gi";
 
 export const metadata = {
   title: "Extra",
@@ -22,7 +23,9 @@ export const metadata = {
       "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, dev tools, and more.",
     url: "https://renato-dulog.is-a.dev/extra",
     siteName: "Renato Dulog | Developer Portfolio",
-    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
+    images: [
+      { url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" },
+    ],
     type: "website",
   },
   twitter: {
@@ -113,6 +116,17 @@ const Extra = () => {
                 <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
               </p>
             </Link> */}
+            <Link
+              href="/extra/game-reviews"
+              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+            >
+              <GiStarsStack size={32} />
+              <p>Game Reviews</p>
+              <p className="flex items-center gap-2 group-hover:opacity-100 opacity-60">
+                <span>EXPLORE</span>
+                <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
+              </p>
+            </Link>
             <Link
               href="/extra/playground"
               className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"

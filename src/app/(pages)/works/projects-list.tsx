@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Github, Link as LinkIcon } from "lucide-react";
 import type { ProjectPreview } from "./projects-gallery";
@@ -16,6 +16,7 @@ const CATEGORY_LABEL: Record<string, string> = {
   playground: "Playground",
   integration: "Integration",
   "web app": "Web App",
+  extension: "Extension",
 };
 
 export default function ProjectsList({
@@ -26,11 +27,12 @@ export default function ProjectsList({
   const categories = [
     "all",
     ...Array.from(
-      new Set(projects.map((p) => p.category).filter(Boolean) as string[])
+      new Set(projects.map((p) => p.category).filter(Boolean) as string[]),
     ),
   ];
 
   const [active, setActive] = useState("all");
+  const router = useRouter();
 
   const filtered =
     active === "all" ? projects : projects.filter((p) => p.category === active);
@@ -54,10 +56,18 @@ export default function ProjectsList({
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map((project) => (
-          <Link
+          <div
             key={project.slug}
-            href={`/works/${project.slug}`}
-            className="block group"
+            role="link"
+            tabIndex={0}
+            onClick={() => router.push(`/works/${project.slug}`)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                router.push(`/works/${project.slug}`);
+              }
+            }}
+            className="block group cursor-pointer"
           >
             <div className="border rounded-md overflow-hidden shadow-sm bg-background hover:shadow-md transition-shadow duration-200">
               <div className="relative">
@@ -137,7 +147,7 @@ export default function ProjectsList({
                 )}
               </div>
             </div>
-          </Link>
+          </div>
         ))}
 
         {filtered.length === 0 && (
