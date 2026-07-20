@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-const JIKAN_API_URL = process.env.NEXT_PUBLIC_JIKAN_API_URL!;
+const TENRAI_API_URL = process.env.NEXT_PUBLIC_TENRAI_API_URL!;
 const TMDB_API_KEY = process.env.TMDB_API_KEY!;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w500";
@@ -32,7 +32,7 @@ async function searchTMDB(searchTerm: string, page: number) {
   };
 }
 
-async function searchJikan(
+async function searchTenrai(
   searchTerm: string,
   searchType: string,
   limit: number,
@@ -52,7 +52,7 @@ async function searchJikan(
   if (page) params.append("page", page.toString());
   if (resultsType) params.append("type", resultsType);
 
-  const res = await fetch(`${JIKAN_API_URL}/${type}?${params}`);
+  const res = await fetch(`${TENRAI_API_URL}/${type}?${params}`);
   const data = await res.json();
 
   return {
@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
     const result =
       searchType === "movie"
         ? await searchTMDB(searchTerm, page)
-        : await searchJikan(searchTerm, searchType, limit, page);
+        : await searchTenrai(searchTerm, searchType, limit, page);
 
     return NextResponse.json({
       message: "Search Successful.",

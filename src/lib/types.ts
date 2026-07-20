@@ -131,7 +131,6 @@ export interface RecommendationInfo {
   scored_by?: number;
   rank?: number;
   popularity?: number;
-  members?: number;
   favorites?: number;
   synopsis?: string;
   background?: string;
@@ -141,6 +140,8 @@ export interface RecommendationInfo {
   producers?: Entity[];
   licensors?: Entity[];
   studios?: Entity[];
+  chapters?: number;
+  volumes?: number;
   genres?: Entity[];
   explicit_genres?: Entity[];
   themes?: Entity[];

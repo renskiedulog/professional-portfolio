@@ -11,7 +11,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { InfoIcon } from "lucide-react";
-import { GiStarsStack } from "react-icons/gi";
 
 export const metadata = {
   title: "Extra",
@@ -67,10 +66,10 @@ const Extra = () => {
           <BackButton href="/" label="Homepage" />
         </div>
         <div className="h-[90dvh] flex items-center justify-center">
-          <div className="flex flex-wrap w-full gap-2 justify-center">
+          <div className="grid grid-cols-2 w-full max-w-2xl mx-auto gap-2">
             <Link
               href="/extra/questions-you-might-ask"
-              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border group text-center bg-background rounded-md px-4 py-4 md:py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <FaInfo size={32} />
               <p>Questions You Might Ask</p>
@@ -81,7 +80,7 @@ const Extra = () => {
             </Link>
             <Link
               href="/extra/recommendations"
-              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border group text-center bg-background rounded-md px-4 py-4 md:py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <BiLike size={32} />
               <div className="flex items-center gap-2 md:flex-row flex-col">
@@ -107,7 +106,7 @@ const Extra = () => {
             </Link>
             {/* <Link
               href="/extra/dev-tools"
-              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border group text-center bg-background rounded-md px-4 py-4 md:py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <FaTools size={32} />
               <p>Developer Tools</p>
@@ -116,9 +115,9 @@ const Extra = () => {
                 <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
               </p>
             </Link> */}
-            <Link
+            {/* <Link
               href="/extra/game-reviews"
-              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border group text-center bg-background rounded-md px-4 py-4 md:py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <GiStarsStack size={32} />
               <p>Game Reviews</p>
@@ -126,10 +125,10 @@ const Extra = () => {
                 <span>EXPLORE</span>
                 <FaArrowRight className="opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition ease-in-out duration-200" />
               </p>
-            </Link>
+            </Link> */}
             <Link
               href="/extra/playground"
-              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border group text-center bg-background rounded-md px-4 py-4 md:py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <FaGamepad size={32} />
               <p>Playground</p>
@@ -140,7 +139,7 @@ const Extra = () => {
             </Link>
             <Link
               href="#"
-              className="border min-w-60 md:min-w-0 basis-1/2 md:basis-1/4 group text-center bg-background rounded-md px-4 py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
+              className="border group text-center bg-background rounded-md px-4 py-4 md:py-8 flex flex-col items-center justify-center gap-2 md:text-base text-sm"
             >
               <GrGift size={32} />
               <p>Coming Soon...</p>

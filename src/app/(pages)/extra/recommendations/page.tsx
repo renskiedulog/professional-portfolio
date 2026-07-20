@@ -18,10 +18,10 @@ const page = () => {
             Powered By
             <Link
               className="hover:text-black font-black text-base"
-              href="https://jikan.moe/"
+              href="https://tenrai.org/"
               target="_blank"
             >
-              Jikan API
+              Tenrai API
             </Link>
           </div>
         </div>

@@ -30,7 +30,7 @@ export async function getRecommendations({
   }
 }
 
-const JIKAN_API_URL = process.env.NEXT_PUBLIC_JIKAN_API_URL!;
+const TENRAI_API_URL = process.env.NEXT_PUBLIC_TENRAI_API_URL!;
 const TMDB_API_KEY = process.env.TMDB_API_KEY!;
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/original";
@@ -105,8 +105,8 @@ export const GetRecommendationInfo = async ({
     if (searchType === "manhwa") type = "manga";
     if (searchType === "movie") type = "anime";
 
-    const req = await fetch(`${JIKAN_API_URL}/${type}/${id}/full`);
-    const chars = await fetch(`${JIKAN_API_URL}/${type}/${id}/characters`);
+    const req = await fetch(`${TENRAI_API_URL}/${type}/${id}/full`);
+    const chars = await fetch(`${TENRAI_API_URL}/${type}/${id}/characters`);
 
     if (!req.ok) return null;
 

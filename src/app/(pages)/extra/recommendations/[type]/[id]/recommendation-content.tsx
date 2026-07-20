@@ -1,4 +1,5 @@
 import { RecommendationInfo } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
   Shuffle,
@@ -6,6 +7,10 @@ import {
   Tv,
   Music,
   Link as LinkIcon,
+  Award,
+  TrendingUp,
+  Heart,
+  Star,
 } from "lucide-react";
 import { FaHeart } from "react-icons/fa";
 import Image from "next/image";
@@ -22,7 +27,7 @@ const RecommendationContent = ({
   return (
     <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[250px_1fr] lg:gap-5">
       {/* Sticky Sidebar */}
-      <aside className="lg:sticky lg:top-4 lg:self-start space-y-3">
+      <aside className="lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto scrollbar-hide space-y-3">
         <div className="relative rounded-xl overflow-hidden shadow-lg w-1/2 sm:w-full max-w-[400px] mx-auto lg:mx-0">
           {recommendationInfo.images?.jpg?.large_image_url && (
             <Image
@@ -77,6 +82,20 @@ const RecommendationContent = ({
                 <span>{recommendationInfo.episodes}</span>
               </div>
             )}
+          {recommendationInfo.chapters !== undefined &&
+            recommendationInfo.chapters !== null && (
+              <div className="flex justify-between">
+                <span className="font-semibold">Chapters</span>
+                <span>{recommendationInfo.chapters}</span>
+              </div>
+            )}
+          {recommendationInfo.volumes !== undefined &&
+            recommendationInfo.volumes !== null && (
+              <div className="flex justify-between">
+                <span className="font-semibold">Volumes</span>
+                <span>{recommendationInfo.volumes}</span>
+              </div>
+            )}
           {recommendationInfo.duration && (
             <div className="flex justify-between">
               <span className="font-semibold">Duration</span>
@@ -89,19 +108,113 @@ const RecommendationContent = ({
               <span>{recommendationInfo.rating}</span>
             </div>
           )}
-          {recommendationInfo.score && (
-            <div className="flex justify-between">
-              <span className="font-semibold">Score</span>
-              <span>{recommendationInfo.score}</span>
-            </div>
-          )}
-          {recommendationInfo.rank && (
-            <div className="flex justify-between">
-              <span className="font-semibold">Rank</span>
-              <span>#{recommendationInfo.rank}</span>
-            </div>
-          )}
         </div>
+
+        {/* Stat Tiles */}
+        {(() => {
+          const hasFavorites =
+            recommendationInfo.favorites !== undefined &&
+            recommendationInfo.favorites !== null;
+          const statCount =
+            (recommendationInfo.score ? 1 : 0) +
+            (recommendationInfo.rank ? 1 : 0) +
+            (recommendationInfo.popularity ? 1 : 0) +
+            (hasFavorites ? 1 : 0);
+          const soloSpan = statCount === 1 ? "col-span-2" : "";
+
+          if (statCount === 0) return null;
+
+          return (
+            <div className="grid grid-cols-2 gap-2 w-full max-w-[400px] mx-auto lg:mx-0">
+              {recommendationInfo.score && (
+                <div
+                  className={cn(
+                    "flex items-center gap-2 rounded-lg border p-2",
+                    soloSpan
+                  )}
+                >
+                  <div className="p-1.5 rounded-md bg-emerald-500/10 text-emerald-500 shrink-0">
+                    <Star className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs text-muted-foreground leading-none">
+                      Score
+                    </div>
+                    <div className="font-semibold text-sm truncate">
+                      {recommendationInfo.score}
+                      {recommendationInfo.scored_by && (
+                        <span className="font-normal text-muted-foreground">
+                          {" "}
+                          ({recommendationInfo.scored_by.toLocaleString()})
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {recommendationInfo.rank && (
+                <div
+                  className={cn(
+                    "flex items-center gap-2 rounded-lg border p-2",
+                    soloSpan
+                  )}
+                >
+                  <div className="p-1.5 rounded-md bg-amber-500/10 text-amber-500 shrink-0">
+                    <Award className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs text-muted-foreground leading-none">
+                      Rank
+                    </div>
+                    <div className="font-semibold text-sm truncate">
+                      #{recommendationInfo.rank}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {recommendationInfo.popularity && (
+                <div
+                  className={cn(
+                    "flex items-center gap-2 rounded-lg border p-2",
+                    soloSpan
+                  )}
+                >
+                  <div className="p-1.5 rounded-md bg-sky-500/10 text-sky-500 shrink-0">
+                    <TrendingUp className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs text-muted-foreground leading-none">
+                      Popularity
+                    </div>
+                    <div className="font-semibold text-sm truncate">
+                      #{recommendationInfo.popularity}
+                    </div>
+                  </div>
+                </div>
+              )}
+              {hasFavorites && (
+                <div
+                  className={cn(
+                    "flex items-center gap-2 rounded-lg border p-2",
+                    soloSpan
+                  )}
+                >
+                  <div className="p-1.5 rounded-md bg-rose-500/10 text-rose-500 shrink-0">
+                    <Heart className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs text-muted-foreground leading-none">
+                      Favorites
+                    </div>
+                    <div className="font-semibold text-sm truncate">
+                      {recommendationInfo.favorites!.toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })()}
       </aside>
 
       {/* Main Content */}
