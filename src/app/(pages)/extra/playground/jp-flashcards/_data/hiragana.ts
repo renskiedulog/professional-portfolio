@@ -1,5 +1,6 @@
 export type KanaChar = { char: string; romaji: string } | null;
-export type KanaRow = { consonant: string; chars: KanaChar[]; divider?: boolean };
+export type KanaGroup = "base" | "dakuten" | "handakuten";
+export type KanaRow = { consonant: string; chars: KanaChar[]; divider?: boolean; group?: KanaGroup };
 
 export const hiraganaRows: KanaRow[] = [
   { consonant: "—", chars: [
@@ -48,27 +49,27 @@ export const hiraganaRows: KanaRow[] = [
   { consonant: "g", chars: [
     { char: "が", romaji: "ga" }, { char: "ぎ", romaji: "gi" },
     { char: "ぐ", romaji: "gu" }, { char: "げ", romaji: "ge" }, { char: "ご", romaji: "go" },
-  ], divider: true },
+  ], divider: true, group: "dakuten" },
   { consonant: "z", chars: [
     { char: "ざ", romaji: "za" }, { char: "じ", romaji: "ji" },
     { char: "ず", romaji: "zu" }, { char: "ぜ", romaji: "ze" }, { char: "ぞ", romaji: "zo" },
-  ]},
+  ], group: "dakuten"},
   { consonant: "d", chars: [
     { char: "だ", romaji: "da" }, { char: "ぢ", romaji: "di" },
     { char: "づ", romaji: "du" }, { char: "で", romaji: "de" }, { char: "ど", romaji: "do" },
-  ]},
+  ], group: "dakuten"},
   { consonant: "b", chars: [
     { char: "ば", romaji: "ba" }, { char: "び", romaji: "bi" },
     { char: "ぶ", romaji: "bu" }, { char: "べ", romaji: "be" }, { char: "ぼ", romaji: "bo" },
-  ]},
+  ], group: "dakuten"},
   // Handakuten (゜) — semi-voiced
   { consonant: "p", chars: [
     { char: "ぱ", romaji: "pa" }, { char: "ぴ", romaji: "pi" },
     { char: "ぷ", romaji: "pu" }, { char: "ぺ", romaji: "pe" }, { char: "ぽ", romaji: "po" },
-  ]},
+  ], group: "handakuten"},
 ];
 
-export type YoonRow = { consonant: string; chars: KanaChar[] };
+export type YoonRow = { consonant: string; chars: KanaChar[]; base?: KanaGroup };
 
 export const hiraganaYoonRows: YoonRow[] = [
   { consonant: "ky", chars: [{ char: "きゃ", romaji: "kya" }, { char: "きゅ", romaji: "kyu" }, { char: "きょ", romaji: "kyo" }] },
@@ -78,11 +79,30 @@ export const hiraganaYoonRows: YoonRow[] = [
   { consonant: "hy", chars: [{ char: "ひゃ", romaji: "hya" }, { char: "ひゅ", romaji: "hyu" }, { char: "ひょ", romaji: "hyo" }] },
   { consonant: "my", chars: [{ char: "みゃ", romaji: "mya" }, { char: "みゅ", romaji: "myu" }, { char: "みょ", romaji: "myo" }] },
   { consonant: "ry", chars: [{ char: "りゃ", romaji: "rya" }, { char: "りゅ", romaji: "ryu" }, { char: "りょ", romaji: "ryo" }] },
-  { consonant: "gy", chars: [{ char: "ぎゃ", romaji: "gya" }, { char: "ぎゅ", romaji: "gyu" }, { char: "ぎょ", romaji: "gyo" }] },
-  { consonant: "j",  chars: [{ char: "じゃ", romaji: "ja"  }, { char: "じゅ", romaji: "ju"  }, { char: "じょ", romaji: "jo"  }] },
-  { consonant: "by", chars: [{ char: "びゃ", romaji: "bya" }, { char: "びゅ", romaji: "byu" }, { char: "びょ", romaji: "byo" }] },
-  { consonant: "py", chars: [{ char: "ぴゃ", romaji: "pya" }, { char: "ぴゅ", romaji: "pyu" }, { char: "ぴょ", romaji: "pyo" }] },
+  { consonant: "gy", chars: [{ char: "ぎゃ", romaji: "gya" }, { char: "ぎゅ", romaji: "gyu" }, { char: "ぎょ", romaji: "gyo" }], base: "dakuten" },
+  { consonant: "j",  chars: [{ char: "じゃ", romaji: "ja"  }, { char: "じゅ", romaji: "ju"  }, { char: "じょ", romaji: "jo"  }], base: "dakuten" },
+  { consonant: "by", chars: [{ char: "びゃ", romaji: "bya" }, { char: "びゅ", romaji: "byu" }, { char: "びょ", romaji: "byo" }], base: "dakuten" },
+  { consonant: "py", chars: [{ char: "ぴゃ", romaji: "pya" }, { char: "ぴゅ", romaji: "pyu" }, { char: "ぴょ", romaji: "pyo" }], base: "handakuten" },
 ];
+
+// Builds a card subset from the selected groups. Yoon rows inherit their
+// base group (ぎゃ is dakuten), so they follow the dakuten/handakuten toggles.
+export type KanaSet = { base: boolean; dakuten: boolean; handakuten: boolean; yoon: boolean };
+
+export function buildKanaCards(rows: KanaRow[], yoonRows: YoonRow[], set: KanaSet) {
+  const allowed = (g: KanaGroup) =>
+    g === "base" ? set.base : g === "dakuten" ? set.dakuten : set.handakuten;
+
+  const plain = rows
+    .filter((row) => allowed(row.group ?? "base"))
+    .flatMap((row) => row.chars);
+
+  const yoon = set.yoon
+    ? yoonRows.filter((row) => allowed(row.base ?? "base")).flatMap((row) => row.chars)
+    : [];
+
+  return [...plain, ...yoon].filter((c): c is NonNullable<KanaChar> => c !== null);
+}
 
 const baseCards = hiraganaRows
   .flatMap((row) => row.chars)

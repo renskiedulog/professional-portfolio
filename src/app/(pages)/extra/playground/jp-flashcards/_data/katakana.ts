@@ -47,24 +47,24 @@ export const katakanaRows: KanaRow[] = [
   { consonant: "g", chars: [
     { char: "ガ", romaji: "ga" }, { char: "ギ", romaji: "gi" },
     { char: "グ", romaji: "gu" }, { char: "ゲ", romaji: "ge" }, { char: "ゴ", romaji: "go" },
-  ], divider: true },
+  ], divider: true, group: "dakuten" },
   { consonant: "z", chars: [
     { char: "ザ", romaji: "za" }, { char: "ジ", romaji: "ji" },
     { char: "ズ", romaji: "zu" }, { char: "ゼ", romaji: "ze" }, { char: "ゾ", romaji: "zo" },
-  ]},
+  ], group: "dakuten"},
   { consonant: "d", chars: [
     { char: "ダ", romaji: "da" }, { char: "ヂ", romaji: "di" },
     { char: "ヅ", romaji: "du" }, { char: "デ", romaji: "de" }, { char: "ド", romaji: "do" },
-  ]},
+  ], group: "dakuten"},
   { consonant: "b", chars: [
     { char: "バ", romaji: "ba" }, { char: "ビ", romaji: "bi" },
     { char: "ブ", romaji: "bu" }, { char: "ベ", romaji: "be" }, { char: "ボ", romaji: "bo" },
-  ]},
+  ], group: "dakuten"},
   // Handakuten (゜) — semi-voiced
   { consonant: "p", chars: [
     { char: "パ", romaji: "pa" }, { char: "ピ", romaji: "pi" },
     { char: "プ", romaji: "pu" }, { char: "ペ", romaji: "pe" }, { char: "ポ", romaji: "po" },
-  ]},
+  ], group: "handakuten"},
 ];
 
 export const katakanaYoonRows: YoonRow[] = [
@@ -75,10 +75,10 @@ export const katakanaYoonRows: YoonRow[] = [
   { consonant: "hy", chars: [{ char: "ヒャ", romaji: "hya" }, { char: "ヒュ", romaji: "hyu" }, { char: "ヒョ", romaji: "hyo" }] },
   { consonant: "my", chars: [{ char: "ミャ", romaji: "mya" }, { char: "ミュ", romaji: "myu" }, { char: "ミョ", romaji: "myo" }] },
   { consonant: "ry", chars: [{ char: "リャ", romaji: "rya" }, { char: "リュ", romaji: "ryu" }, { char: "リョ", romaji: "ryo" }] },
-  { consonant: "gy", chars: [{ char: "ギャ", romaji: "gya" }, { char: "ギュ", romaji: "gyu" }, { char: "ギョ", romaji: "gyo" }] },
-  { consonant: "j",  chars: [{ char: "ジャ", romaji: "ja"  }, { char: "ジュ", romaji: "ju"  }, { char: "ジョ", romaji: "jo"  }] },
-  { consonant: "by", chars: [{ char: "ビャ", romaji: "bya" }, { char: "ビュ", romaji: "byu" }, { char: "ビョ", romaji: "byo" }] },
-  { consonant: "py", chars: [{ char: "ピャ", romaji: "pya" }, { char: "ピュ", romaji: "pyu" }, { char: "ピョ", romaji: "pyo" }] },
+  { consonant: "gy", chars: [{ char: "ギャ", romaji: "gya" }, { char: "ギュ", romaji: "gyu" }, { char: "ギョ", romaji: "gyo" }], base: "dakuten" },
+  { consonant: "j",  chars: [{ char: "ジャ", romaji: "ja"  }, { char: "ジュ", romaji: "ju"  }, { char: "ジョ", romaji: "jo"  }], base: "dakuten" },
+  { consonant: "by", chars: [{ char: "ビャ", romaji: "bya" }, { char: "ビュ", romaji: "byu" }, { char: "ビョ", romaji: "byo" }], base: "dakuten" },
+  { consonant: "py", chars: [{ char: "ピャ", romaji: "pya" }, { char: "ピュ", romaji: "pyu" }, { char: "ピョ", romaji: "pyo" }], base: "handakuten" },
 ];
 
 const baseCards = katakanaRows

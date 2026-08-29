@@ -1,9 +1,13 @@
 "use client";
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { ArrowLeft, ChevronRight, RotateCcw, BookOpen, FlaskConical, Puzzle, PencilLine, Keyboard, Type } from "lucide-react";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { ArrowLeft, ChevronRight, RotateCcw, BookOpen, FlaskConical, Puzzle, PencilLine, Keyboard, Type, Library } from "lucide-react";
 import BackButton from "@/app/UI/global-components/back-button";
-import { hiraganaCards } from "../_data/hiragana";
-import { katakanaCards } from "../_data/katakana";
+import KanjiStudyMode from "./kanji-study.client";
+import {
+  hiraganaCards, hiraganaRows, hiraganaYoonRows, buildKanaCards,
+  type KanaSet,
+} from "../_data/hiragana";
+import { katakanaCards, katakanaRows, katakanaYoonRows } from "../_data/katakana";
 import { kanjiCards } from "../_data/kanji";
 import { vocabCards } from "../_data/vocabulary";
 import { particleList, particleCards } from "../_data/particles";
@@ -11,7 +15,7 @@ import { numberCards } from "../_data/numbers";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type DeckKey = "hiragana" | "katakana" | "kanji" | "vocabulary" | "particles" | "numbers";
-type Mode = "select" | "learning" | "test" | "type" | "match" | "fillinblank" | "write";
+type Mode = "select" | "learning" | "test" | "type" | "match" | "fillinblank" | "write" | "study";
 type FlashCard = { front: string; back: string; reading?: string };
 type MatchTile = { id: number; pairId: number; content: string; isKana: boolean };
 type FillQuestion = { before: string; after: string; romaji: string; en: string; answer: string; choices: string[] };
@@ -34,6 +38,19 @@ const DECK_INFO: Record<DeckKey, { label: string; jp: string; desc: string }> = 
   particles:  { label: "Particles",  jp: "助詞",   desc: "Japanese particles · N5 level · 14 entries" },
   numbers:    { label: "Numbers",    jp: "数字",   desc: "Japanese numbers · 0 to 10,000 · 31 entries" },
 };
+
+// Kana subsets — lets you drill the plain gojuon without dakuten/combos.
+const KANA_SET_OPTIONS: {
+  key: keyof KanaSet; label: string; jp: string;
+  sample: Record<"hiragana" | "katakana", string>;
+}[] = [
+  { key: "base",       label: "Base",       jp: "五十音", sample: { hiragana: "あ か さ た", katakana: "ア カ サ タ" } },
+  { key: "dakuten",    label: "Dakuten",    jp: "濁音",       sample: { hiragana: "が ざ だ ば", katakana: "ガ ザ ダ バ" } },
+  { key: "handakuten", label: "Handakuten", jp: "半濁音", sample: { hiragana: "ぱ ぴ ぷ", katakana: "パ ピ プ" } },
+  { key: "yoon",       label: "Combos",     jp: "拗音",       sample: { hiragana: "きゃ しゅ ちょ", katakana: "キャ シュ チョ" } },
+];
+
+const DEFAULT_KANA_SET: KanaSet = { base: true, dakuten: false, handakuten: false, yoon: false };
 
 // ── Utilities ─────────────────────────────────────────────────────────────────
 function shuffle<T>(arr: T[]): T[] {
@@ -925,6 +942,8 @@ function buildMatchTiles(allCards: FlashCard[]): MatchTile[] {
 function MatchGame({ cards: allCards, label, onBack }: {
   cards: FlashCard[]; label: string; onBack: () => void;
 }) {
+  // A small character-set selection can hold fewer cards than MATCH_PAIRS.
+  const pairCount = Math.min(MATCH_PAIRS, allCards.length);
   const [tiles, setTiles]           = useState<MatchTile[]>(() => buildMatchTiles(allCards));
   const [flippedIds, setFlippedIds] = useState<number[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<Set<number>>(new Set());
@@ -944,8 +963,8 @@ function MatchGame({ cards: allCards, label, onBack }: {
   }, [done]);
 
   useEffect(() => {
-    if (matchedPairs.size === MATCH_PAIRS) setDone(true);
-  }, [matchedPairs]);
+    if (matchedPairs.size === pairCount) setDone(true);
+  }, [matchedPairs, pairCount]);
 
   const handleClick = useCallback((tile: MatchTile) => {
     if (lockRef.current) return;
@@ -989,16 +1008,16 @@ function MatchGame({ cards: allCards, label, onBack }: {
   }, [allCards]);
 
   const fmt = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-  const accuracy = attempts > 0 ? Math.round((MATCH_PAIRS / attempts) * 100) : 100;
+  const accuracy = attempts > 0 ? Math.round((pairCount / attempts) * 100) : 100;
 
   if (done) {
-    const emoji = attempts <= MATCH_PAIRS + 1 ? "🏆" : attempts <= MATCH_PAIRS * 2 ? "🎉" : "👍";
+    const emoji = attempts <= pairCount + 1 ? "🏆" : attempts <= pairCount * 2 ? "🎉" : "👍";
     return (
       <div className="min-h-[70dvh] flex flex-col items-center justify-center gap-10">
         <div className="text-center space-y-2">
           <div className="text-5xl mb-3">{emoji}</div>
           <h2 className="text-2xl font-bold">All Matched!</h2>
-          <p className="text-sm text-muted-foreground">{label} · {MATCH_PAIRS} pairs</p>
+          <p className="text-sm text-muted-foreground">{label} · {pairCount} pairs</p>
         </div>
         <div className="flex gap-8 text-center">
           <Stat value={attempts} label="Attempts" />
@@ -1030,7 +1049,7 @@ function MatchGame({ cards: allCards, label, onBack }: {
       <div className="flex items-center justify-between text-xs text-muted-foreground">
         <span>
           <span className="font-semibold text-emerald-600 dark:text-emerald-400">{matchedPairs.size}</span>
-          <span className="opacity-60"> / {MATCH_PAIRS} matched</span>
+          <span className="opacity-60"> / {pairCount} matched</span>
         </span>
         <span className="flex gap-3">
           <span>{attempts} attempts</span>
@@ -1041,7 +1060,7 @@ function MatchGame({ cards: allCards, label, onBack }: {
       <div className="h-1 bg-border rounded-full overflow-hidden">
         <div
           className="h-full bg-emerald-500 rounded-full transition-all duration-500"
-          style={{ width: `${(matchedPairs.size / MATCH_PAIRS) * 100}%` }}
+          style={{ width: `${(matchedPairs.size / pairCount) * 100}%` }}
         />
       </div>
 
@@ -1090,13 +1109,17 @@ function MatchGame({ cards: allCards, label, onBack }: {
 }
 
 // ── Mode Select ───────────────────────────────────────────────────────────────
-function ModeSelect({ info, deck, onSelect }: {
+function ModeSelect({ info, deck, kanaSet, onToggleKanaSet, cardCount, onSelect }: {
   info: (typeof DECK_INFO)[DeckKey];
   deck: DeckKey;
-  onSelect: (mode: "learning" | "test" | "type" | "match" | "fillinblank" | "write") => void;
+  kanaSet: KanaSet;
+  onToggleKanaSet: (key: keyof KanaSet) => void;
+  cardCount: number;
+  onSelect: (mode: Exclude<Mode, "select">) => void;
 }) {
   const isParticles = deck === "particles";
   const isKana = deck === "hiragana" || deck === "katakana";
+  const isKanji = deck === "kanji";
   return (
     <div className="flex flex-col gap-10 py-4">
       <div>
@@ -1104,14 +1127,70 @@ function ModeSelect({ info, deck, onSelect }: {
           <h1 className="text-3xl font-bold jp-char">{info.label}</h1>
           <span className="text-xl text-muted-foreground jp-char">{info.jp}</span>
         </div>
-        <p className="text-sm text-muted-foreground">{info.desc}</p>
+        <p className="text-sm text-muted-foreground">
+          {isKana ? `${info.desc.split(" · ")[0]} · ${cardCount} characters selected` : info.desc}
+        </p>
       </div>
+
+      {isKana && (
+        <div>
+          <p className="text-[11px] font-semibold text-muted-foreground mb-4 uppercase tracking-widest">
+            Character sets
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {KANA_SET_OPTIONS.map((opt) => {
+              const active = kanaSet[opt.key];
+              return (
+                <button
+                  key={opt.key}
+                  onClick={() => onToggleKanaSet(opt.key)}
+                  aria-pressed={active}
+                  className={`rounded-xl border-2 px-4 py-3 text-left transition-all duration-200 active:scale-[0.98] ${
+                    active
+                      ? "border-foreground bg-foreground/[0.04]"
+                      : "border-border opacity-55 hover:opacity-100 hover:border-foreground/40"
+                  }`}
+                >
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-sm font-bold">{opt.label}</span>
+                    <span className="text-xs text-muted-foreground jp-char">{opt.jp}</span>
+                  </div>
+                  <div className="mt-1 text-sm text-muted-foreground jp-char">
+                    {opt.sample[deck as "hiragana" | "katakana"]}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Applies to every mode below. At least one set stays on.
+          </p>
+        </div>
+      )}
 
       <div>
         <p className="text-[11px] font-semibold text-muted-foreground mb-4 uppercase tracking-widest">
           Choose a study mode
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
+          {isKanji && (
+            <button
+              onClick={() => onSelect("study")}
+              className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99] sm:col-span-2"
+            >
+              <Library size={28} className="mb-4 opacity-70" />
+              <div className="font-bold text-lg mb-2">Study</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Not flashcards. Read each kanji properly — where the shape came from, which parts it is
+                built from and what they mean, how the meaning shifts across compounds, and example
+                sentences that use it in place.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+                Open Study <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
+
           <button
             onClick={() => onSelect("learning")}
             className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
@@ -1224,14 +1303,40 @@ function ModeSelect({ info, deck, onSelect }: {
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function DeckClient({ deck }: { deck: DeckKey }) {
   const [mode, setMode] = useState<Mode>("select");
+  const [kanaSet, setKanaSet] = useState<KanaSet>(DEFAULT_KANA_SET);
   const info = DECK_INFO[deck];
-  const cards = CARD_POOLS[deck];
+  const isKana = deck === "hiragana" || deck === "katakana";
+
+  const cards = useMemo(() => {
+    if (!isKana) return CARD_POOLS[deck];
+    const rows = deck === "hiragana" ? hiraganaRows : katakanaRows;
+    const yoonRows = deck === "hiragana" ? hiraganaYoonRows : katakanaYoonRows;
+    return buildKanaCards(rows, yoonRows, kanaSet).map((c) => ({ front: c.char, back: c.romaji }));
+  }, [deck, isKana, kanaSet]);
+
+  const handleToggleKanaSet = useCallback((key: keyof KanaSet) => {
+    setKanaSet((prev) => {
+      const next = { ...prev, [key]: !prev[key] };
+      // Never leave the deck empty.
+      if (!Object.values(next).some(Boolean)) return prev;
+      return next;
+    });
+  }, []);
 
   const handleBack = useCallback(() => setMode("select"), []);
 
   return (
     <PageShell onBack={mode !== "select" ? handleBack : undefined}>
-      {mode === "select" && <ModeSelect info={info} deck={deck} onSelect={setMode} />}
+      {mode === "select" && (
+        <ModeSelect
+          info={info}
+          deck={deck}
+          kanaSet={kanaSet}
+          onToggleKanaSet={handleToggleKanaSet}
+          cardCount={cards.length}
+          onSelect={setMode}
+        />
+      )}
       {mode === "learning" && (
         <LearningMode cards={cards} label={info.label} onBack={handleBack} />
       )}
@@ -1247,6 +1352,7 @@ export default function DeckClient({ deck }: { deck: DeckKey }) {
       {mode === "fillinblank" && (
         <FillInBlankGame label={info.label} onBack={handleBack} />
       )}
+      {mode === "study" && <KanjiStudyMode onBack={handleBack} />}
       {mode === "write" && (
         <WriteMode cards={cards} label={info.label} deck={deck} onBack={handleBack} />
       )}
