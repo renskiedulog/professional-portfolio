@@ -123,7 +123,7 @@ const ServicePage = async () => {
         </div>
         <Services />
         {/* Pricing */}
-        <Pricing status={status as "unavailable" | "busy"} />
+        {/* <Pricing status={status as "unavailable" | "busy"} /> */}
         {/* How It's Delivered */}
         {/* <WorkFlow /> */}
       </BlurFade>

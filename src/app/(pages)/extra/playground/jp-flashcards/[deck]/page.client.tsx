@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
-import { ArrowLeft, ChevronRight, RotateCcw, BookOpen, FlaskConical, Puzzle, PencilLine, Keyboard, Type, Library } from "lucide-react";
+import { ArrowLeft, ChevronRight, RotateCcw, BookOpen, FlaskConical, Puzzle, PencilLine, Keyboard, Type, Library, Repeat, Languages, Timer, Search, ArrowUpDown } from "lucide-react";
 import BackButton from "@/app/UI/global-components/back-button";
 import KanjiStudyMode from "./kanji-study.client";
 import {
   hiraganaCards, hiraganaRows, hiraganaYoonRows, buildKanaCards,
-  type KanaSet,
+  type KanaSet, type KanaRow, type YoonRow,
 } from "../_data/hiragana";
 import { katakanaCards, katakanaRows, katakanaYoonRows } from "../_data/katakana";
 import { kanjiCards } from "../_data/kanji";
@@ -15,10 +15,16 @@ import { numberCards } from "../_data/numbers";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type DeckKey = "hiragana" | "katakana" | "kanji" | "vocabulary" | "particles" | "numbers";
-type Mode = "select" | "learning" | "test" | "type" | "match" | "fillinblank" | "write" | "study";
+type Mode =
+  | "select" | "learning" | "test" | "type" | "match" | "fillinblank" | "write" | "study"
+  | "reverse" | "reading" | "timeattack" | "oddone" | "sort";
 type FlashCard = { front: string; back: string; reading?: string };
 type MatchTile = { id: number; pairId: number; content: string; isKana: boolean };
 type FillQuestion = { before: string; after: string; romaji: string; en: string; answer: string; choices: string[] };
+// Reused by every multiple-choice mode (reverse, kanji reading, time attack).
+type QuizQuestion = { prompt: string; promptSub?: string; answer: string; choices: string[] };
+// A gojuon row, a yoon row, or a kanji category — whatever the deck groups by.
+type CharGroup = { label: string; jp?: string; items: { char: string; romaji: string }[] };
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 const CARD_POOLS: Record<DeckKey, FlashCard[]> = {
@@ -69,6 +75,32 @@ function generateChoices(correct: FlashCard, pool: FlashCard[]): string[] {
     .slice(0, 3)
     .map((c) => c.back);
   return shuffle([correct.back, ...distractors]);
+}
+
+// Same idea as generateChoices, but for any plain string field (kana, readings…).
+function generateChoicesFrom(correct: string, pool: string[], n = 3): string[] {
+  const distractors = Array.from(new Set(pool))
+    .filter((v) => v !== correct)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, n);
+  return shuffle([correct, ...distractors]);
+}
+
+// Kana rows narrowed to the character sets the user turned on.
+function selectedKanaGroups(rows: KanaRow[], yoonRows: YoonRow[], set: KanaSet): CharGroup[] {
+  const allowed = (g?: "base" | "dakuten" | "handakuten") =>
+    g === "dakuten" ? set.dakuten : g === "handakuten" ? set.handakuten : set.base;
+
+  const toGroup = (consonant: string, chars: ({ char: string; romaji: string } | null)[]): CharGroup => ({
+    label: `${consonant} row`,
+    items: chars.filter((c): c is { char: string; romaji: string } => c !== null),
+  });
+
+  const plain = rows.filter((r) => allowed(r.group)).map((r) => toGroup(r.consonant, r.chars));
+  const yoon = set.yoon
+    ? yoonRows.filter((r) => allowed(r.base)).map((r) => toGroup(r.consonant, r.chars))
+    : [];
+  return [...plain, ...yoon];
 }
 
 // ── Shared: Page shell ────────────────────────────────────────────────────────
@@ -1108,6 +1140,538 @@ function MatchGame({ cards: allCards, label, onBack }: {
   );
 }
 
+// ── Shared: choice button styles ──────────────────────────────────────────────
+const QUIZ_CHOICE_STYLES: Record<string, string> = {
+  idle:    "border-border hover:border-foreground/40 hover:bg-foreground/[0.03] active:scale-[0.99]",
+  correct: "border-emerald-400 bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-600 scale-[1.01]",
+  wrong:   "border-rose-400 bg-rose-50 text-rose-800 dark:bg-rose-950 dark:text-rose-300 dark:border-rose-600",
+};
+
+// ── Shared: empty state ───────────────────────────────────────────────────────
+function NotEnoughData({ message, onBack }: { message: string; onBack: () => void }) {
+  return (
+    <div className="min-h-[60dvh] flex flex-col items-center justify-center gap-6 text-center">
+      <div className="text-4xl opacity-40">🗂️</div>
+      <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">{message}</p>
+      <button
+        onClick={onBack}
+        className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background font-semibold text-sm transition-all hover:opacity-85 active:scale-[0.98]"
+      >
+        Change Mode <ChevronRight size={13} />
+      </button>
+    </div>
+  );
+}
+
+// ── Shared: Multiple-choice quiz ──────────────────────────────────────────────
+// Backs both Reverse Test (romaji/meaning → character) and the kanji Reading Test.
+function ChoiceQuizMode({ questions, label, promptClass, choiceClass, hint, onBack }: {
+  questions: QuizQuestion[]; label: string;
+  promptClass: string; choiceClass: string; hint: string;
+  onBack: () => void;
+}) {
+  const [index, setIndex] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [score, setScore] = useState(0);
+  const [animKey, setAnimKey] = useState(0);
+
+  const isDone = index >= questions.length;
+  const q = questions[index];
+
+  const handleChoice = useCallback((choice: string) => {
+    if (selected !== null) return;
+    setSelected(choice);
+    if (choice === q.answer) setScore((s) => s + 1);
+    setTimeout(() => {
+      setIndex((i) => i + 1);
+      setSelected(null);
+      setAnimKey((k) => k + 1);
+    }, 950);
+  }, [selected, q]);
+
+  const handleRestart = useCallback(() => {
+    setIndex(0); setSelected(null); setScore(0); setAnimKey((k) => k + 1);
+  }, []);
+
+  if (questions.length === 0) return (
+    <NotEnoughData message="This deck has nothing to quiz on yet." onBack={onBack} />
+  );
+
+  if (isDone) return (
+    <EndScreen label={label} total={questions.length} score={score}
+      mode="test" onRestart={handleRestart} onBack={onBack} />
+  );
+
+  const getVariant = (choice: string) => {
+    if (selected === null) return "idle";
+    if (choice === q.answer) return "correct";
+    if (choice === selected) return "wrong";
+    return "idle";
+  };
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex items-center justify-between">
+        <ProgressBar current={index} total={questions.length} />
+        <span className="ml-4 text-xs font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums shrink-0">
+          {score} correct
+        </span>
+      </div>
+
+      {/* Prompt card */}
+      <div key={animKey} className="w-full max-w-sm mx-auto rounded-2xl border border-border bg-card shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-10 min-h-[200px]">
+        <span className={`${promptClass} font-medium leading-tight text-center`}>{q.prompt}</span>
+        {q.promptSub && (
+          <span className="text-sm text-muted-foreground text-center">{q.promptSub}</span>
+        )}
+      </div>
+
+      {/* Choices 2×2 grid */}
+      <div className="grid grid-cols-2 gap-2.5 w-full max-w-sm mx-auto">
+        {q.choices.map((choice, i) => (
+          <button
+            key={i}
+            onClick={() => handleChoice(choice)}
+            disabled={selected !== null}
+            className={`py-4 px-3 rounded-xl border-2 font-semibold text-center transition-all duration-150 ${choiceClass} ${QUIZ_CHOICE_STYLES[getVariant(choice)]}`}
+          >
+            {choice}
+          </button>
+        ))}
+      </div>
+
+      <p className="text-center text-[11px] text-muted-foreground/50 tracking-wider">{hint}</p>
+    </div>
+  );
+}
+
+// Reverse of the normal test: you are shown the meaning/romaji and pick the character.
+function buildReverseQuestions(cards: FlashCard[]): QuizQuestion[] {
+  const fronts = cards.map((c) => c.front);
+  return shuffle(cards).map((c) => ({
+    prompt: c.back,
+    answer: c.front,
+    choices: generateChoicesFrom(c.front, fronts),
+  }));
+}
+
+// Kanji only — tests the reading instead of the meaning.
+function buildReadingQuestions(): QuizQuestion[] {
+  const readings = kanjiCards.map((c) => c.reading);
+  return shuffle(kanjiCards).map((c) => ({
+    prompt: c.front,
+    promptSub: c.meaning,
+    answer: c.reading,
+    choices: generateChoicesFrom(c.reading, readings),
+  }));
+}
+
+// ── Time Attack ───────────────────────────────────────────────────────────────
+const TIME_ATTACK_SECONDS = 60;
+const STREAK_BONUS_CAP = 10;
+
+function TimeAttackMode({ cards: allCards, label, onBack }: {
+  cards: FlashCard[]; label: string; onBack: () => void;
+}) {
+  const [queue, setQueue]   = useState(() => shuffle(allCards));
+  const [index, setIndex]   = useState(0);
+  const [timeLeft, setTime] = useState(TIME_ATTACK_SECONDS);
+  const [score, setScore]   = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [best, setBest]     = useState(0);
+  const [correct, setCorrect] = useState(0);
+  const [wrong, setWrong]     = useState(0);
+  const [flash, setFlash]     = useState<"correct" | "wrong" | null>(null);
+  const [runId, setRunId]     = useState(0);
+
+  const done = timeLeft <= 0;
+  const card = queue[index];
+  const choices = useMemo(
+    () => (card ? generateChoices(card, allCards) : []),
+    [card, allCards]
+  );
+
+  useEffect(() => {
+    if (done) return;
+    const t = setInterval(() => setTime((s) => Math.max(0, s - 1)), 1000);
+    return () => clearInterval(t);
+  }, [done, runId]);
+
+  const handleChoice = useCallback((choice: string) => {
+    if (done || !card) return;
+    const ok = choice === card.back;
+    if (ok) {
+      const next = streak + 1;
+      setScore((s) => s + 10 + Math.min(streak, STREAK_BONUS_CAP) * 2);
+      setStreak(next);
+      setBest((b) => Math.max(b, next));
+      setCorrect((c) => c + 1);
+    } else {
+      setStreak(0);
+      setWrong((w) => w + 1);
+    }
+    setFlash(ok ? "correct" : "wrong");
+    setTimeout(() => setFlash(null), 220);
+
+    // Rapid-fire: advance straight away, reshuffling once the pool runs out.
+    const nextIdx = index + 1;
+    if (nextIdx >= queue.length) { setQueue(shuffle(allCards)); setIndex(0); }
+    else setIndex(nextIdx);
+  }, [done, card, streak, index, queue.length, allCards]);
+
+  const handleRestart = useCallback(() => {
+    setQueue(shuffle(allCards));
+    setIndex(0); setTime(TIME_ATTACK_SECONDS); setScore(0);
+    setStreak(0); setBest(0); setCorrect(0); setWrong(0); setFlash(null);
+    setRunId((r) => r + 1);
+  }, [allCards]);
+
+  if (done) {
+    const answered = correct + wrong;
+    const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+    const emoji = accuracy >= 80 && correct >= 20 ? "🏆" : accuracy >= 60 ? "🎉" : "📚";
+    return (
+      <div className="min-h-[70dvh] flex flex-col items-center justify-center gap-10">
+        <div className="text-center space-y-2">
+          <div className="text-5xl mb-3">{emoji}</div>
+          <h2 className="text-2xl font-bold">Time&apos;s Up</h2>
+          <p className="text-sm text-muted-foreground">{label} · {TIME_ATTACK_SECONDS}s run</p>
+        </div>
+        <div className="flex gap-8 text-center">
+          <Stat value={score} label="Score" />
+          <Divider />
+          <Stat value={correct} label="Correct" color="emerald" />
+          <Divider />
+          <Stat value={wrong} label="Wrong" color="rose" />
+          <Divider />
+          <Stat value={best} label="Best Streak" />
+        </div>
+        <div className="flex gap-3">
+          <button
+            onClick={handleRestart}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl border-2 border-border hover:border-foreground/40 font-semibold text-sm transition-all hover:-translate-y-px active:scale-[0.98]"
+          >
+            <RotateCcw size={13} /> Run Again
+          </button>
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background font-semibold text-sm transition-all hover:opacity-85 active:scale-[0.98]"
+          >
+            Change Mode <ChevronRight size={13} />
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!card) return (
+    <NotEnoughData message="This deck has nothing to quiz on yet." onBack={onBack} />
+  );
+
+  const urgent = timeLeft <= 10;
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex items-center justify-between gap-4">
+        <div className={`text-2xl font-bold tabular-nums transition-colors ${
+          urgent ? "text-rose-500 animate-pulse" : ""
+        }`}>
+          {timeLeft}s
+        </div>
+        <div className="flex items-center gap-4 text-xs">
+          <span className="font-semibold tabular-nums">{score} pts</span>
+          <span className={`font-semibold tabular-nums ${streak >= 3 ? "text-amber-500" : "text-muted-foreground"}`}>
+            {streak > 0 ? `🔥 ${streak}` : "—"}
+          </span>
+        </div>
+      </div>
+
+      <div className="h-1 bg-border rounded-full overflow-hidden">
+        <div
+          className={`h-full rounded-full transition-all duration-1000 ease-linear ${urgent ? "bg-rose-500" : "bg-foreground"}`}
+          style={{ width: `${(timeLeft / TIME_ATTACK_SECONDS) * 100}%` }}
+        />
+      </div>
+
+      {/* Question card */}
+      <div className={`w-full max-w-sm mx-auto rounded-2xl border-2 bg-card flex items-center justify-center p-10 min-h-[200px] transition-colors duration-150 ${
+        flash === "correct"
+          ? "border-emerald-400"
+          : flash === "wrong"
+          ? "border-rose-400"
+          : "border-border"
+      }`}>
+        <span className="jp-char text-7xl font-medium leading-none">{card.front}</span>
+      </div>
+
+      {/* Choices 2×2 grid */}
+      <div className="grid grid-cols-2 gap-2.5 w-full max-w-sm mx-auto">
+        {choices.map((choice, i) => (
+          <button
+            key={`${index}-${i}`}
+            onClick={() => handleChoice(choice)}
+            className={`py-4 px-3 rounded-xl border-2 text-sm font-semibold text-center transition-all duration-150 jp-mono ${QUIZ_CHOICE_STYLES.idle}`}
+          >
+            {choice}
+          </button>
+        ))}
+      </div>
+
+      <p className="text-center text-[11px] text-muted-foreground/50 tracking-wider">
+        NO PAUSE · LONGER STREAK = MORE POINTS
+      </p>
+    </div>
+  );
+}
+
+// ── Odd One Out ───────────────────────────────────────────────────────────────
+type OddQuestion = {
+  tiles: { char: string; romaji: string }[];
+  answer: string; groupLabel: string; oddLabel: string;
+};
+
+const ODD_ROUNDS = 12;
+
+function buildOddQuestions(groups: CharGroup[]): OddQuestion[] {
+  const usable = groups.filter((g) => g.items.length >= 3);
+  if (usable.length < 2) return [];
+
+  const out: OddQuestion[] = [];
+  for (let i = 0; i < ODD_ROUNDS; i++) {
+    const g = usable[Math.floor(Math.random() * usable.length)];
+    const others = groups.filter((o) => o.label !== g.label && o.items.length > 0);
+    if (others.length === 0) break;
+    const odd = others[Math.floor(Math.random() * others.length)];
+    const trio = shuffle(g.items).slice(0, 3);
+    const intruder = shuffle(odd.items)[0];
+    out.push({
+      tiles: shuffle([...trio, intruder]),
+      answer: intruder.char,
+      groupLabel: g.label,
+      oddLabel: odd.label,
+    });
+  }
+  return out;
+}
+
+function OddOneOutGame({ groups, label, onBack }: {
+  groups: CharGroup[]; label: string; onBack: () => void;
+}) {
+  const [questions, setQuestions] = useState<OddQuestion[]>(() => buildOddQuestions(groups));
+  const [index, setIndex]       = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [score, setScore]       = useState(0);
+  const [animKey, setAnimKey]   = useState(0);
+
+  const isDone = index >= questions.length;
+  const q = questions[index];
+
+  const handleChoice = useCallback((char: string) => {
+    if (selected !== null) return;
+    setSelected(char);
+    if (char === q.answer) setScore((s) => s + 1);
+    setTimeout(() => {
+      setIndex((i) => i + 1);
+      setSelected(null);
+      setAnimKey((k) => k + 1);
+    }, 1200);
+  }, [selected, q]);
+
+  const handleRestart = useCallback(() => {
+    setQuestions(buildOddQuestions(groups));
+    setIndex(0); setSelected(null); setScore(0); setAnimKey((k) => k + 1);
+  }, [groups]);
+
+  if (questions.length === 0) return (
+    <NotEnoughData
+      message="Odd One Out needs at least two groups of three characters. Turn on more character sets and try again."
+      onBack={onBack}
+    />
+  );
+
+  if (isDone) return (
+    <EndScreen label={label} total={questions.length} score={score}
+      mode="test" onRestart={handleRestart} onBack={onBack} />
+  );
+
+  const getVariant = (char: string) => {
+    if (selected === null) return "idle";
+    if (char === q.answer) return "correct";
+    if (char === selected) return "wrong";
+    return "idle";
+  };
+
+  return (
+    <div className="flex flex-col gap-5">
+      <div className="flex items-center justify-between">
+        <ProgressBar current={index} total={questions.length} />
+        <span className="ml-4 text-xs font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums shrink-0">
+          {score} correct
+        </span>
+      </div>
+
+      <p className="text-center text-sm text-muted-foreground">
+        Three of these belong together. Tap the one that does not.
+      </p>
+
+      {/* Tiles 2×2 */}
+      <div key={animKey} className="grid grid-cols-2 gap-3 w-full max-w-sm mx-auto">
+        {q.tiles.map((tile) => (
+          <button
+            key={tile.char}
+            onClick={() => handleChoice(tile.char)}
+            disabled={selected !== null}
+            className={`py-7 px-3 rounded-xl border-2 text-center transition-all duration-150 flex flex-col items-center gap-1.5 ${QUIZ_CHOICE_STYLES[getVariant(tile.char)]}`}
+          >
+            <span className="jp-char text-4xl font-medium leading-none">{tile.char}</span>
+            {selected !== null && (
+              <span className="jp-mono text-[10px] text-muted-foreground line-clamp-2">{tile.romaji}</span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {/* Feedback strip */}
+      <div className={`text-center text-xs h-8 transition-opacity duration-200 ${selected !== null ? "opacity-100" : "opacity-0"}`}>
+        {selected !== null && (
+          <span className={selected === q.answer ? "text-emerald-600 dark:text-emerald-400 font-medium" : "text-muted-foreground"}>
+            <span className="jp-char font-semibold">{q.answer}</span> is {q.oddLabel} — the rest are {q.groupLabel}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Row Sort ──────────────────────────────────────────────────────────────────
+function RowSortGame({ groups, label, onBack }: {
+  groups: CharGroup[]; label: string; onBack: () => void;
+}) {
+  const [rounds] = useState(() => shuffle(groups.filter((g) => g.items.length >= 2)));
+  const [index, setIndex]       = useState(0);
+  const [placed, setPlaced]     = useState<string[]>([]);
+  const [wrongChar, setWrong]   = useState<string | null>(null);
+  const [clean, setClean]       = useState(0);
+  const [roundClean, setRoundClean] = useState(true);
+  const [mistakes, setMistakes] = useState(0);
+
+  const round = rounds[index];
+  const scrambled = useMemo(() => (round ? shuffle(round.items) : []), [round]);
+
+  const handleTap = useCallback((char: string) => {
+    if (!round) return;
+    const expected = round.items[placed.length];
+    if (!expected || placed.includes(char)) return;
+
+    if (char !== expected.char) {
+      setWrong(char);
+      setMistakes((m) => m + 1);
+      setRoundClean(false);
+      setTimeout(() => setWrong(null), 450);
+      return;
+    }
+
+    const next = [...placed, char];
+    setPlaced(next);
+    if (next.length === round.items.length) {
+      const wasClean = roundClean;
+      setTimeout(() => {
+        if (wasClean) setClean((c) => c + 1);
+        setIndex((i) => i + 1);
+        setPlaced([]);
+        setRoundClean(true);
+      }, 650);
+    }
+  }, [round, placed, roundClean]);
+
+  const handleRestart = useCallback(() => {
+    setIndex(0); setPlaced([]); setWrong(null);
+    setClean(0); setRoundClean(true); setMistakes(0);
+  }, []);
+
+  if (rounds.length === 0) return (
+    <NotEnoughData
+      message="Row Sort needs rows of at least two characters. Turn on more character sets and try again."
+      onBack={onBack}
+    />
+  );
+
+  if (index >= rounds.length) return (
+    <EndScreen label={`${label} · ${mistakes} mistakes`} total={rounds.length} score={clean}
+      mode="test" onRestart={handleRestart} onBack={onBack} />
+  );
+
+  const isRowDone = placed.length === round.items.length;
+
+  return (
+    <div className="flex flex-col gap-5 max-w-md mx-auto w-full">
+      <div className="flex items-center justify-between">
+        <ProgressBar current={index} total={rounds.length} />
+        <span className="ml-4 text-xs font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums shrink-0">
+          {clean} clean
+        </span>
+      </div>
+
+      <div className="text-center">
+        <div className="text-lg font-bold">{round.label}</div>
+        <p className="text-xs text-muted-foreground mt-1">
+          Fill each slot with the matching character, in order.
+        </p>
+      </div>
+
+      {/* Answer slots — each labelled with the reading it expects */}
+      <div className="flex justify-center gap-2 flex-wrap">
+        {round.items.map((item, i) => {
+          const filled = placed[i];
+          const isNext = i === placed.length;
+          return (
+            <div key={item.char} className="flex flex-col items-center gap-1.5">
+              <div className={`w-16 h-16 rounded-xl border-2 flex items-center justify-center transition-all duration-200 ${
+                filled
+                  ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-950/50"
+                  : isNext
+                  ? "border-foreground bg-foreground/[0.04]"
+                  : "border-dashed border-border bg-card"
+              }`}>
+                {filled && <span className="jp-char text-3xl font-medium">{filled}</span>}
+              </div>
+              <span className="jp-mono text-[10px] text-muted-foreground">{item.romaji}</span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Scrambled characters */}
+      <div className="flex justify-center gap-2 flex-wrap min-h-[4rem]">
+        {scrambled.map((item) => {
+          const used = placed.includes(item.char);
+          const isWrong = wrongChar === item.char;
+          return (
+            <button
+              key={item.char}
+              onClick={() => handleTap(item.char)}
+              disabled={used || isRowDone}
+              className={`w-16 h-16 rounded-xl border-2 jp-char text-3xl font-medium transition-all duration-150 ${
+                used
+                  ? "opacity-0 pointer-events-none"
+                  : isWrong
+                  ? "border-rose-400 bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300"
+                  : "border-border bg-card hover:border-foreground/40 hover:bg-foreground/[0.03] active:scale-[0.97]"
+              }`}
+            >
+              {item.char}
+            </button>
+          );
+        })}
+      </div>
+
+      <p className="text-center text-[11px] text-muted-foreground/50 tracking-wider">
+        A ROW WITH NO MISTAKES COUNTS AS CLEAN
+      </p>
+    </div>
+  );
+}
+
 // ── Mode Select ───────────────────────────────────────────────────────────────
 function ModeSelect({ info, deck, kanaSet, onToggleKanaSet, cardCount, onSelect }: {
   info: (typeof DECK_INFO)[DeckKey];
@@ -1294,6 +1858,86 @@ function ModeSelect({ info, deck, kanaSet, onToggleKanaSet, cardCount, onSelect 
               </div>
             </button>
           )}
+
+          {(isKana || isKanji) && (
+            <button
+              onClick={() => onSelect("reverse")}
+              className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <Repeat size={28} className="mb-4 opacity-70" />
+              <div className="font-bold text-lg mb-2">Reverse Test</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                The test turned around. You get the {isKanji ? "meaning" : "romaji"} and pick the correct character from 4 options.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+                Start Reverse <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
+
+          {isKanji && (
+            <button
+              onClick={() => onSelect("reading")}
+              className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <Languages size={28} className="mb-4 opacity-70" />
+              <div className="font-bold text-lg mb-2">Reading Test</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Meaning is not enough. See the kanji and pick how it is actually read, not what it means.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+                Start Reading <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
+
+          {(isKana || isKanji) && (
+            <button
+              onClick={() => onSelect("timeattack")}
+              className="border-2 border-amber-300 dark:border-amber-800 rounded-2xl p-7 text-left group hover:border-amber-500 dark:hover:border-amber-600 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <Timer size={28} className="mb-4 opacity-70 text-amber-600 dark:text-amber-400" />
+              <div className="font-bold text-lg mb-2">Time Attack</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Sixty seconds, no pauses. Answer as many as you can — a longer streak is worth more points.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold text-amber-600 dark:text-amber-400 group-hover:gap-2.5 transition-all">
+                Start Run <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
+
+          {(isKana || isKanji) && (
+            <button
+              onClick={() => onSelect("oddone")}
+              className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <Search size={28} className="mb-4 opacity-70" />
+              <div className="font-bold text-lg mb-2">Odd One Out</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Four characters, three from the same {isKanji ? "category" : "row"}. Spot the one that does not belong.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+                Play Minigame <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
+
+          {isKana && (
+            <button
+              onClick={() => onSelect("sort")}
+              className="border-2 border-border rounded-2xl p-7 text-left group hover:border-foreground/50 hover:shadow-[0_4px_24px_rgba(0,0,0,0.07)] hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.99]"
+            >
+              <ArrowUpDown size={28} className="mb-4 opacity-70" />
+              <div className="font-bold text-lg mb-2">Row Sort</div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                A gojuon row, scrambled. Drop each character into its slot in order — か き く け こ, not か く き こ け.
+              </p>
+              <div className="mt-6 flex items-center gap-1.5 text-sm font-semibold group-hover:gap-2.5 transition-all">
+                Start Sorting <ChevronRight size={14} />
+              </div>
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -1313,6 +1957,30 @@ export default function DeckClient({ deck }: { deck: DeckKey }) {
     const yoonRows = deck === "hiragana" ? hiraganaYoonRows : katakanaYoonRows;
     return buildKanaCards(rows, yoonRows, kanaSet).map((c) => ({ front: c.char, back: c.romaji }));
   }, [deck, isKana, kanaSet]);
+
+  // Odd One Out and Row Sort group by gojuon row (kana) or category (kanji).
+  const charGroups = useMemo<CharGroup[]>(() => {
+    if (isKana) {
+      const rows = deck === "hiragana" ? hiraganaRows : katakanaRows;
+      const yoonRows = deck === "hiragana" ? hiraganaYoonRows : katakanaYoonRows;
+      return selectedKanaGroups(rows, yoonRows, kanaSet);
+    }
+    if (deck !== "kanji") return [];
+    const byCategory = new Map<string, CharGroup>();
+    kanjiCards.forEach((c) => {
+      const g = byCategory.get(c.category) ?? { label: c.category, items: [] };
+      g.items.push({ char: c.front, romaji: c.meaning });
+      byCategory.set(c.category, g);
+    });
+    return [...byCategory.values()];
+  }, [deck, isKana, kanaSet]);
+
+  // Built once per card pool so a parent re-render never reshuffles a quiz in progress.
+  const reverseQuestions = useMemo(() => buildReverseQuestions(cards), [cards]);
+  const readingQuestions = useMemo(
+    () => (deck === "kanji" ? buildReadingQuestions() : []),
+    [deck]
+  );
 
   const handleToggleKanaSet = useCallback((key: keyof KanaSet) => {
     setKanaSet((prev) => {
@@ -1351,6 +2019,35 @@ export default function DeckClient({ deck }: { deck: DeckKey }) {
       )}
       {mode === "fillinblank" && (
         <FillInBlankGame label={info.label} onBack={handleBack} />
+      )}
+      {mode === "reverse" && (
+        <ChoiceQuizMode
+          questions={reverseQuestions}
+          label={info.label}
+          promptClass="jp-mono text-4xl"
+          choiceClass="jp-char text-3xl"
+          hint="PICK THE CHARACTER"
+          onBack={handleBack}
+        />
+      )}
+      {mode === "reading" && (
+        <ChoiceQuizMode
+          questions={readingQuestions}
+          label={info.label}
+          promptClass="jp-char text-7xl"
+          choiceClass="jp-char text-sm"
+          hint="PICK THE CORRECT READING"
+          onBack={handleBack}
+        />
+      )}
+      {mode === "timeattack" && (
+        <TimeAttackMode cards={cards} label={info.label} onBack={handleBack} />
+      )}
+      {mode === "oddone" && (
+        <OddOneOutGame groups={charGroups} label={info.label} onBack={handleBack} />
+      )}
+      {mode === "sort" && (
+        <RowSortGame groups={charGroups} label={info.label} onBack={handleBack} />
       )}
       {mode === "study" && <KanjiStudyMode onBack={handleBack} />}
       {mode === "write" && (

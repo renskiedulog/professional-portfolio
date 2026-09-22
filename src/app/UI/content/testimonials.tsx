@@ -126,6 +126,9 @@ const TestimonialsSection: React.FC<Props> = ({ testimonials }) => {
 export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
   testimonial,
 }) => {
+  const withProtocol = (url?: string) =>
+    !url ? undefined : /^https?:\/\//i.test(url) ? url : `https://${url}`;
+
   return (
     <div className="flex flex-col justify-center select-none cursor-grab active:cursor-grabbing">
       {testimonial?.testimonial && (
@@ -167,7 +170,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
           <div className="flex gap-1 items-center">
             {testimonial.github && (
               <Link
-                href={testimonial.github}
+                href={withProtocol(testimonial.github) as string}
                 className="hover:opacity-80"
                 target="_blank"
                 aria-label={`Go to ${testimonial?.displayName}'s GitHub Profile`}
@@ -177,7 +180,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
             )}
             {testimonial.portfolio && (
               <Link
-                href={testimonial.portfolio}
+                href={withProtocol(testimonial.portfolio) as string}
                 className="hover:opacity-80"
                 target="_blank"
                 aria-label={`Go to ${testimonial?.displayName}'s Portfolio Website`}
@@ -187,7 +190,7 @@ export const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
             )}
             {testimonial.linkedin && (
               <Link
-                href={testimonial.linkedin}
+                href={withProtocol(testimonial.linkedin) as string}
                 className="hover:opacity-80"
                 target="_blank"
                 aria-label={`Go to ${testimonial?.displayName}'s LinkedIn Profile`}
