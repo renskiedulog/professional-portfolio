@@ -1,32 +1,16 @@
 import React from "react";
-import BlogPage from "./blog-page";
+import { Suspense } from "react";
+import BlogPage, { BlogPageWithParams } from "./blog-page";
+import { pageMetadata } from "@/lib/site";
 
 export const revalidate = 3600;
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Blog",
   description:
-    "Read articles on web development, React, Next.js, TypeScript, and software engineering by Renato Dulog.",
-  openGraph: {
-    title: "Blog | Renato Dulog",
-    description:
-      "Read articles on web development, React, Next.js, TypeScript, and software engineering by Renato Dulog.",
-    url: "https://renato-dulog.is-a.dev/blog",
-    siteName: "Renato Dulog | Developer Portfolio",
-    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Blog | Renato Dulog",
-    description:
-      "Read articles on web development, React, Next.js, TypeScript, and software engineering by Renato Dulog.",
-    images: ["https://renato-dulog.is-a.dev/me.webp"],
-  },
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/blog`,
-  },
-};
+    "Articles by Renato Dulog on web development, React, Next.js, TypeScript, AI in programming, and life as a developer.",
+  path: "/blog",
+});
 
 const getData = async () => {
   const [blogsReq, filtersReq] = await Promise.all([
@@ -68,7 +52,12 @@ const Page = async () => {
           }),
         }}
       />
-      <BlogPage blogs={blogs} filters={filters} />
+      <h1 className="sr-only">Blog by Renato Dulog</h1>
+      <Suspense
+        fallback={<BlogPage blogs={blogs} filters={filters} category={null} />}
+      >
+        <BlogPageWithParams blogs={blogs} filters={filters} />
+      </Suspense>
     </>
   );
 };

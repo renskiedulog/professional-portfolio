@@ -3,31 +3,14 @@ import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import { FaArrowRight, FaKeyboard, FaToriiGate } from "react-icons/fa6";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Playground",
   description:
     "Interactive mini-apps and games by Renato Dulog — typing speed tests, Japanese flashcards, and more.",
-  openGraph: {
-    title: "Playground | Renato Dulog",
-    description:
-      "Interactive mini-apps and games by Renato Dulog — typing speed tests, Japanese flashcards, and more.",
-    url: "https://renato-dulog.is-a.dev/extra/playground",
-    siteName: "Renato Dulog | Developer Portfolio",
-    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Playground | Renato Dulog",
-    description:
-      "Interactive mini-apps and games by Renato Dulog — typing speed tests, Japanese flashcards, and more.",
-    images: ["https://renato-dulog.is-a.dev/me.webp"],
-  },
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra/playground`,
-  },
-};
+  path: "/extra/playground",
+});
 
 const Playground = () => {
   return (
@@ -51,6 +34,7 @@ const Playground = () => {
           }),
         }}
       />
+      <h1 className="sr-only">Playground: mini-apps and games by Renato Dulog</h1>
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">

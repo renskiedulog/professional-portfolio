@@ -1,29 +1,12 @@
 import ClientStatsPage from "./page.client";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Stats",
   description:
     "Live coding stats and GitHub activity from Renato Dulog — contributions, streaks, languages, and more.",
-  openGraph: {
-    title: "Stats | Renato Dulog",
-    description:
-      "Live coding stats and GitHub activity from Renato Dulog — contributions, streaks, languages, and more.",
-    url: "https://renato-dulog.is-a.dev/extra/stats",
-    siteName: "Renato Dulog | Developer Portfolio",
-    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Stats | Renato Dulog",
-    description:
-      "Live coding stats and GitHub activity from Renato Dulog — contributions, streaks, languages, and more.",
-    images: ["https://renato-dulog.is-a.dev/me.webp"],
-  },
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra/stats`,
-  },
-};
+  path: "/extra/stats",
+});
 
 const StatsPage = () => {
   return (

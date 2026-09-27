@@ -19,6 +19,7 @@ import ProjectImages from "./images";
 import PortableTextComponents from "@/app/UI/sanity/portableTextComponents";
 import WorkSchema from "./project-schema";
 import { Metadata } from "next";
+import { OG_IMAGE, SITE_URL } from "@/lib/site";
 
 export async function generateMetadata({
   params,
@@ -32,9 +33,10 @@ export async function generateMetadata({
     return { title: "Project Not Found" };
   }
 
+  // images are asset URLs, crop via Sanity image params
   const image = info.images?.[0]
-    ? getSanityImageUrl(info.images[0])
-    : "https://renato-dulog.is-a.dev/me.webp";
+    ? `${info.images[0]}?w=1200&h=630&fit=crop&fm=jpg`
+    : OG_IMAGE;
 
   return {
     title: info.title,
@@ -42,9 +44,9 @@ export async function generateMetadata({
     openGraph: {
       title: `${info.title} | Renato Dulog`,
       description: info.description,
-      url: `https://renato-dulog.is-a.dev/works/${project}`,
+      url: `${SITE_URL}/works/${project}`,
       siteName: "Renato Dulog | Developer Portfolio",
-      images: [{ url: image, alt: info.title }],
+      images: [{ url: image, width: 1200, height: 630, alt: info.title }],
       type: "article",
     },
     twitter: {
@@ -54,7 +56,10 @@ export async function generateMetadata({
       images: [image],
     },
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/works/${project}`,
+      canonical: `${SITE_URL}/works/${project}`,
+      types: {
+        "text/markdown": `${SITE_URL}/works/${project}.md`,
+      },
     },
   };
 }
@@ -90,7 +95,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
   return (
     <Container as="main">
       <WorkSchema
-        slug={info.slug}
+        slug={project}
         title={info.title}
         description={info.description ?? ""}
         image={
@@ -125,7 +130,7 @@ const ProjectInfo = async ({ params }: { params: { project: string } }) => {
             />
           )}
           <div className="flex items-center justify-between sm:flex-row flex-col-reverse sm:gap-0 gap-4">
-            <Heading>{info?.title}</Heading>
+            <Heading as="h1">{info?.title}</Heading>
             <div className="items-center gap-2 sm:flex hidden">
               {info?.liveUrl && (
                 <Link href={info?.liveUrl} target="_blank">

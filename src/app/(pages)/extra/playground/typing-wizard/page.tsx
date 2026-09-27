@@ -3,31 +3,14 @@ import BackButton from "@/app/UI/global-components/back-button";
 import Container from "@/app/UI/global-components/container";
 import TypingWizardUI from "./components/ui";
 import Image from "next/image";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Typing Wizard",
   description:
     "Test and improve your typing speed with Typing Wizard — an interactive typing game by Renato Dulog.",
-  openGraph: {
-    title: "Typing Wizard | Renato Dulog",
-    description:
-      "Test and improve your typing speed with Typing Wizard — an interactive typing game by Renato Dulog.",
-    url: "https://renato-dulog.is-a.dev/extra/playground/typing-wizard",
-    siteName: "Renato Dulog | Developer Portfolio",
-    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Typing Wizard | Renato Dulog",
-    description:
-      "Test and improve your typing speed with Typing Wizard — an interactive typing game by Renato Dulog.",
-    images: ["https://renato-dulog.is-a.dev/me.webp"],
-  },
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra/playground/typing-wizard`,
-  },
-};
+  path: "/extra/playground/typing-wizard",
+});
 
 const Page = () => {
   return (

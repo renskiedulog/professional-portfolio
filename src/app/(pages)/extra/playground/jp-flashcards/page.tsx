@@ -1,31 +1,14 @@
 import BlurFade from "@/app/UI/animation-wrappers/fade";
 import Container from "@/app/UI/global-components/container";
 import JpFlashcardsClient from "./page.client";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Japanese Flashcards",
   description:
     "Practice Japanese hiragana, katakana, and vocabulary with interactive flashcards by Renato Dulog.",
-  openGraph: {
-    title: "Japanese Flashcards | Renato Dulog",
-    description:
-      "Practice Japanese hiragana, katakana, and vocabulary with interactive flashcards by Renato Dulog.",
-    url: "https://renato-dulog.is-a.dev/extra/playground/jp-flashcards",
-    siteName: "Renato Dulog | Developer Portfolio",
-    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Japanese Flashcards | Renato Dulog",
-    description:
-      "Practice Japanese hiragana, katakana, and vocabulary with interactive flashcards by Renato Dulog.",
-    images: ["https://renato-dulog.is-a.dev/me.webp"],
-  },
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra/playground/jp-flashcards`,
-  },
-};
+  path: "/extra/playground/jp-flashcards",
+});
 
 const Page = () => {
   return (

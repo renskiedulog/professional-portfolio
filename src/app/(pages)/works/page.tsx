@@ -8,31 +8,14 @@ import BackButton from "@/app/UI/global-components/back-button";
 import { Badge } from "@/components/ui/badge";
 import Crown from "@/app/UI/global-components/crown";
 import Heading from "@/app/UI/global-components/heading";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Works",
   description:
-    "I build modern, scalable web applications using React and Next.js. Explore my projects focused on performance, clean UI, and real-world impact.",
-  openGraph: {
-    title: "Works | Renato Dulog",
-    description:
-      "I build modern, scalable web applications using React and Next.js. Explore my projects focused on performance, clean UI, and real-world impact.",
-    url: "https://renato-dulog.is-a.dev/works",
-    siteName: "Renato Dulog | Developer Portfolio",
-    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Works | Renato Dulog",
-    description:
-      "I build modern, scalable web applications using React and Next.js. Explore my projects focused on performance, clean UI, and real-world impact.",
-    images: ["https://renato-dulog.is-a.dev/me.webp"],
-  },
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/works`,
-  },
-};
+    "Projects by Renato Dulog, a full-stack web developer: web apps, websites, Chrome extensions and tools built with React, Next.js and TypeScript.",
+  path: "/works",
+});
 
 const Page = () => {
   return (
@@ -76,7 +59,7 @@ const Page = () => {
         <div className="relative">
           <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
             <Crown>Work Portfolio</Crown>
-            <Heading className="w-full text-center text-3xl md:text-4xl">
+            <Heading as="h1" className="w-full text-center text-3xl md:text-4xl">
               Selected Projects
             </Heading>
             <p>

@@ -3,12 +3,14 @@ import BlurFade from "@/app/UI/animation-wrappers/fade";
 import BackButton from "@/app/UI/global-components/back-button";
 import { triviaList } from "../_data/trivia";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Japanese Trivia | Renato Dulog",
+export const metadata: Metadata = pageMetadata({
+  title: "Japanese Trivia",
   description:
     "Fun and interesting facts about the Japanese language — writing systems, grammar, culture, and history.",
-};
+  path: "/extra/playground/jp-flashcards/trivia",
+});
 
 export default function TriviaPage() {
   return (

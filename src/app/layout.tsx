@@ -11,6 +11,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
 import Overlays from "./overlays";
 import BreadcrumbJsonLd from "./UI/global-components/breadcrumb-jsonld";
+import {
+  OG_IMAGE,
+  personSchema,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,60 +30,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    template: "%s | Renato Dulog – Web Developer Portfolio",
-    default: "Renato Dulog – Full-Stack Web Developer Portfolio",
+    template: "%s | Renato Dulog",
+    default: SITE_TITLE,
   },
-  description:
-    "Explore the professional portfolio of Renato Dulog — a full-stack web developer specializing in React, Next.js, and TypeScript. Discover projects, technical blogs, and creative web applications built with modern tools.",
-  keywords: [
-    "renato dulog",
-    "web developer portfolio",
-    "react developer",
-    "nextjs developer",
-    "typescript engineer",
-    "frontend developer",
-    "fullstack developer",
-    "software engineer",
-    "web app developer",
-    "modern web development",
-    "personal developer site",
-    "freelance web developer philippines",
-    "tailwind css expert",
-    "ui engineer",
-    "next.js portfolio website",
-    "react projects showcase",
-    "open source developer",
-    "developer blog",
-    "tech portfolio website",
-    "creative web designer",
-    "javascript developer",
-    "programming tutorials",
-    "developer case studies",
-    "front end developer philippines",
-    "tech stack projects",
-  ],
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: "Renato Dulog – Full-Stack Web Developer Portfolio",
-    description:
-      "Full-stack web developer specializing in React, Next.js, and TypeScript. Browse projects, tutorials, and web app case studies from Renato Dulog.",
-    url: "https://renato-dulog.is-a.dev/",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     siteName: "Renato Dulog | Developer Portfolio",
     images: [
       {
-        url: "https://renato-dulog.is-a.dev/me.webp",
-        width: 600,
-        height: 600,
-        alt: "Renato Dulog – Web Developer Portfolio",
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: SITE_TITLE,
       },
     ],
     type: "website",
     locale: "en_PH",
   },
-  authors: [{ name: "Renato Dulog", url: "https://renato-dulog.is-a.dev/" }],
-  alternates: {
-    canonical: "https://renato-dulog.is-a.dev",
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
   },
+  // No canonical/og:url here: children would inherit the homepage URL.
+  // Every page sets its own through pageMetadata().
+  authors: [{ name: "Renato Dulog", url: SITE_URL }],
   other: {
     preconnect: "https://avatars.githubusercontent.com",
   },
@@ -92,46 +75,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Renato Dulog",
-              url: "https://renato-dulog.is-a.dev/",
-              image: "https://renato-dulog.is-a.dev/me.webp",
-              jobTitle: "Full Stack Engineer",
-              email: "mailto:renato.larayos.dulog@gmail.com",
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "Pandacan, Pinamungajan, Cebu",
-                addressCountry: "Philippines",
-              },
-              sameAs: [
-                "https://facebook.com/renato.dulog",
-                "https://www.linkedin.com/in/renato-dulog/",
-                "https://github.com/renskiedulog",
-              ],
-              worksFor: [
-                {
-                  "@type": "Organization",
-                  name: "WebriQ",
-                  url: "https://www.webriq.com/",
-                },
-                {
-                  "@type": "Organization",
-                  name: "Freelance / Self-Employed",
-                },
-              ],
-              knowsAbout: [
-                "Web Development",
-                "React",
-                "Next.js",
-                "Node.js",
-                "TypeScript",
-                "UI/UX Design",
-              ],
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <BreadcrumbJsonLd />
       </head>

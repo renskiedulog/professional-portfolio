@@ -13,16 +13,27 @@ import { Blog } from "@/lib/types";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toKebabCase } from "@/lib/utils";
 
-const BlogPage = ({ blogs, filters }: { blogs: Blog[]; filters: string[] }) => {
-  const searchParams = useSearchParams();
+type BlogPageProps = { blogs: Blog[]; filters: string[] };
+
+// Reads ?category= on the client; page.tsx wraps it in Suspense with the unfiltered
+// list as fallback, so the full post list is still server-rendered for crawlers
+export const BlogPageWithParams = (props: BlogPageProps) => {
+  const category = useSearchParams().get("category");
+  return <BlogPage {...props} category={category} />;
+};
+
+const BlogPage = ({
+  blogs,
+  filters,
+  category,
+}: BlogPageProps & { category: string | null }) => {
   const [toggleFilter, setToggleFilter] = useState(true);
   const [search, setSearch] = useState<null | string>(null);
   const [selectedFilters, setSelectedFilters] = useState([]);
-  const category = searchParams.get("category");
   const router = useRouter();
 
   const removeCategoryParam = () => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(window.location.search);
     params.delete("category");
 
     router.push(`?${params.toString()}`, { scroll: false });

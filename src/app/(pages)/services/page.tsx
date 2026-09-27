@@ -9,31 +9,14 @@ import { groq } from "next-sanity";
 import Services from "./services";
 import WorkFlow from "./workflow";
 import Pricing from "./pricing";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Services",
   description:
-    "Explore the services I offer — from responsive design to full-stack solutions tailored to your needs or the grunt works you are trying to avoid.",
-  openGraph: {
-    title: "Services | Renato Dulog",
-    description:
-      "Explore the services I offer — from responsive design to full-stack solutions tailored to your needs or the grunt works you are trying to avoid.",
-    url: "https://renato-dulog.is-a.dev/services",
-    siteName: "Renato Dulog | Developer Portfolio",
-    images: [{ url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" }],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Services | Renato Dulog",
-    description:
-      "Explore the services I offer — from responsive design to full-stack solutions tailored to your needs or the grunt works you are trying to avoid.",
-    images: ["https://renato-dulog.is-a.dev/me.webp"],
-  },
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/services`,
-  },
-};
+    "Web development services by Renato Dulog, from responsive websites to full-stack web apps built with React and Next.js, tailored to your needs.",
+  path: "/services",
+});
 
 export const states = {
   busy: {
@@ -113,7 +96,7 @@ const ServicePage = async () => {
         {/* Services */}
         <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
           <Crown>Services Offered</Crown>
-          <Heading className="w-full text-center text-3xl md:text-4xl">
+          <Heading as="h1" className="w-full text-center text-3xl md:text-4xl">
             What I Can Do For You
           </Heading>
           <p>

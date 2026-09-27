@@ -8,6 +8,32 @@ import { RecommendationInfo } from "@/lib/types";
 import RecommendationContent from "./recommendation-content";
 import { notFound } from "next/navigation";
 import { sanityClient } from "@/lib/sanityClient";
+import { cache } from "react";
+import { pageMetadata } from "@/lib/site";
+
+type Params = { type: GetRecommendationsParams["type"]; id: string };
+
+// Shared by generateMetadata and the page so the lookup runs once per request
+const getInfo = cache((type: Params["type"], id: string) =>
+  GetRecommendationInfo({ searchType: type, id })
+);
+
+export async function generateMetadata({ params }: { params: Promise<Params> }) {
+  const { type, id } = await params;
+  const info: RecommendationInfo | undefined = (await getInfo(type, id))?.data;
+  if (!info) return { title: "Recommendation Not Found" };
+
+  const title = info.title_english || info.title;
+  const synopsis = info.synopsis?.replace(/\s+/g, " ").trim() ?? "";
+
+  return pageMetadata({
+    title: `${title} (${type.charAt(0).toUpperCase() + type.slice(1)})`,
+    description: synopsis
+      ? synopsis.length > 155 ? `${synopsis.slice(0, 152).trimEnd()}...` : synopsis
+      : `${title}, a ${type} recommendation handpicked by Renato Dulog.`,
+    path: `/extra/recommendations/${type}/${id}`,
+  });
+}
 
 const Page = async ({
   params,
@@ -20,7 +46,7 @@ const Page = async ({
   const { type, id } = await params;
 
   const [req, sanityRec] = await Promise.all([
-    GetRecommendationInfo({ searchType: type, id }),
+    getInfo(type, id),
     sanityClient.fetch<{ favorite?: boolean } | null>(
       `*[_type == "recommendations" && string(id) == $id && type == $type][0]{ favorite }`,
       { id, type }

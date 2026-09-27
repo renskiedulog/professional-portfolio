@@ -12,17 +12,16 @@ import LeftSection from "./UI/left/LeftSection";
 import TestimonialsSection from "./UI/content/testimonials";
 import { getEnrichedTestimonials } from "@/lib/github";
 import SiteVisitScript from "./scripts/site-visit-script";
+import { pageMetadata, SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
 
 export const revalidate = 86400;
 
-export const metadata = {
-  title: "Renato Dulog | Web Portfolio",
-  description:
-    "A digital portfolio showcasing the journey, technical expertise, achievements, and skills behind innovative web development.",
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
-  },
-};
+export const metadata = pageMetadata({
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  path: "/",
+  absoluteTitle: true,
+});
 
 export default async function Home() {
   const testimonials = await getEnrichedTestimonials();

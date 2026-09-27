@@ -35,8 +35,13 @@ function toLabel(segment: string): string {
   );
 }
 
+// Detail pages render their own breadcrumb with the real Sanity title
+const SELF_BREADCRUMB_ROUTES = /^\/(blog|works)\/[^/]+\/?$/;
+
 export default function BreadcrumbJsonLd() {
   const pathname = usePathname();
+
+  if (SELF_BREADCRUMB_ROUTES.test(pathname)) return null;
 
   const segments = pathname.split("/").filter(Boolean);
 

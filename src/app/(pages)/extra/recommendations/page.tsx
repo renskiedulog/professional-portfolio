@@ -6,6 +6,14 @@ import Heading from "@/app/UI/global-components/heading";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { pageMetadata } from "@/lib/site";
+
+export const metadata = pageMetadata({
+  title: "Recommendations",
+  description:
+    "Anime, manga, manhwa and movie recommendations handpicked by Renato Dulog.",
+  path: "/extra/recommendations",
+});
 
 const page = () => {
   return (

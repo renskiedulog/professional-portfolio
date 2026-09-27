@@ -8,9 +8,25 @@ import Crown from "@/app/UI/global-components/crown";
 import Heading from "@/app/UI/global-components/heading";
 import { getRecommendations } from "@/lib/recommendations";
 import { SearchResult } from "@/lib/types";
+import { pageMetadata } from "@/lib/site";
 
 export interface GetRecommendationsParams {
   type: "anime" | "manga" | "manhwa" | "movie";
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ type: GetRecommendationsParams["type"] }>;
+}) {
+  const { type } = await params;
+  const label = type.charAt(0).toUpperCase() + type.slice(1);
+
+  return pageMetadata({
+    title: `${label} Recommendations`,
+    description: `Handpicked ${type} recommendations from Renato Dulog, with ratings and personal favorites.`,
+    path: `/extra/recommendations/${type}`,
+  });
 }
 
 const Page = async ({
@@ -38,7 +54,7 @@ const Page = async ({
         </div>
         <div className="max-w-2xl text-center flex flex-col mx-auto mt-10 gap-2">
           <Crown>Handpicked</Crown>
-          <Heading className="w-full text-center text-3xl md:text-4xl capitalize">
+          <Heading as="h1" className="w-full text-center text-3xl md:text-4xl capitalize">
             {type} Recommendations
           </Heading>
         </div>

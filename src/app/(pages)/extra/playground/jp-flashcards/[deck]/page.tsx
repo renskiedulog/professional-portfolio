@@ -3,33 +3,34 @@ import BlurFade from "@/app/UI/animation-wrappers/fade";
 import DeckClient from "./page.client";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/site";
 
 const VALID = ["hiragana", "katakana", "kanji", "vocabulary", "particles", "numbers"] as const;
 type DeckParam = (typeof VALID)[number];
 
 const META: Record<DeckParam, { title: string; description: string }> = {
   hiragana: {
-    title: "Hiragana Flashcards | Renato Dulog",
+    title: "Hiragana Flashcards",
     description: "Study all 46 hiragana characters with flip cards or multiple-choice tests.",
   },
   katakana: {
-    title: "Katakana Flashcards | Renato Dulog",
+    title: "Katakana Flashcards",
     description: "Study all 46 katakana characters with flip cards or multiple-choice tests.",
   },
   kanji: {
-    title: "Kanji Flashcards | Renato Dulog",
+    title: "Kanji Flashcards",
     description: "Study N5-level kanji with flip cards or multiple-choice tests.",
   },
   vocabulary: {
-    title: "Japanese Vocabulary Flashcards | Renato Dulog",
+    title: "Japanese Vocabulary Flashcards",
     description: "Study common N5 Japanese vocabulary with flip cards or multiple-choice tests.",
   },
   particles: {
-    title: "Japanese Particles Flashcards | Renato Dulog",
+    title: "Japanese Particles Flashcards",
     description: "Study common Japanese particles with flashcards and fill-in-the-blank practice.",
   },
   numbers: {
-    title: "Japanese Numbers Flashcards | Renato Dulog",
+    title: "Japanese Numbers Flashcards",
     description: "Study Japanese numbers 0–10,000 with kanji, kana readings, and flashcards.",
   },
 };
@@ -46,7 +47,11 @@ export async function generateMetadata({
   const { deck } = await params;
   const meta = META[deck as DeckParam];
   if (!meta) return { title: "Not Found" };
-  return { title: meta.title, description: meta.description };
+  return pageMetadata({
+    title: meta.title,
+    description: meta.description,
+    path: `/extra/playground/jp-flashcards/${deck}`,
+  });
 }
 
 export default async function DeckPage({

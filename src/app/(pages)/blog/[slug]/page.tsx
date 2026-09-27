@@ -20,6 +20,8 @@ import BottomSection from "./bottom-section";
 import LikeButton from "./like-button";
 import BlogSchema from "./blog-schema";
 import { toKebabCase } from "@/lib/utils";
+import { OG_IMAGE, SITE_URL } from "@/lib/site";
+import { urlFor } from "@/sanity/lib/image";
 
 const getBlogPost = async (slug: string) => {
   const query = groq`*[_type == "blog" && !(_id in path("drafts.**")) && slug.current == $slug][0] {
@@ -28,6 +30,7 @@ const getBlogPost = async (slug: string) => {
     body,
     author-> { name },
     publishedAt,
+    _updatedAt,
     mainImage,
     likeCount,
     "categories": categories[]->title,
@@ -60,7 +63,7 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const { slug } = await params;
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
+  const canonicalUrl = `${SITE_URL}/blog/${slug}`;
   const blog = await getBlogPost(slug);
 
   if (!blog) {
@@ -70,19 +73,27 @@ export async function generateMetadata({
     };
   }
 
+  const ogImage = blog?.mainImage
+    ? urlFor(blog.mainImage).width(1200).height(630).fit("crop").format("jpg").url()
+    : OG_IMAGE;
+
   return {
     title: blog.title,
     description: blog.description,
     openGraph: {
       title: blog.title,
       description: blog.description,
+      url: canonicalUrl,
+      siteName: "Renato Dulog | Developer Portfolio",
+      locale: "en_PH",
       type: "article",
       publishedTime: blog.publishedAt,
+      modifiedTime: blog._updatedAt,
       images: [
         {
-          url: blog?.mainImage
-            ? getSanityImageUrl(blog?.mainImage)
-            : "/placeholder.png",
+          url: ogImage,
+          width: 1200,
+          height: 630,
           alt: blog.title,
         },
       ],
@@ -92,10 +103,13 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: blog.title,
       description: blog.description,
-      images: [blog.mainImage],
+      images: [ogImage],
     },
     alternates: {
       canonical: canonicalUrl,
+      types: {
+        "text/markdown": `${canonicalUrl}.md`,
+      },
     },
   };
 }
@@ -128,6 +142,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
     publishedAt,
     categories,
     mainImage,
+    _updatedAt,
   } = blog;
 
   return (
@@ -135,8 +150,9 @@ const page = async ({ params }: { params: { slug: string } }) => {
       <BlogSchema
         coverImage={getSanityImageUrl(mainImage)}
         date={publishedAt}
+        modifiedDate={_updatedAt}
         description={description}
-        slug={params?.slug}
+        slug={slug}
         title={title}
         key={title}
       />

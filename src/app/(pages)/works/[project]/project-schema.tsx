@@ -1,5 +1,5 @@
-import Script from "next/script";
 import React from "react";
+import { breadcrumbSchema, PERSON_ID, SITE_URL } from "@/lib/site";
 
 interface WorkSchemaProps {
   title: string;
@@ -17,6 +17,7 @@ interface WorkSchemaProps {
 const WorkSchema = ({
   title,
   description,
+  slug,
   image,
   techStack,
   screenshots,
@@ -34,6 +35,7 @@ const WorkSchema = ({
     image,
     author: {
       "@type": "Person",
+      "@id": PERSON_ID,
       name: authorName ?? "Renato Dulog",
     },
     datePublished: createdAt,
@@ -54,11 +56,23 @@ const WorkSchema = ({
     schema.codeRepository = githubUrl;
   }
 
+  const breadcrumbs = breadcrumbSchema([
+    { name: "Home", url: SITE_URL },
+    { name: "Works", url: `${SITE_URL}/works` },
+    { name: title, url: `${SITE_URL}/works/${slug}` },
+  ]);
+
   return (
-    <Script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+      />
+    </>
   );
 };
 

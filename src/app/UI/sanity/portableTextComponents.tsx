@@ -80,9 +80,9 @@ export const PortableTextComponents = {
   },
   block: {
     h1: ({ children }: { children: React.ReactNode }) => (
-      <h1 className="text-3xl sm:text-4xl font-extrabold mt-6 pb-2 text-primary">
+      <h2 className="text-3xl sm:text-4xl font-extrabold mt-6 pb-2 text-primary">
         {children}
-      </h1>
+      </h2>
     ),
     h2: ({ children }: { children: React.ReactNode }) => (
       <h2 className="text-2xl sm:text-3xl font-bold mt-5 pb-2 text-primary">

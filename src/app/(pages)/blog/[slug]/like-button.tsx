@@ -2,7 +2,7 @@
 import { useStorage } from "@/app/UI/global-components/storage-provider";
 import { Badge } from "@/components/ui/badge";
 import { Heart, ThumbsUp } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const buttonState = {
   unliked:
@@ -18,11 +18,14 @@ const LikeButton = ({
   likeCount: number;
 }) => {
   const { setItem, getItem } = useStorage();
-  const likedBlogs: string[] | null = getItem("likedBlogs") || [];
   const [renderedCount, setRenderedCount] = useState(likeCount ?? 0);
-  const [liked, setLiked] = useState<"unliked" | "liked">(
-    likedBlogs?.includes(slug) ? "liked" : "unliked"
-  );
+  const [liked, setLiked] = useState<"unliked" | "liked">("unliked");
+
+  // Read localStorage after mount so server and client first render match
+  useEffect(() => {
+    const likedBlogs = getItem<string[]>("likedBlogs") || [];
+    if (likedBlogs.includes(slug)) setLiked("liked");
+  }, [slug]);
 
   const incrementLikeCount = async () => {
     try {
@@ -45,11 +48,12 @@ const LikeButton = ({
 
   const handleLike = () => {
     if (liked === "liked") return;
+    const likedBlogs = getItem<string[]>("likedBlogs") || [];
     // If blog is already liked by user - postpone
-    if (likedBlogs && likedBlogs?.includes(slug)) {
+    if (likedBlogs.includes(slug)) {
       return;
     }
-    likedBlogs?.push(slug);
+    likedBlogs.push(slug);
     setItem("likedBlogs", likedBlogs);
     setLiked("liked");
     setRenderedCount((prev) => prev + 1);

@@ -37,6 +37,15 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
     NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
   },
+  async rewrites() {
+    return {
+      // Markdown copies of posts/projects for AI agents (src/app/md)
+      beforeFiles: [
+        { source: "/blog/:slug.md", destination: "/md/blog/:slug" },
+        { source: "/works/:project.md", destination: "/md/works/:project" },
+      ],
+    };
+  },
   async redirects() {
     return [
       {

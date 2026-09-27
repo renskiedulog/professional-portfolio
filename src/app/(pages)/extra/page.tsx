@@ -11,33 +11,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { InfoIcon } from "lucide-react";
+import { pageMetadata } from "@/lib/site";
 
-export const metadata = {
+export const metadata = pageMetadata({
   title: "Extra",
   description:
-    "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, dev tools, and more.",
-  openGraph: {
-    title: "Extra | Renato Dulog",
-    description:
-      "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, dev tools, and more.",
-    url: "https://renato-dulog.is-a.dev/extra",
-    siteName: "Renato Dulog | Developer Portfolio",
-    images: [
-      { url: "https://renato-dulog.is-a.dev/me.webp", alt: "Renato Dulog" },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Extra | Renato Dulog",
-    description:
-      "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, dev tools, and more.",
-    images: ["https://renato-dulog.is-a.dev/me.webp"],
-  },
-  alternates: {
-    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/extra`,
-  },
-};
+    "Explore extras from Renato Dulog — anime & movie recommendations, live stats, playground games, and more.",
+  path: "/extra",
+});
 
 const Extra = () => {
   return (
@@ -60,6 +41,7 @@ const Extra = () => {
           }),
         }}
       />
+      <h1 className="sr-only">Extras by Renato Dulog</h1>
       <BlurFade className="px-3 sm:px-5">
         {/* Navigation Bar */}
         <div className="w-full flex justify-between">

@@ -1,4 +1,3 @@
-import Script from "next/script";
 import { Item } from "./page";
 
 function extractPlainTextFromPortableText(blocks: any[]): string {
@@ -28,10 +27,9 @@ const QymaSchema = ({ questions }: { questions: Item[] }) => {
   };
 
   return (
-    <Script
+    <script
       id="faq-schema"
       type="application/ld+json"
-      strategy="afterInteractive"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
   );

@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext } from "react";
 
 type StorageContextType = {
   getItem: <T>(key: string) => T | null;
@@ -12,14 +12,6 @@ const StorageContext = createContext<StorageContextType | undefined>(undefined);
 export const StorageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [initialized, setInitialized] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setInitialized(true);
-    }
-  }, []);
-
   const setItem = (key: string, value: any) => {
     try {
       const serializedValue = JSON.stringify(value);
@@ -49,7 +41,7 @@ export const StorageProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <StorageContext.Provider value={{ getItem, setItem, removeItem }}>
-      {initialized && children}
+      {children}
     </StorageContext.Provider>
   );
 };
