@@ -15,11 +15,11 @@ const addresses = [
     icon: MdOutlineMailOutline,
     link: "mailto:renato.larayos.dulog@gmail.com",
   },
-  {
-    label: "renato.dulog",
-    icon: FaFacebookSquare,
-    link: "https://facebook.com/renato.dulog",
-  },
+  // {
+  //   label: "renato.dulog",
+  //   icon: FaFacebookSquare,
+  //   link: "https://facebook.com/renato.dulog",
+  // },
   {
     label: "in/renato-dulog",
     icon: FaLinkedin,

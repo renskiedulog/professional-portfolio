@@ -22,7 +22,7 @@ const contactCategories = [
   ["Collaboration", "collaboration"],
   ["Help Request", "help-request"],
   ["Question", "question"],
-  ["Freelance Work", "freelance-work", true],
+  ["Freelance Work", "freelance-work"],
   ["Feedback", "feedback"],
   ["Other", "other"],
 ];
@@ -73,12 +73,12 @@ export default function ContactForm() {
         </div>,
         {
           position: window?.innerWidth > 640 ? "bottom-right" : "top-left",
-        }
+        },
       );
       form.reset();
     } catch (error: any) {
       toast.error(
-        error.message || "Failed to submit the form. Please try again."
+        error.message || "Failed to submit the form. Please try again.",
       );
     }
   }
